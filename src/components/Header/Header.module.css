@@ -8,10 +8,38 @@
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .headerName {
     font-size: 28px;
     font-weight: 600;
+    color: white;
+    cursor: pointer;
+}
+
+.headerName:hover {
+    text-shadow: 1px 1px 13px green;
+}
+
+.headerNav {
+    display: flex;
+    align-items: center;
+}
+
+.headerNav button {
+    color: #B0D997;
+    padding: 10px 22px 10px 22px;
+    border-radius: 20px;
+    background: white;
+    font-size: 20px;
+    border: none;
+    margin-left: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.headerNav button:hover {
+    color: #90C084;
 }
 

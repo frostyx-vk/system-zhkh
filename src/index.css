@@ -35,6 +35,11 @@ body {
 
 a {
   text-decoration: none;
+  font-family: "Montserrat";
+}
+
+button {
+  font-family: "Montserrat";
 }
 
 .font-monserat {

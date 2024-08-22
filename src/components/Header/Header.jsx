@@ -11,10 +11,15 @@ export default function Header() {
     return (
         <div className={s.header}>
             <div className={s.headerWrapper}>
-                <div className={s.headerName}>
+                <Link className={s.headerName} to='/'>
                     Портал ЖКХ
+                </Link>
+                <div className={s.headerNav}>
+                    <Nav />
+                    <button>
+                        Личный кабинет
+                    </button>
                 </div>
-                <Nav />
             </div>
         </div>
     )

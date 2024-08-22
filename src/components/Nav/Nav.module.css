@@ -1,7 +1,36 @@
 .nav ul {
-    color: white;
-    text-decoration: none;
     list-style: none;
     padding-left: 0;
     margin: 0;
+}
+
+.nav ul a {
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 12px;
+    font-weight: 500;
+    position: relative;
+    text-decoration: none
+}
+
+.nav ul a::after {
+    position: absolute;
+    content: '';
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+}
+
+.nav ul a::after {
+    width: 0;
+    transition: 0.3s;
+}
+
+.nav ul a:hover:after {
+    width: 100%;
 }
