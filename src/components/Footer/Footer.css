@@ -1,0 +1,142 @@
+.footer-content {
+    display: flex;
+    padding: 174px 160px 0 160px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-content__logo-svg {
+    margin-bottom: 40px;
+}
+
+.footer-content__logo-contact {
+    margin-bottom: 12px;
+}
+
+.footer-content__logo-contact a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 12px;
+}
+
+.footer-content__logo-callme {
+    color: #25B2E7;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    cursor: pointer;
+}
+
+.footer-content__order-btn {
+    width: 254px;
+    height: 56px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #25B2E7;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.footer-content__order-btn svg {
+    position: absolute;
+}
+
+.footer-content__order-contacts {
+    margin-top: 42px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.footer-content__order-contacts div a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.footer-politic {
+    padding: 0 160px 38px 160px;
+    margin-top: 74px;
+    display: flex;
+    align-items: center;
+    gap: 120px;
+}
+
+.footer-politic a {
+    color: #8E8E8E;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+}
+
+.footer-nav ul {
+    flex-direction: column;
+    padding: 0;
+    align-items: center;
+}
+
+.footer-content__logo-block img {
+    width: 300px;
+}
+
+.footer-content__logo-block,
+.footer-content__order-contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 1920px) {
+
+    .footer-content__service-block ul,
+    .footer-content__about-block ul {
+        padding: 0;
+    }
+}
+
+@media (max-width: 1280px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .footer-content__service-block,
+    .footer-content__about-block {
+        text-align: center;
+    }
+
+    .footer-content__logo-contact a,
+    .footer-content__logo-callme {
+        margin-left: 0px;
+    }
+
+    .footer-politic {
+        justify-content: center;
+    }
+}
