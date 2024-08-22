@@ -12,11 +12,10 @@ root.render(
     <React.StrictMode>
       <Header />
       {/* <Routes>
-        <Route path='/home' element={<HomePage />} />
-        <Route path='/about' element={<About />} />
+        <Route path='/' element={<HomePage />} />
         <Route path='/service' element={<Service />} />
         <Route path='/news' element={<News />} />
-        <Route path='/contacts' element={<Contacts />} />
+        <Route path='/about' element={<About />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
       <Footer /> */}
