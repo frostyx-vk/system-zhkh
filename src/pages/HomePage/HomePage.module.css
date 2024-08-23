@@ -1,0 +1,16 @@
+.homeFirstBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 70px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.titleBlock p {
+    font-size: 20px;
+    font-weight: 400;
+}
