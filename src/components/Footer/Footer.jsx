@@ -8,7 +8,7 @@ export default function Footer() {
       <div className={s.footerContent}>
         <div className={s.footerContentLeft}>
           <p>© 2025 Портал ЖКХ |</p>
-          <Link to='!#'>
+          <Link to='/reserved'>
             Все права защищены
           </Link>
         </div>
