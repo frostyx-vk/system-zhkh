@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import './font/stylesheet.css'
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,8 +18,8 @@ root.render(
         <Route path='/news' element={<News />} />
         <Route path='/about' element={<About />} />
         <Route path='*' element={<NotFoundPage />} />
-      </Routes>
-      <Footer /> */}
+      </Routes> */}
+      <Footer />
     </React.StrictMode>
   </ BrowserRouter>
 );

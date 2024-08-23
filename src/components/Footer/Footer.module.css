@@ -1,0 +1,38 @@
+.footer {
+    height: 114px;
+    background: #E2E2E2;
+}
+
+.footerContent {
+    width: 1280px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footerContentLeft p {
+    color: #ADADAD;
+    font-weight: 600;
+}
+
+.footerContentLeft a {
+    color: #ADADAD;
+    font-weight: 600;
+    margin-left: 6px;
+}
+.footerContentLeft a:hover {
+    text-decoration: underline;
+}
+
+.footerContentLeft {
+    display: flex;
+    align-items: center;
+}
+.footerContentRight {
+    color: #ADADAD;
+    display: flex;
+    gap: 10px;
+    font-weight: 600;
+    align-items: center;
+}
