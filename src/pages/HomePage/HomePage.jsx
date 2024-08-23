@@ -14,6 +14,9 @@ function HomePage() {
           <p>Коммуникация между жителями и<br /> управляющими компаниями еще<br /> не была настолько удобной!</p>
         </div>
       </div>
+      <div className={s.homeSecondBlock}>
+
+      </div>
     </main>
   )
 }
