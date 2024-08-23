@@ -13,21 +13,25 @@ import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import Reserved from './pages/Reserved/Reserved';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { ChakraProvider } from '@chakra-ui/react'
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter >
-    <React.StrictMode>
-      <Header />
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/service' element={<Service />} />
-        <Route path='/news' element={<News />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/reserved' element={<Reserved />} />
-        <Route path='*' element={<NotFoundPage />} />
-      </Routes>
-      <Footer />
-    </React.StrictMode>
+    <ChakraProvider>
+      <React.StrictMode>
+        <Header />
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/service' element={<Service />} />
+          <Route path='/news' element={<News />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/reserved' element={<Reserved />} />
+          <Route path='*' element={<NotFoundPage />} />
+        </Routes>
+        <Footer />
+      </React.StrictMode>
+    </ChakraProvider>
   </ BrowserRouter>
 );
 

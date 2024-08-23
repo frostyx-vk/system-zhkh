@@ -14,3 +14,41 @@
     font-size: 20px;
     font-weight: 400;
 }
+
+.homeSecondBlock {
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.homeSecondBlockLeft, .homeSecondBlockRight, .leftButtonUp, .leftButtonDown, .rightButtonUp, .rightButtonDown {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.homeSecondBlockLeft, .homeSecondBlockRight {
+    display: flex;
+    height: 240px;
+    justify-content: space-between;
+}
+
+.homeSecondBlock button {
+    width: 500px;
+}
+
+.leftButtonUp button {
+    color: green;
+}
+
+.leftButtonDown button {
+    color: rgb(233, 198, 43);
+}
+
+.rightButtonUp button {
+    color: rgb(114, 114, 221);
+}
+
+.rightButtonDown button {
+    color: rgb(183, 75, 75);
+}

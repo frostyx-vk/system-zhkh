@@ -9,8 +9,8 @@ body {
   height: 100%;
   margin: 0 auto;
   padding: 0 auto;
-  background: #90C084;
-  color: #FFF;
+  background: #90C084 !important;
+  color: #FFF !important;
 }
 
 /* 5 backgrounds for background main page */
