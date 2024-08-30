@@ -9,6 +9,7 @@ import HomePage from './pages/HomePage/HomePage';
 import Service from './pages/Service/Service';
 import News from './pages/News/News';
 import About from './pages/About/About';
+import Login from './pages/Login/Login';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import Reserved from './pages/Reserved/Reserved';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -26,6 +27,7 @@ root.render(
           <Route path='/service' element={<Service />} />
           <Route path='/news' element={<News />} />
           <Route path='/about' element={<About />} />
+          <Route path='/login' element={<Login />} />
           <Route path='/reserved' element={<Reserved />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>

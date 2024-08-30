@@ -2,7 +2,7 @@ import React from 'react'
 import flatLogo from '../../illustration/flat.png'
 import s from './HomePage.module.css'
 import { Button } from '@chakra-ui/react'
-import { EditIcon, ChatIcon, WarningIcon, CalendarIcon, ViewIcon, LinkIcon, PlusSquareIcon, BellIcon} from '@chakra-ui/icons'
+import { EditIcon, ChatIcon, WarningIcon, CalendarIcon, ViewIcon, LinkIcon, PlusSquareIcon, BellIcon } from '@chakra-ui/icons'
 
 function HomePage() {
   return (

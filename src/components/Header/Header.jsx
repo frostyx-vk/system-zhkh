@@ -17,7 +17,9 @@ export default function Header() {
                 <div className={s.headerNav}>
                     <Nav />
                     <button>
-                        Личный кабинет
+                        <Link to='/login'>
+                            Личный кабинет
+                        </Link>
                     </button>
                 </div>
             </div>
