@@ -2,6 +2,7 @@
   "name": "system-zhkh",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:4200",
   "dependencies": {
     "@chakra-ui/button": "^2.1.0",
     "@chakra-ui/icons": "^2.1.1",
@@ -11,6 +12,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.6",
     "eslint": "^8.57.0",
     "framer-motion": "^11.3.29",
     "react": "^18.3.1",

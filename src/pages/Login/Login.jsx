@@ -1,13 +1,32 @@
 import React, { useState } from 'react'
 import s from './Login.module.css'
 import { Input } from '@chakra-ui/react'
+import axios from 'axios';
 
 function Login() {
     const [userAccount, setUserAccount] = useState('');
     const [userPassword, setUserPassword] = useState('');
-    
+
     function handlerForm(event) {
         event.preventDefault();
+
+        let userData = {
+            userAccount,
+            userPassword
+        };
+
+        // fetch('/api/login', {
+        //     method: 'post',
+        //     headers: {
+        //         'Content-Type': 'applacation/json'
+        //     },
+        //     body: JSON.stringify(userData)
+        // }).then(res => res.json()).then(data => {
+        //     console.log(data)
+        // })
+
+        axios.post('/api/login', userData)
+            .then(res => console.log(res.data.message))
 
         console.log('Hi')
     }
