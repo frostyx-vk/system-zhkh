@@ -1,16 +1,18 @@
 import React from 'react'
+import s from './Login.module.css'
+import { Input } from '@chakra-ui/react'
 
 function Login() {
     return (
         <main className='content'>
             <div className='wrapper'>
-                <form method="post">
-                    <label>Имя</label><br />
-                    <input type="text" name="userName" /><br /><br />
-                    <label>Возраст</label><br />
-                    <input type="number" name="userAge" /><br /><br />
-                    <input type="submit" value="Отправить" />
-                </form>
+                <div className={s.wrapperForm}>
+                    <form className={s.loginForm} method="post" action="">
+                        <Input type='text' placeholder='Введите номер Лицевого счета' size='md' name="userAccount" />
+                        <Input type='password' placeholder='Введите пароль' size='md' name="userPassword" />
+                        <Input type="submit" value="Отправить" />
+                    </form>
+                </div>
             </div>
         </main>
     )

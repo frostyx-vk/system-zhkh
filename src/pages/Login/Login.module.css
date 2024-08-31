@@ -1,0 +1,17 @@
+.wrapperForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 30%;
+    margin-top: 100px;
+}
+
+.loginForm input::placeholder {
+    color: white;
+}
