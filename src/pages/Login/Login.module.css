@@ -2,6 +2,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+.wrapperForm h2 {
+    margin-bottom: 16px;
+    font-size: 24px;
 }
 
 .loginForm {
@@ -9,7 +16,6 @@
     flex-direction: column;
     gap: 14px;
     width: 30%;
-    margin-top: 100px;
 }
 
 .loginForm input::placeholder {
