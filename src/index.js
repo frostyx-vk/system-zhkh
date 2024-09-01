@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
+
+import './index.css';
 import './font/stylesheet.css'
+
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
@@ -12,8 +14,10 @@ import About from './pages/About/About';
 import Login from './pages/Login/Login';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import Reserved from './pages/Reserved/Reserved';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import PrivateRoutes from './utils/routes/PrivateRoutes';
+import UserPage from './pages/UserPage/UserPage';
 
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -28,6 +32,9 @@ root.render(
           <Route path='/news' element={<News />} />
           <Route path='/about' element={<About />} />
           <Route path='/login' element={<Login />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path='/userpage' element={<UserPage />} />
+          </Route>
           <Route path='/reserved' element={<Reserved />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>

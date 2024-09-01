@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import s from './Login.module.css'
 import { Input } from '@chakra-ui/react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+    const [user, setUser] = useState('');
     const [userAccount, setUserAccount] = useState('');
     const [userPassword, setUserPassword] = useState('');
+
+    let navigator = useNavigate();
 
     function handlerForm(event) {
         event.preventDefault();
@@ -15,21 +19,21 @@ function Login() {
             userPassword
         };
 
-        // fetch('/api/login', {
-        //     method: 'post',
-        //     headers: {
-        //         'Content-Type': 'applacation/json'
-        //     },
-        //     body: JSON.stringify(userData)
-        // }).then(res => res.json()).then(data => {
-        //     console.log(data)
-        // })
-
         axios.post('/api/login', userData)
-            .then(res => console.log(res.data.message))
+            .then(res => {
+                console.log(res.data.message)
+                if (res.data.message === 'Запрос прошел успешно! ') {
+                    setUser('Access');
+                }
+            })
+    };
 
-        console.log('Hi')
-    }
+    useEffect(() => {
+        if (user.length !== 0) {
+            localStorage.setItem(userAccount, userPassword);
+            navigator('/userpage')
+        }
+    }, [user])
 
     return (
         <main className='content'>
