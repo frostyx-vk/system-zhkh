@@ -34,7 +34,7 @@ export default function Header() {
                                 </button>
                                 <button onClick={() => clearAuth()}>
                                     <Link>
-                                        Выход
+                                        Выйти
                                     </Link>
                                 </button>
                             </div> :

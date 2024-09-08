@@ -1,20 +1,15 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import s from './UserPage.module.css'
 
 function UserPage() {
 
-  let navigator = useNavigate();
-  
-  function clearAuth() {
-    localStorage.clear();
-    navigator('/login');
-  }
-
   return (
-    <main className='content'>
+    <main className={s.content}>
       <div className='wrapper'>
-        Страница авторизованного пользователя
-        <button onClick={() => clearAuth()} style={{marginLeft:'50px'}}>Exit</button>
+        <div className={s.userpage}>
+          <div className={s.userpageNav}></div>
+          <div className={s.userpageContent}></div>
+        </div>
       </div>
     </main>
   )
