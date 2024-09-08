@@ -1,7 +1,7 @@
 // import React, { useState, useEffect } from 'react'
 import s from './Header.module.css'
 import { Link } from 'react-router-dom'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import { ReactComponent as PhoneIcon } from '../../svg/phone.svg'
 // import { ReactComponent as TelegramIcon } from '../../svg/telegram.svg'
 // import logo from '../../illustration/logo.png'
@@ -15,10 +15,6 @@ export default function Header() {
         localStorage.clear();
         navigator('/login');
     }
-
-    const location = useLocation();
-
-    console.log(localStorage.admin)
 
     return (
         <div className={s.header}>
