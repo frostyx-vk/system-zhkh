@@ -6,14 +6,25 @@ import { useNavigate } from 'react-router-dom';
 // import { ReactComponent as TelegramIcon } from '../../svg/telegram.svg'
 // import logo from '../../illustration/logo.png'
 import Nav from '../Nav/Nav'
+import {
+    serverBaseUrl,
+    LOGOUT
+} from '../../api/urls'
+import axios from "axios";
 
 export default function Header() {
 
     let navigator = useNavigate();
 
     function clearAuth() {
-        localStorage.clear();
-        navigator('/login');
+        const data = { name: 'Axios POST with Bearer Token' };
+        const headers = { 'Authorization': 'Token ' + localStorage.accessToken};
+        axios.post(`${serverBaseUrl}${LOGOUT}`, data, { headers })
+            .then(response => {
+                if (response.status in [200, 201, 204]) return
+                localStorage.clear();
+                navigator('/login');
+            })
     }
 
     return (
