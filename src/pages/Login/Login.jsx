@@ -80,7 +80,7 @@ function Login() {
                        size='md'
                        name="email"
                        onChange={e => setUserEmail(e.target.value)}/>
-                <Input onClick={resetPasswordAction} value="Отправить" />
+                <Input type='button' onClick={resetPasswordAction} value="Отправить" />
             </form>
         </main>
 )

@@ -14,10 +14,20 @@
 .loginForm {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 14px;
     width: 30%;
 }
 
 .loginForm input::placeholder {
     color: white;
+}
+
+.wrapperForm button {
+    margin-top: 20px;
+}
+
+.wrapperForm input[type="submit"] {
+    width: 140px;
+    cursor: pointer;
 }
