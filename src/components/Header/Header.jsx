@@ -25,7 +25,7 @@ export default function Header() {
                 <div className={s.headerNav}>
                     <Nav />
                     {
-                        localStorage.admin === "admin" ?
+                        localStorage.accessToken ?
                             <div>
                                 <button>
                                     <Link to='/userpage'>
