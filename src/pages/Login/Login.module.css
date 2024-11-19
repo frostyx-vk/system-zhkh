@@ -27,7 +27,7 @@
     margin-top: 20px;
 }
 
-.wrapperForm input[type="submit"] {
+.wrapperForm input[type="submit"], .wrapperForm input[type="button"] {
     width: 140px;
     cursor: pointer;
 }

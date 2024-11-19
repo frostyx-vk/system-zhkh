@@ -12,6 +12,7 @@ import Service from './pages/Service/Service';
 import News from './pages/News/News';
 import About from './pages/About/About';
 import Login from './pages/Login/Login';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import Reserved from './pages/Reserved/Reserved';
 import PrivateRoutes from './utils/routes/PrivateRoutes';
@@ -32,6 +33,7 @@ root.render(
           <Route path='/news' element={<News />} />
           <Route path='/about' element={<About />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/forgotpass' element={<ForgotPassword />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/userpage' element={<UserPage />} />
           </Route>

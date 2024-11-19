@@ -44,6 +44,10 @@ function Login() {
             })
     }
 
+    function toForgotPassword () {
+        navigator('/forgotpass')
+    }
+
     // useEffect(() => {
     //     if (user.length !== 0) {
     //         // localStorage.setItem(username, password);
@@ -70,18 +74,18 @@ function Login() {
                             onChange={e => setUserPassword(e.target.value)} />
                         <Input type="submit" value="Войти" />
                     </form>
-                    <button id="reset-password" type="button" >Забыли пароль?</button>
+                    <button id="reset-password" type="button" onClick={toForgotPassword} >Забыли пароль?</button>
                 </div>
             </div>
 
-            <form className={s.loginForm} method="post" action=''>
+            {/* <form className={s.loginForm} method="post" action=''>
                 <Input type='email'
                        placeholder='Введите Email привязанный к аккаунту'
                        size='md'
                        name="email"
                        onChange={e => setUserEmail(e.target.value)}/>
                 <Input type='button' onClick={resetPasswordAction} value="Отправить" />
-            </form>
+            </form> */}
         </main>
 )
 }
