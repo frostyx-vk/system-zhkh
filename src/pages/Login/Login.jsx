@@ -6,14 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import {
     serverBaseUrl,
     USER_LOGIN,
-    RESET_PASSWORD
 } from '../../api/urls'
 
 function Login() {
     // const [user, setUser] = useState('');
     const [username, setUserAccount] = useState('');
     const [password, setUserPassword] = useState('');
-    const [email, setUserEmail] = useState('')
 
     let navigator = useNavigate();
 
@@ -32,15 +30,6 @@ function Login() {
                 if (localStorage.accessToken) {
                     navigator('/userpage')
                 }
-            })
-    }
-
-    function resetPasswordAction() {
-        let formData = new FormData()
-        formData.append('email', email)
-        axios.post(`${serverBaseUrl}${RESET_PASSWORD}`, formData)
-            .then(response => {
-                console.log(response)
             })
     }
 
@@ -77,15 +66,6 @@ function Login() {
                     <button id="reset-password" type="button" onClick={toForgotPassword} >Забыли пароль?</button>
                 </div>
             </div>
-
-            {/* <form className={s.loginForm} method="post" action=''>
-                <Input type='email'
-                       placeholder='Введите Email привязанный к аккаунту'
-                       size='md'
-                       name="email"
-                       onChange={e => setUserEmail(e.target.value)}/>
-                <Input type='button' onClick={resetPasswordAction} value="Отправить" />
-            </form> */}
         </main>
 )
 }
