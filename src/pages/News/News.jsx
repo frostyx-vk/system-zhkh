@@ -9,10 +9,12 @@ function  News() {
       <div className='wrapper'>{
         newsList.map((item, i) => {
             return <div>
-                {item.title}
-                {item.description}
-                {item.image}
-                {item.date_created}
+                <div>{item.title}</div>
+                <div>{item.description}</div>
+                <div>{item.image}
+                    <img src={item.image} alt="Новость"/>
+                </div>
+                <div>{item.date_created}</div>
             </div>
         })
       }
