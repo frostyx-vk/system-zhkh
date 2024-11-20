@@ -58,6 +58,9 @@
     color: black;
 }
 
+.modalForm input:first-child {
+    margin-bottom: 16px;
+}
 .modalForm textarea {
     height: 180px;
     margin-top: 16px;

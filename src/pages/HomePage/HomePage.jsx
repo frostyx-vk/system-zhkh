@@ -22,6 +22,7 @@ function HomePage() {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  const [emailName, setEmailName] = useState('');
   const [trublName, setTrublName] = useState('');
   const [descrName, setDescrName] = useState('');
 
@@ -29,6 +30,7 @@ function HomePage() {
     event.preventDefault();
 
     let modalData = {
+      emailName,
       trublName,
       descrName
     };
@@ -103,6 +105,13 @@ function HomePage() {
               <ModalCloseButton />
 
               <ModalBody>
+                <Input type='e-mail'
+                  placeholder='Введите cвой e-mail'
+                  size='md'
+                  required
+                  minLength="5"
+                  onChange={e => setEmailName(e.target.value)}
+                />
                 <Input type='text'
                   placeholder='Введите название проблемы'
                   size='md'
