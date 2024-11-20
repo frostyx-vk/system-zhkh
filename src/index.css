@@ -53,3 +53,15 @@ button {
   padding-right: 10px;
   flex: 1 1 auto;
 }
+
+.service-table tr th {
+  border: 1px solid black;
+  background: #e3eaf0;;
+  color: black;
+}
+
+.service-table tr td {
+  border: 1px solid black;
+  background: #e3eaf0;
+  color: black;
+}
