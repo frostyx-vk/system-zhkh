@@ -1,10 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios';
 import flatLogo from '../../illustration/flat.png'
 import s from './HomePage.module.css'
 import { Button } from '@chakra-ui/react'
 import { EditIcon, ChatIcon, WarningIcon, CalendarIcon, ViewIcon, LinkIcon, PlusSquareIcon, BellIcon } from '@chakra-ui/icons'
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react"
+import { useDisclosure } from '@chakra-ui/react'
+import { Input } from '@chakra-ui/react'
+import { Textarea } from '@chakra-ui/react'
+
 
 function HomePage() {
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const [trublName, setTrublName] = useState('');
+  const [descrName, setDescrName] = useState('');
+
+  function handlerModalForm(event) {
+    event.preventDefault();
+
+    let modalData = {
+      trublName,
+      descrName
+    };
+
+    console.log(modalData)
+
+
+    // axios.post(`${serverBaseUrl}${USER_LOGIN}`, modalData)
+    //     .then(response => {
+    //         if (response.status !== 200) return
+
+    //         if (localStorage.accessToken) {
+    //             navigator('/userpage')
+    //         }
+    //     })
+  }
+
   return (
     <main className='content wrapper'>
       <div className={s.homeFirstBlock}>
@@ -45,7 +86,7 @@ function HomePage() {
             </Button>
           </div>
           <div className={s.rightButtonDown}>
-            <Button leftIcon={<WarningIcon boxSize={6} />}>
+            <Button onClick={onOpen} leftIcon={<WarningIcon boxSize={6} />}>
               Заявить о проблеме
             </Button>
             <Button leftIcon={<ChatIcon boxSize={6} />}>
@@ -54,6 +95,40 @@ function HomePage() {
           </div>
         </div>
       </div>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay>
+          <ModalContent>
+            <form onSubmit={handlerModalForm} action="" className={s.modalForm}>
+              <ModalHeader>Заявить о проблеме</ModalHeader>
+              <ModalCloseButton />
+
+              <ModalBody>
+                <Input type='text'
+                  placeholder='Введите название проблемы'
+                  size='md'
+                  required
+                  minLength="5"
+                  onChange={e => setTrublName(e.target.value)}
+                />
+                <Textarea
+                  placeholder='Введите описание проблемы'
+                  size='md'
+                  required
+                  minLength="20"
+                  onChange={e => setDescrName(e.target.value)}
+                />
+              </ModalBody>
+
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                  Выйти
+                </Button>
+                <Button variant="ghost" type='submit'>Отправить</Button>
+              </ModalFooter>
+            </form>
+          </ModalContent>
+        </ModalOverlay>
+      </Modal>
     </main>
   )
 }
