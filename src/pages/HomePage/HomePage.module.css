@@ -53,3 +53,12 @@
 .rightButtonDown button {
     color: rgb(183, 75, 75);
 }
+
+.modalForm {
+    color: black;
+}
+
+.modalForm textarea {
+    height: 180px;
+    margin-top: 16px;
+}
