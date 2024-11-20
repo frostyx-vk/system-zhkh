@@ -7,3 +7,5 @@ export const LOGOUT = 'auth/token/logout/';
 
 export const NEWS_LIST = 'web/news/';
 export const SERVICE_LIST = 'web/services/';
+export const ABOUT_PORTAL_LIST = 'web/about-portal/';
+export const CONTACT_LIST = 'web/contacts/';
