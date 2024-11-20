@@ -4,18 +4,13 @@ import flatLogo from '../../illustration/flat.png'
 import s from './HomePage.module.css'
 import { Button } from '@chakra-ui/react'
 import { EditIcon, ChatIcon, WarningIcon, CalendarIcon, ViewIcon, LinkIcon, PlusSquareIcon, BellIcon } from '@chakra-ui/icons'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react"
+import { Modal, ModalOverlay, ModalContent,ModalHeader, ModalFooter, ModalBody, ModalCloseButton} from "@chakra-ui/react"
 import { useDisclosure } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function HomePage() {
@@ -46,6 +41,9 @@ function HomePage() {
     //             navigator('/userpage')
     //         }
     //     })
+
+    toast.success("Запрос успешно отправлен!");
+    // onClose();
   }
 
   return (
@@ -105,11 +103,10 @@ function HomePage() {
               <ModalCloseButton />
 
               <ModalBody>
-                <Input type='e-mail'
+                <Input type='email'
                   placeholder='Введите cвой e-mail'
                   size='md'
                   required
-                  minLength="5"
                   onChange={e => setEmailName(e.target.value)}
                 />
                 <Input type='text'
@@ -137,6 +134,7 @@ function HomePage() {
             </form>
           </ModalContent>
         </ModalOverlay>
+        <ToastContainer position="top-right"/>
       </Modal>
     </main>
   )
