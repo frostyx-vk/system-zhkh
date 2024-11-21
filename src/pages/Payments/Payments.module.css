@@ -1,0 +1,25 @@
+.content {
+  flex: 1 0 auto;
+  background: url("../../illustration/background-zhkh.jpeg");
+  /* opacity: 0.8; */
+}
+
+.userpage {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.userpageNav {
+  width: 30%;
+  height: 500px;
+  background: white;
+  border-radius: 20px;
+}
+
+.userpageContent {
+  width: 65%;
+  height: 800px;
+  background: white;
+  border-radius: 20px;
+}

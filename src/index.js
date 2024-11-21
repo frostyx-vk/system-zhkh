@@ -17,6 +17,10 @@ import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import Reserved from './pages/Reserved/Reserved';
 import PrivateRoutes from './utils/routes/PrivateRoutes';
 import UserPage from './pages/UserPage/UserPage';
+import Messages from './pages/Messages/Messages';
+import Counters from './pages/Counters/Counters';
+import Salesinvoice from './pages/Salesinvoice/Salesinvoice';
+import Payments from './pages/Payments/Payments';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
@@ -36,6 +40,10 @@ root.render(
           <Route path='/forgotpass' element={<ForgotPassword />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/userpage' element={<UserPage />} />
+            <Route path='/messages' element={<Messages />} />
+            <Route path='/counters' element={<Counters />} />
+            <Route path='/salesinvoice' element={<Salesinvoice />} />
+            <Route path='/payments' element={<Payments />} />
           </Route>
           <Route path='/reserved' element={<Reserved />} />
           <Route path='*' element={<NotFoundPage />} />
