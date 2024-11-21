@@ -7,13 +7,28 @@
 .navPers a {
     padding: 12px 12px;
     font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+
 .navPers a:hover {
     background-color: #d9efcb;
 }
-.navPers a:first-child:hover {
+
+.navActive {
+    background-color: #90C084;
+    color: white;
+    font-weight: 600;
+}
+.navActive svg {
+    color: white !important;
+}
+
+.navPers a:first-child:hover, .navActive:first-child {
     border-radius: 20px 20px 0 0px;
 }
-.navPers a:last-child:hover {
+
+.navPers a:last-child:hover, .navActive:last-child {
     border-radius: 0 0 20px 20px;
 }
