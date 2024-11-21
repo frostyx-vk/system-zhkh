@@ -7,11 +7,11 @@ function UserPage() {
   return (
     <main className={s.content}>
       <div className='wrapper'>
-        <div className={s.userpage}>
-          <div className={s.userpageNav}>
+        <div className='personalPage'>
+          <div className='personalNav'>
             <NavPersonal />
           </div>
-          <div className={s.userpageContent}></div>
+          <div className='personalContent'></div>
         </div>
       </div>
     </main>
