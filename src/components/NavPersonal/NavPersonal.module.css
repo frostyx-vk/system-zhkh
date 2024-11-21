@@ -1,0 +1,19 @@
+.navPers {
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.navPers a {
+    padding: 12px 12px;
+    font-size: 20px;
+}
+.navPers a:hover {
+    background-color: #d9efcb;
+}
+.navPers a:first-child:hover {
+    border-radius: 20px 20px 0 0px;
+}
+.navPers a:last-child:hover {
+    border-radius: 0 0 20px 20px;
+}

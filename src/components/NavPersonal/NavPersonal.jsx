@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export default function NavPersonal() {
     return (
         <div >
-            <ul >
+            <ul className={s.navPers}>
                 <Link to='/userpage'>
                     Профиль
                 </Link>
