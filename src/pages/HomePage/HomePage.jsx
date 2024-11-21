@@ -11,36 +11,36 @@ import { Textarea } from '@chakra-ui/react'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {
+    serverBaseUrl,
+    MESSAGE_PROBLEM,
+} from '../../api/urls'
 
 
 function HomePage() {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const [emailName, setEmailName] = useState('');
-  const [trublName, setTrublName] = useState('');
-  const [descrName, setDescrName] = useState('');
+  const [email, setEmailName] = useState('');
+  const [title, setTrublName] = useState('');
+  const [content, setDescrName] = useState('');
 
   function handlerModalForm(event) {
     event.preventDefault();
 
     let modalData = {
-      emailName,
-      trublName,
-      descrName
+      email,
+      title,
+      content
     };
 
-    console.log(modalData)
-
-
-    // axios.post(`${serverBaseUrl}${USER_LOGIN}`, modalData)
-    //     .then(response => {
-    //         if (response.status !== 200) return
-
-    //         if (localStorage.accessToken) {
-    //             navigator('/userpage')
-    //         }
-    //     })
+    axios.post(`${serverBaseUrl}${MESSAGE_PROBLEM}`, modalData)
+        .then(response => {
+            if (response.status !== 200) return
+            if (localStorage.accessToken) {
+                navigator('/userpage')
+            }
+        })
 
     toast.success("Запрос успешно отправлен!");
     // onClose();
