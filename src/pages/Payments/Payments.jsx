@@ -1,8 +1,8 @@
 import React from 'react'
-import s from './UserPage.module.css'
+import s from './Payments.module.css'
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 
-function UserPage() {
+function Payments() {
 
   return (
     <main className={s.content}>
@@ -18,4 +18,4 @@ function UserPage() {
   )
 }
 
-export default UserPage
+export default Payments
