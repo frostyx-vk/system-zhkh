@@ -2,3 +2,58 @@
   flex: 1 0 auto;
   background: url("../../illustration/background-zhkh.jpeg");
 }
+
+.personalTabs button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.personalTabs button {
+  color: black;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.personalTabs button[aria-selected=true] {
+  color: white;
+  background: #90C084;
+  padding: 12px 12px;
+  transition: none !important;
+}
+
+.personalTabs button[aria-selected=false] {
+  transition: none !important;
+}
+
+.personalTabs button:first-child[aria-selected=true] {
+  border-radius: 20px 0 0 0;
+}
+
+.personalTabs button:last-child[aria-selected=true] {
+  border-radius: 0 20px 0 0;
+}
+
+.personalTabsContent {
+  color: black;
+}
+
+.personalTabsContent1 p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.personalTabsContent1 input {
+  margin-bottom: 10px;
+}
+.personalTabsContent1 form button {
+  color: white;
+  background: #90C084;
+  padding: 8px 24px;
+  border-radius: 12px;
+  margin-top: 8px;
+  float: right;
+}

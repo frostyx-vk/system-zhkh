@@ -13,7 +13,6 @@ export default function NavPersonal() {
 
     const setActive = ({ isActive }) => (isActive ? s.navActive : "");
 
-
     return (
         <div >
             <ul className={s.navPers}>
