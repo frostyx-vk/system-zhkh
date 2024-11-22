@@ -38,3 +38,22 @@
 .personalTabsContent {
   color: black;
 }
+
+.personalTabsContent1 p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.personalTabsContent1 input {
+  margin-bottom: 10px;
+}
+.personalTabsContent1 form button {
+  color: white;
+  background: #90C084;
+  padding: 8px 24px;
+  border-radius: 12px;
+  margin-top: 8px;
+  float: right;
+}
