@@ -1,36 +1,43 @@
 import React from 'react'
+import s from './Service.module.css'
 import {
     serviceList
 } from '../../api/index'
+import {
+    Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer,
+} from '@chakra-ui/react'
 
 function Service() {
-  return (
-    <main className='content'>
-        <div className='wrapper'>
-            <table className='service-table'>
-                <tr>
-                    <th></th>
-                    <th>Услуги</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th>Название</th>
-                    <th>Описание услуги</th>
-                    <th>Цена</th>
-                </tr>
-                {
-                    serviceList.map((item, i) => {
-                        return <tr>
-                            <td>{item.title}</td>
-                            <td>{item.description}</td>
-                            <td>{item.price}</td>
-                        </tr>
-                    })
-                }
-            </table>
-        </div>
-    </main>
-  )
+    return (
+        <main className='content'>
+            <div className='wrapper'>
+                <h1>Предоставляемые услуги</h1>
+                <TableContainer>
+                    <Table variant='simple' size='md'>
+                        <TableCaption>Указаны ориентировочные цены на услуги.</TableCaption>
+                        <Thead>
+                            <Tr>
+                                <Th>Название</Th>
+                                <Th>Описание услуги</Th>
+                                <Th isNumeric>Цена, ₽ с НДС</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {
+                                serviceList.map((item, i) => {
+                                    return <Tr>
+                                        <Td>{item.title}</Td>
+                                        <Td>{item.description}</Td>
+                                        <Td isNumeric>{item.price}</Td>
+                                    </Tr>
+                                })
+                            }
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            </div>
+        </main>
+    )
 }
 
 export default Service

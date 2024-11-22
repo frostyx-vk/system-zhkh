@@ -1,0 +1,23 @@
+h1 {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 20px 0;
+}
+
+table {
+    width: 100%;
+}
+
+table thead tr th:first-child {
+    max-width: 300px;
+}
+
+table tbody tr td:first-child {
+    max-width: 300px;
+    white-space: wrap;
+    min-width: 290px;
+}
+
+table tbody tr td:nth-child(2) {
+    white-space: wrap;
+}
