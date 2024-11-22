@@ -4,14 +4,14 @@ import {
     serviceList
 } from '../../api/index'
 import {
-    Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer,
+    Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer,
 } from '@chakra-ui/react'
 
 function Service() {
     return (
         <main className='content'>
             <div className='wrapper'>
-                <h1>Предоставляемые услуги</h1>
+                <h1 className={s.title}>Предоставляемые услуги</h1>
                 <TableContainer>
                     <Table variant='simple' size='md'>
                         <TableCaption>Указаны ориентировочные цены на услуги.</TableCaption>
@@ -25,7 +25,7 @@ function Service() {
                         <Tbody>
                             {
                                 serviceList.map((item, i) => {
-                                    return <Tr>
+                                    return <Tr key={i}>
                                         <Td>{item.title}</Td>
                                         <Td>{item.description}</Td>
                                         <Td isNumeric>{item.price}</Td>

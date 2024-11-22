@@ -1,4 +1,4 @@
-h1 {
+.title {
     font-size: 24px;
     font-weight: 500;
     margin: 20px 0;
@@ -6,6 +6,11 @@ h1 {
 
 table {
     width: 100%;
+    font-weight: 500;
+}
+
+table thead tr th {
+    font-family: "Montserrat" !important;
 }
 
 table thead tr th:first-child {

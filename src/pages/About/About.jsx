@@ -1,4 +1,5 @@
 import React from 'react'
+import s from './About.module.jsx'
 import {
     aboutPortalList,
     contactList
