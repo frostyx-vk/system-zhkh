@@ -21,9 +21,9 @@ function HomePage() {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const [email, setEmailName] = useState('');
-  const [title, setTrublName] = useState('');
-  const [content, setDescrName] = useState('');
+  const [email, setEmail] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   function handlerModalForm(event) {
     event.preventDefault();
@@ -107,21 +107,21 @@ function HomePage() {
                   placeholder='Введите cвой e-mail'
                   size='md'
                   required
-                  onChange={e => setEmailName(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                 />
                 <Input type='text'
                   placeholder='Введите название проблемы'
                   size='md'
                   required
                   minLength="5"
-                  onChange={e => setTrublName(e.target.value)}
+                  onChange={e => setTitle(e.target.value)}
                 />
                 <Textarea
                   placeholder='Введите описание проблемы'
                   size='md'
                   required
                   minLength="20"
-                  onChange={e => setDescrName(e.target.value)}
+                  onChange={e => setContent(e.target.value)}
                 />
               </ModalBody>
 
