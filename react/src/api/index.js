@@ -5,7 +5,7 @@ import {
     CONTACT_LIST,
     NEWS_LIST,
     SERVICE_LIST
-} from '../api/urls'
+} from './urls'
 
 const headers = { headers: {"Authorization" : 'Token ' + localStorage.accessToken}}
 
