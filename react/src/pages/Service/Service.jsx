@@ -2,7 +2,7 @@ import React from 'react'
 import s from './Service.module.css'
 import {
     serviceList
-} from '../../api/index'
+} from '../../api'
 import {
     Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer,
 } from '@chakra-ui/react'
