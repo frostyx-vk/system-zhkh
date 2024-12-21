@@ -6,7 +6,6 @@ import {
     NEWS_LIST,
     SERVICE_LIST,
     USERPAGE_API,
-    SERVICE_LIST
 } from '../api/urls'
 
 export const headers = { headers: {"Authorization" : 'Token ' + localStorage.accessToken}}
