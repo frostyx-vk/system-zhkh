@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    ports:
+      - "5432:5432"
+    container_name: zhkh_postgres
+    volumes:
+      - ~/.pg/pg_data/zhkh_service:/var/lib/postgresql/data
+    env_file:
+      - ./django/zhkh_service/.env
+
+  django:
+    container_name: back_django
+    restart: always
+    build:
+      context: .
+      dockerfile: ./django/zhkh_service/Dockerfile
+    volumes:
+      - ./django/zhkh_service:/zhkh_service
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    expose:
+      - 8000
+    env_file:
+      - ./django/zhkh_service/.env
+    command: python manage.py runserver 0.0.0.0:8000
+
+  react:
+    container_name: front_react
+    restart: always
+    build:
+      context: .
+      dockerfile: ./react/Dockerfile
+    volumes:
+      - ./react:/react
+      - /react/node_modules
+    ports:
+      - "3001:3000"
+    expose:
+      - 3001
+
+volumes:
+  static_volume:
+  media_volume:

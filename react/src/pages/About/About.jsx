@@ -3,7 +3,7 @@ import s from './About.module.css'
 import {
     aboutPortalList,
     contactList
-} from '../../api/index'
+} from '../../api'
 
 function About() {
 
