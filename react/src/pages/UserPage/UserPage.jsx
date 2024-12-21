@@ -3,6 +3,10 @@ import s from './UserPage.module.css'
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { Input, InputGroup, InputLeftAddon } from '@chakra-ui/react'
+import { userPageDetail, headers } from '../../api/index'
+import { USERPAGE_API, serverBaseUrl } from '../../api/urls'
+import axios from "axios";
+
 
 function UserPage() {
 
@@ -26,9 +30,15 @@ function UserPage() {
 
     let formData = new FormData()
     formData.append('contactInfo', contactInfo)
-
-    console.log(contactInfo)
   }
+
+  function updateUser() {
+    axios.patch(`${serverBaseUrl}${USERPAGE_API}`, {'email': email, 'phone': phone, 'is_active': true},
+        { headers: {"Authorization" : 'Token ' + localStorage.accessToken}})
+         .then(response => console.log(response.data))
+         .catch(error => console.error(error));
+  }
+
 
   return (
     <main className={s.content}>
@@ -50,7 +60,7 @@ function UserPage() {
                     <label>
                       Фамилия
                       <Input
-                        value={'Расторгуев'}
+                        value={`${userPageDetail.last_name}`}
                         readOnly
                         placeholder='Введите фамилию'
                         size='md'
@@ -59,7 +69,7 @@ function UserPage() {
                     <label>
                       Имя
                       <Input
-                        value={'Олег'}
+                        value={`${userPageDetail.first_name}`}
                         readOnly
                         placeholder='Введите имя'
                         size='md'
@@ -68,20 +78,20 @@ function UserPage() {
                     <label>
                       Отчество
                       <Input
-                        value={'Газманович'}
+                        value={`${userPageDetail.middle_name}`}
                         readOnly
                         placeholder='Введите отчество'
                         size='md'
                       />
                     </label>
                     <p style={{ marginTop: '14px' }}>Редактируемая информация</p>
-                    <form onSubmit={handleSubmit} action="">
+                    <form onSubmit={updateUser} action="">
                       <label>
                         Телефон
                         <InputGroup>
                           <InputLeftAddon>+7</InputLeftAddon>
                           <Input type='number'
-                            placeholder='Номер телефона'
+                            placeholder={userPageDetail.phone}
                             required
                             pattern="[1-9]{1}[0-9]{9}"
                             maxLength={10}
@@ -95,7 +105,7 @@ function UserPage() {
                         <Input
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          placeholder='Введите фамилию'
+                          placeholder={userPageDetail.email}
                           size='md'
                           type='email'
                           required
