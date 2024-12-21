@@ -23,12 +23,12 @@ services:
     depends_on:
       - db
     ports:
-      - "7000:7000"
+      - "8000:8000"
     expose:
-      - 7000
+      - 8000
     env_file:
       - ./django/zhkh_service/.env
-    command: python manage.py runserver 0.0.0.0:7000
+    command: python manage.py runserver 0.0.0.0:8000
 
   react:
     container_name: front_react

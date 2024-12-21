@@ -39,6 +39,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'accounts',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -50,7 +51,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'djoser',
 
-    'accounts',
     'communication',
     'web'
 ]
