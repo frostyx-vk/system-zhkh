@@ -17,7 +17,7 @@ class User(AbstractUser):
     type = models.CharField(choices=TypeProperty.choices, default=TypeProperty.HABITABLE, max_length=255, blank=True)
 
     REQUIRED_FIELDS = ['last_name', 'first_name', 'middle_name', 'phone', 'email', 'number_ls', 'address', 'square',
-                       'type', 'is_active']
+                       'type', 'is_active', 'password']
 
     def __str__(self):
         return self.username
