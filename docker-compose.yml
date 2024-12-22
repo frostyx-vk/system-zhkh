@@ -36,6 +36,8 @@ services:
     build:
       context: .
       dockerfile: ./react/Dockerfile
+    environment:
+      - WDS_SOCKET_PORT=0
     volumes:
       - ./react:/react
       - /react/node_modules
