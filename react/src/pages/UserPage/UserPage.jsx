@@ -10,8 +10,8 @@ import axios from "axios";
 
 function UserPage() {
 
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
 
   function handlePhone(e) {
     if (e.target.value.length > 10) {
@@ -33,10 +33,10 @@ function UserPage() {
   }
 
   function updateUser() {
-    axios.patch(`${serverBaseUrl}${USERPAGE_API}`, {'email': email, 'phone': phone, 'is_active': true},
-        { headers: {"Authorization" : 'Token ' + localStorage.accessToken}})
-         .then(response => console.log(response.data))
-         .catch(error => console.error(error));
+    axios.patch(`${serverBaseUrl}${USERPAGE_API}`, { 'email': email, 'phone': phone, 'is_active': true },
+      { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error));
   }
 
 
