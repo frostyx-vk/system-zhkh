@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from communication.models import MessageProblem
+from communication.models import MessageProblem, ChatMessage, Chat
 
 
 class MessageProblemSerializer(ModelSerializer):
@@ -10,3 +10,16 @@ class MessageProblemSerializer(ModelSerializer):
 
     def update(self, instance, validated_data):
         return instance
+
+
+class MessageSerializer(ModelSerializer):
+    class Meta:
+        model = ChatMessage
+        exclude = ("chat",)
+
+
+class ChatSerializer(ModelSerializer):
+    messages = MessageSerializer(many=True, read_only=True)
+    class Meta:
+        model = Chat
+        fields = ["messages", "short_id"]
