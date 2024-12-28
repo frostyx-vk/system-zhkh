@@ -1,11 +1,11 @@
 import axios from 'axios';
 import {
-    serverBaseUrl,
+    // serverBaseUrl,
     // ABOUT_PORTAL_LIST,
     // CONTACT_LIST,
     // NEWS_LIST,
     // SERVICE_LIST,
-    USERPAGE_API,
+    // USERPAGE_API,
 } from '../api/urls'
 
 export const headers = { headers: {"Authorization" : 'Token ' + localStorage.accessToken}}
@@ -24,6 +24,6 @@ export const headers = { headers: {"Authorization" : 'Token ' + localStorage.acc
 //     .catch(err => console.log(err));
 
 
-export const userPageDetail = await axios.get(`${serverBaseUrl}${USERPAGE_API}`, headers)
-    .then(res => res.data)
-    .catch(err => console.log(err));
+// export const userPageDetail = await axios.get(`${serverBaseUrl}${USERPAGE_API}`, headers)
+//     .then(res => res.data)
+//     .catch(err => console.log(err));
