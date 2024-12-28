@@ -22,6 +22,7 @@ services:
       - ./django/zhkh_service:/zhkh_service
     depends_on:
       - db
+      - redis
     ports:
       - "8000:8000"
     expose:
@@ -45,6 +46,16 @@ services:
       - "3001:3000"
     expose:
       - 3001
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redisdata:/data
+    env_file:
+      - ./django/zhkh_service/.env
 
 volumes:
   static_volume:
