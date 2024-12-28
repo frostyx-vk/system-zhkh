@@ -1,20 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import flatLogo from '../../illustration/flat.png'
 import s from './HomePage.module.css'
 import { Button } from '@chakra-ui/react'
 import { EditIcon, ChatIcon, WarningIcon, CalendarIcon, ViewIcon, LinkIcon, PlusSquareIcon, BellIcon } from '@chakra-ui/icons'
-import { Modal, ModalOverlay, ModalContent,ModalHeader, ModalFooter, ModalBody, ModalCloseButton} from "@chakra-ui/react"
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react"
 import { useDisclosure } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {
-    serverBaseUrl,
-    MESSAGE_PROBLEM,
-} from '../../api/urls'
+
+import { useNavigate } from 'react-router-dom';
 
 
 function HomePage() {
@@ -34,16 +32,30 @@ function HomePage() {
       content
     };
 
-    axios.post(`${serverBaseUrl}${MESSAGE_PROBLEM}`, modalData)
-        .then(response => {
-            if (response.status !== 200) return
-            if (localStorage.accessToken) {
-                navigator('/userpage')
-            }
-        })
+    axios.post('http://localhost:8000/communication/create-message-problem/', modalData)
+      .then(res => {
+        toast.success(res.data.status + '!');
+        onClose();
+      })
+      .catch(err => {
+        if (err.response) {
+          toast.error("Ошибка! Попробуйте отправить позже");
+        } else if (err.request) {
+          toast.error("Ошибка! Попробуйте отправить позже");
+        } else {
+          toast.error("Ошибка! Попробуйте отправить позже");
+        }
+      });
 
-    toast.success("Запрос успешно отправлен!");
-    // onClose();
+    // axios.post(`${serverBaseUrl}${MESSAGE_PROBLEM}`, modalData)
+    //   .then(response => {
+    //     if (response.status !== 200) return
+    //     if (localStorage.accessToken) {
+    //       navigator('/userpage')
+    //     }
+    //     // немного не понял, зачем тут перенаправление на страницу юзера?
+    //   })
+
   }
 
   return (
@@ -134,8 +146,8 @@ function HomePage() {
             </form>
           </ModalContent>
         </ModalOverlay>
-        <ToastContainer position="top-right"/>
       </Modal>
+      <ToastContainer position="top-right" />
     </main>
   )
 }

@@ -11,5 +11,5 @@ export const USERPAGE_API = 'auth/users/me/';
 // export const ABOUT_PORTAL_LIST = 'web/about-portal/';
 // export const CONTACT_LIST = 'web/contacts/';
 
-export const MESSAGE_PROBLEM = 'communication/create-message-problem/';
+// export const MESSAGE_PROBLEM = 'communication/create-message-problem/';
 
