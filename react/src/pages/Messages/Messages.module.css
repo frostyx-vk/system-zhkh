@@ -1,5 +1,74 @@
 .content {
   flex: 1 0 auto;
   background: url("../../illustration/background-zhkh.jpeg");
-  /* opacity: 0.8; */
+}
+
+.container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 10px #888888;
+  border: 1px solid rgb(130, 130, 130);
+}
+
+.inputContainer {
+  display: flex;
+}
+
+.msgContainerWrapper {
+  height: 60vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.message {
+  text-align: left;
+  display: block;
+  padding: 5px 10px;
+  background-color: rgb(218, 218, 218);
+  margin: 10px 0;
+  border-radius: 20px;
+  max-width: 60%;
+  overflow-wrap: break-word;
+  height: fit-content;
+}
+
+.messageContainer {
+  overflow: auto;
+}
+
+.otherMsg {
+  text-align: right !important;
+  margin-right: auto !important;
+  background-color: rgb(176, 228, 240);
+  width: fit-content;
+}
+
+.myMsg {
+  text-align: left !important;
+  margin-left: auto !important;
+  background-color: rgb(176, 240, 184);
+  width: fit-content;
+}
+
+input {
+  padding: 10px;
+  flex: 3;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border: 1px rgb(48, 109, 200) solid;
+}
+
+.sendBtn {
+  color: white;
+  background: #90C084;
+  padding: 8px 24px;
+  border-radius: 12px;
+  margin: 12px;
+  float: right;
+  font-weight: bold;
 }
