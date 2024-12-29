@@ -1,7 +1,7 @@
 let serverUrl = 'http://localhost:8000';
 
 export let serverBaseUrl = `${serverUrl}/`;
-export const USER_LOGIN = 'auth/token/login/';
+// export const USER_LOGIN = 'auth/token/login/';
 export const RESET_PASSWORD = 'auth/users/reset_password/';
 export const LOGOUT = 'auth/token/logout/';
 export const USERPAGE_API = 'auth/users/me/';

@@ -3,13 +3,11 @@ import s from './Login.module.css'
 import { Input } from '@chakra-ui/react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {
-    serverBaseUrl,
-    USER_LOGIN,
-} from '../../api/urls'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
-    // const [user, setUser] = useState('');
     const [username, setUserAccount] = useState('');
     const [password, setUserPassword] = useState('');
 
@@ -23,23 +21,19 @@ function Login() {
             password
         };
 
-        axios.post(`${serverBaseUrl}${USER_LOGIN}`, userData)
+        axios.post('http://localhost:8000/auth/token/login/', userData)
             .then(response => {
-                if (response.status !== 200) return
                 localStorage.setItem('accessToken', response.data.auth_token);
                 if (localStorage.accessToken) {
                     navigator('/userpage')
-                }
+                };
             })
+            .catch((err) => {
+                console.log(err)
+                toast.error("Ошибка! Попробуйте зайти позже.")
+                // здесь нужно обработать каждую ошибку
+            });
     }
-
-    // useEffect(() => {
-    //     if (user.length !== 0) {
-    //         // localStorage.setItem(username, password);
-    //         navigator('/userpage')
-    //         console.log(localStorage)
-    //     }
-    // }, [user])
 
     return (
         <main className='content'>
@@ -63,9 +57,10 @@ function Login() {
                     </form>
                     <button id="reset-password" type="button" onClick={() => (navigator('/forgotpass'))} >Забыли пароль?</button>
                 </div>
+                <ToastContainer position="top-right" />
             </div>
         </main>
-)
+    )
 }
 
 export default Login
