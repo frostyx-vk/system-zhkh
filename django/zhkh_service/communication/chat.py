@@ -1,10 +1,13 @@
 import socketio
 from aiohttp import web
 
-
-sio = socketio.AsyncServer(cors_allowed_origins="*")
 app = web.Application()
-sio.attach(app)
+mgr = socketio.AsyncRedisManager('redis://')
+# sio = socketio.Server(async_mode='threading', cors_allowed_origins='*')
+sio = socketio.AsyncServer(
+    client_manager=mgr, cors_allowed_origins="*"
+)
+# sio.attach(app)
 
 
 @sio.event
