@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function About() {
     const [about, setAbout] = useState([]);
 
-      let navigator = useNavigate();
+    let navigator = useNavigate();
 
     useEffect(() => {
         axios.get('http://localhost:8000/web/about-portal/')
