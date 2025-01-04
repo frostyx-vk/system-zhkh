@@ -13,7 +13,7 @@ function Invoice() {
           </div>
           <div className='personalContent'>
             <div className={s.title}>
-              Платежный документ
+              Платежные документы
             </div>
           </div>
         </div>
