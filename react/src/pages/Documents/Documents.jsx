@@ -11,7 +11,11 @@ function Documents() {
           <div className='personalNav'>
             <NavPersonal />
           </div>
-          <div className='personalContent'></div>
+          <div className='personalContent'>
+            <div className={s.title}>
+              Документы от управляющей компании
+            </div>
+          </div>
         </div>
       </div>
     </main>

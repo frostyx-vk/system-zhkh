@@ -19,7 +19,7 @@ import PrivateRoutes from './utils/routes/PrivateRoutes';
 import UserPage from './pages/UserPage/UserPage';
 import Messages from './pages/Messages/Messages';
 import Counters from './pages/Counters/Counters';
-import Salesinvoice from './pages/Salesinvoice/Salesinvoice';
+import Invoice from './pages/Invoice/Invoice';
 import Payments from './pages/Payments/Payments';
 import Documents from './pages/Documents/Documents';
 
@@ -43,7 +43,7 @@ root.render(
             <Route path='/userpage' element={<UserPage />} />
             <Route path='/messages' element={<Messages />} />
             <Route path='/counters' element={<Counters />} />
-            <Route path='/salesinvoice' element={<Salesinvoice />} />
+            <Route path='/invoice' element={<Invoice />} />
             <Route path='/payments' element={<Payments />} />
             <Route path='/documents' element={<Documents />} />
           </Route>

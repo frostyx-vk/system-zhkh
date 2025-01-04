@@ -26,8 +26,8 @@ export default function NavPersonal() {
                 <NavLink to='/counters' className={setActive}>
                     <PiNotePencilThin style={{ color: 'green' }} /> Показания счетчиков
                 </NavLink>
-                <NavLink to='/salesinvoice' className={setActive}>
-                    <CiViewList style={{ color: 'green' }} />Счет-фактура
+                <NavLink to='/invoice' className={setActive}>
+                    <CiViewList style={{ color: 'green' }} />Платёжный документ
                 </NavLink>
                 <NavLink to='/payments' className={setActive}>
                     <CiWallet style={{ color: 'green' }} />Платежи
