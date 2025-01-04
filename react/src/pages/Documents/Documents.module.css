@@ -13,3 +13,14 @@
   font-weight: 600;
   font-size: 18px;
 }
+
+.documents {
+  padding: 14px;
+}
+
+.documents p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}

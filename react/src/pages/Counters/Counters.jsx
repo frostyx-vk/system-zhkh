@@ -11,7 +11,11 @@ function Counters() {
           <div className='personalNav'>
             <NavPersonal />
           </div>
-          <div className='personalContent'></div>
+          <div className='personalContent'>
+            <div className={s.title}>
+              Передача показаний счетчиков
+            </div>
+          </div>
         </div>
       </div>
     </main>

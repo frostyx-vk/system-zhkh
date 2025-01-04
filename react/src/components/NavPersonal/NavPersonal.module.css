@@ -21,14 +21,23 @@
     color: white;
     font-weight: 600;
 }
+
+.navActive:hover {
+    background-color: #90C084 !important;
+    color: white !important;
+    font-weight: 600;
+}
+
 .navActive svg {
     color: white !important;
 }
 
-.navPers a:first-child:hover, .navActive:first-child {
+.navPers a:first-child:hover,
+.navActive:first-child {
     border-radius: 20px 20px 0 0px;
 }
 
-.navPers a:last-child:hover, .navActive:last-child {
+.navPers a:last-child:hover,
+.navActive:last-child {
     border-radius: 0 0 20px 20px;
 }
