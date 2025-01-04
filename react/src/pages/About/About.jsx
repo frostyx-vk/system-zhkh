@@ -1,16 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import s from './About.module.css'
-import {
-    aboutPortalList,
-    contactList
-} from '../../api'
+import { useNavigate } from 'react-router-dom';
 
 function About() {
+    const [about, setAbout] = useState([]);
+
+    let navigator = useNavigate();
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/web/about-portal/')
+            .then(res => setAbout(res.data))
+            .catch(err => {
+                if (err.response) {
+                    console.log('Отсутствует ответ')
+                    navigator('/404')
+                } else if (err.request) {
+                    console.log('Ошибка запроса')
+                } else {
+                    console.log('Другая ошибка')
+                }
+            });
+    }, [])
 
     return (
         <main className='content'>
             <div className='wrapper'>{
-                aboutPortalList.map((item, i) => {
+                about.map((item, i) => {
                     return <div key={i}>
                         <h1 className={s.title}>{item.title}</h1>
                         <p className={s.description}>{item.description}</p>
@@ -22,15 +38,6 @@ function About() {
                     </div>
                 })
             }
-                {/* {
-                    contactList.map((item, i) => {
-                        return <div>
-                            <p>{item.name}</p>
-                            <p>{item.phone}</p>
-                            <p>{item.email}</p>
-                        </div>
-                    })
-                } */}
             </div>
         </main>
     )
