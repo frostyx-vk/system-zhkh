@@ -6,6 +6,7 @@ import { IoPersonOutline } from "react-icons/io5";
 import { PiNotePencilThin } from "react-icons/pi";
 import { CiViewList } from "react-icons/ci";
 import { CiWallet } from "react-icons/ci";
+import { IoDocumentsOutline } from "react-icons/io5";
 
 
 
@@ -30,6 +31,9 @@ export default function NavPersonal() {
                 </NavLink>
                 <NavLink to='/payments' className={setActive}>
                     <CiWallet style={{ color: 'green' }} />Платежи
+                </NavLink>
+                <NavLink to='/documents' className={setActive}>
+                    <IoDocumentsOutline style={{ color: '#d07575' }} />Документы от УК
                 </NavLink>
             </ul>
         </div>
