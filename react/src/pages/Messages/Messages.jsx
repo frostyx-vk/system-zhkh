@@ -6,8 +6,9 @@ import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import { Textarea } from '@chakra-ui/react'
 import { io } from 'socket.io-client';
 
+const socket = io('http://localhost:8005');
+
 function Messages() {
-  const socket = io('http://localhost:8005');
 
   const [socketID, setSocketID] = useState('');
   const [currentMessage, setCurrentMessage] = useState('');
@@ -33,6 +34,7 @@ function Messages() {
     });
 
     socket.on('message', (data) => {
+      console.log(data)
       setMessageList((list) => [...list, data]);
     });
 
