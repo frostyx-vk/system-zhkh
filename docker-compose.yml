@@ -57,6 +57,16 @@ services:
     env_file:
       - ./django/zhkh_service/.env
 
+
+  poutiuvbm:
+    container_name: sdfgdfytu
+    restart: always
+    build:
+      context: .
+      dockerfile: ./django/zhkh_service/docker_chat/Dockerfile
+#    command: ./.venv/bin/activate && uvicorn --port 8005 zhkh_service.asgi:application
+
+
 volumes:
   static_volume:
   media_volume:

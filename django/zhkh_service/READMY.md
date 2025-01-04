@@ -1,17 +1,17 @@
 ## Подготовка к запуску
 
 ```sh
-docker-compose build
+docker_chat-compose build
 ```
 
 ## Запуск
 
 ```sh
-docker-compose up
+docker_chat-compose up
 ```
 
 ### Применение миграций
 
 ```sh
-docker-compose run --rm web python manage.py migrate
+docker_chat-compose run --rm web python manage.py migrate
 ```
