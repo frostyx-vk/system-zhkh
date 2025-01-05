@@ -1,10 +1,8 @@
 import socketio
 
-mgr = socketio.RedisManager('redis://')
 sio = socketio.AsyncServer(
-    async_mode="asgi", client_manager=mgr, cors_allowed_origins="*"
+    async_mode="asgi",cors_allowed_origins="*"
 )
-
 
 @sio.event
 async def connect(sid, environ):
