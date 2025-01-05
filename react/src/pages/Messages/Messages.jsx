@@ -23,9 +23,12 @@ function Messages() {
       .then(response => {
         if (response.data.chats) {
           setIsAdmin(true);
+          console.log(JSON.parse(response.data.chats))
+          // setMessageList(response.data.data.messages);
         } else {
           setIsAdmin(false);
           setChatId(response.data.data.short_id);
+          setMessageList(response.data.data.messages);
         }
         // console.log(JSON.parse(response.data.chats))
         // setChatId(response.data.data.short_id);
@@ -61,6 +64,8 @@ function Messages() {
     };
   }, [socket]);
 
+  console.log(messageList)
+
   return (
     <main className={s.content}>
       <div className='wrapper'>
@@ -75,18 +80,27 @@ function Messages() {
             <div className={s.container}>
               <div className={s.msgContainerWrapper}>
                 {
-                  isAdmin ? <div className={s.messageContainer}>
-                    <p>Сообщения администратора</p>
-                    {messageList.map((msg, i) => {
-                      return (
-                        <div key={i} className={`${s.message} ${msg.sender_id === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
-                          {msg.text}
-                        </div>
-                      );
-                    })}
-                  </div> :
+                  isAdmin ?
+                    <div className={s.messageAdminBlock}>
+                      <div className={s.messageUsers}>
+                        <ul>
+                          <li>Users 1</li>
+                          <li>Users 2</li>
+                          <li>Users 3</li>
+                        </ul>
+                      </div>
+                      <div className={s.messageContainer}>
+                        {messageList.map((msg, i) => {
+                          return (
+                            <div key={i} className={`${s.message} ${msg.sender_id === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
+                              {msg.text}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    :
                     <div className={s.messageContainer}>
-                      <p>Сообщения пользователя</p>
                       {messageList.map((msg, i) => {
                         return (
                           <div key={i} className={`${s.message} ${msg.sender_id === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
