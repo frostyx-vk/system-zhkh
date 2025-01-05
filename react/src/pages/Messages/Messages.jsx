@@ -24,9 +24,9 @@ function Messages() {
         if (response.data.chats) {
           setIsAdmin(true);
         } else {
-          setIsAdmin(false)
+          setIsAdmin(false);
+          setChatId(response.data.data.short_id);
         }
-        console.log(response.data)
         // console.log(JSON.parse(response.data.chats))
         // setChatId(response.data.data.short_id);
       })
@@ -69,6 +69,9 @@ function Messages() {
             <NavPersonal />
           </div>
           <div className='personalContent' style={{ color: 'black' }}>
+            <div className={s.title}>
+              {isAdmin ? 'Сообщения Администратора' : 'Сообщения пользователя'}
+            </div>
             <div className={s.container}>
               <div className={s.msgContainerWrapper}>
                 {
