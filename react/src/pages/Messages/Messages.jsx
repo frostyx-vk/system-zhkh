@@ -11,6 +11,8 @@ const socket = io('http://localhost:8005');
 
 function Messages() {
 
+  const [isAdmin, setIsAdmin] = useState(null);
+
   const [chatId, setChatId] = useState('');
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
@@ -19,8 +21,13 @@ function Messages() {
     axios.get('http://localhost:8000/communication/get-chat/',
       { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
       .then(response => {
+        if (response.data.chats) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false)
+        }
         console.log(response.data)
-        console.log(JSON.parse(response.data.chats))
+        // console.log(JSON.parse(response.data.chats))
         // setChatId(response.data.data.short_id);
       })
       .catch((err) => {
@@ -64,16 +71,28 @@ function Messages() {
           <div className='personalContent' style={{ color: 'black' }}>
             <div className={s.container}>
               <div className={s.msgContainerWrapper}>
-                <div className={s.messageContainer}>
-                  {messageList.map((msg, i) => {
-                    return (
-                      <div key={i} className={`${s.message} ${msg.sender_id === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
-                        {msg.text}
-                      </div>
-                    );
-                  })}
-                </div>
-
+                {
+                  isAdmin ? <div className={s.messageContainer}>
+                    <p>Сообщения администратора</p>
+                    {messageList.map((msg, i) => {
+                      return (
+                        <div key={i} className={`${s.message} ${msg.sender_id === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
+                          {msg.text}
+                        </div>
+                      );
+                    })}
+                  </div> :
+                    <div className={s.messageContainer}>
+                      <p>Сообщения пользователя</p>
+                      {messageList.map((msg, i) => {
+                        return (
+                          <div key={i} className={`${s.message} ${msg.sender_id === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
+                            {msg.text}
+                          </div>
+                        );
+                      })}
+                    </div>
+                }
                 <div className={s.inputContainer}>
                   <Textarea
                     value={currentMessage}
