@@ -10,17 +10,15 @@ const socket = io('http://localhost:8005');
 
 function Messages() {
 
-  const [socketID, setSocketID] = useState('');
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
       const messageData = {
-        sender: socketID,
+        sender: localStorage.accessToken,
         message: currentMessage,
       };
-
       await socket.emit('message', messageData);
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage('');
@@ -28,13 +26,7 @@ function Messages() {
   };
 
   useEffect(() => {
-    socket.on('socket_id', (id) => {
-      setSocketID(id);
-      console.log(id)
-    });
-
     socket.on('message', (data) => {
-      console.log(data)
       setMessageList((list) => [...list, data]);
     });
 
@@ -76,7 +68,7 @@ function Messages() {
                 <div className={s.messageContainer}>
                   {messageList.map((msg, i) => {
                     return (
-                      <div key={i} className={`${s.message} ${msg.sender === socketID ? s.myMsg : s.otherMsg}`}>
+                      <div key={i} className={`${s.message} ${msg.sender === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
                         {msg.message}
                       </div>
                     );

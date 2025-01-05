@@ -11,7 +11,11 @@ function Payments() {
           <div className='personalNav'>
             <NavPersonal />
           </div>
-          <div className='personalContent'></div>
+          <div className='personalContent'>
+            <div className={s.title}>
+              Платежи за выбранный период
+            </div>
+          </div>
         </div>
       </div>
     </main>

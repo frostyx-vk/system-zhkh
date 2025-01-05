@@ -1,8 +1,8 @@
 import React from 'react'
-import s from './Salesinvoice.module.css'
+import s from './Invoice.module.css'
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 
-function Salesinvoice() {
+function Invoice() {
 
   return (
     <main className={s.content}>
@@ -11,11 +11,15 @@ function Salesinvoice() {
           <div className='personalNav'>
             <NavPersonal />
           </div>
-          <div className='personalContent'></div>
+          <div className='personalContent'>
+            <div className={s.title}>
+              Платежные документы
+            </div>
+          </div>
         </div>
       </div>
     </main>
   )
 }
 
-export default Salesinvoice
+export default Invoice
