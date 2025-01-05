@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import s from './Messages.module.css'
+import axios from 'axios';
 
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 
@@ -10,15 +11,32 @@ const socket = io('http://localhost:8005');
 
 function Messages() {
 
+  const [chatId, setChatId] = useState('');
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/communication/get-chat/',
+      { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
+      .then(response => {
+        console.log(response.data)
+        console.log(JSON.parse(response.data.chats))
+        // setChatId(response.data.data.short_id);
+      })
+      .catch((err) => {
+        console.log(err)
+        // toast.error("Ошибка! Информация отсутствует.")
+      });
+  }, [])
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
       const messageData = {
-        sender: localStorage.accessToken,
-        message: currentMessage,
+        chat_id: chatId,
+        sender_id: localStorage.accessToken,
+        text: currentMessage,
       };
+
       await socket.emit('message', messageData);
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage('');
@@ -36,25 +54,6 @@ function Messages() {
     };
   }, [socket]);
 
-  // useEffect(() => {
-  //   socket.on('message', function (data) {
-  //     const msgContainer = document.querySelector('#message_container');
-  //     const chatItem = document.createElement('li');
-  //     chatItem.innerText = data;
-  //     msgContainer.appendChild(chatItem);
-  //   });
-  // }, [])
-
-  // function sendMessage() {
-  //   socket.emit('message', message);
-  //   const msgContainer = document.querySelector('#message_container');
-  //   const chatItem = document.createElement('li');
-  //   chatItem.innerText = 'Вы: ' + message;
-  //   chatItem.style.color = 'black'
-  //   msgContainer.appendChild(chatItem);
-  //   setMessage('');
-  // }
-
   return (
     <main className={s.content}>
       <div className='wrapper'>
@@ -68,8 +67,8 @@ function Messages() {
                 <div className={s.messageContainer}>
                   {messageList.map((msg, i) => {
                     return (
-                      <div key={i} className={`${s.message} ${msg.sender === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
-                        {msg.message}
+                      <div key={i} className={`${s.message} ${msg.sender_id === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
+                        {msg.text}
                       </div>
                     );
                   })}
