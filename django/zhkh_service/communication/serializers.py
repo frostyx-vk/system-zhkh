@@ -15,11 +15,10 @@ class MessageProblemSerializer(ModelSerializer):
 class MessageSerializer(ModelSerializer):
     class Meta:
         model = ChatMessage
-        exclude = ("chat",)
+        fields = '__all__'
 
 
 class ChatSerializer(ModelSerializer):
-    messages = MessageSerializer(many=True, read_only=True)
     class Meta:
         model = Chat
-        fields = ["messages", "short_id"]
+        fields = ('short_id',)

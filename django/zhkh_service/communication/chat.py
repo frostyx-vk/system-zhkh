@@ -1,20 +1,50 @@
-import socketio
+import json
 
-sio = socketio.AsyncServer(
-    async_mode="asgi",cors_allowed_origins="*"
-)
+import socketio
+from asgiref.sync import sync_to_async
+from django.shortcuts import get_object_or_404
+
+
+
+sio = socketio.AsyncServer(async_mode="asgi",cors_allowed_origins="*")
 
 @sio.event
-async def connect(sid, environ):
-    print(f'Клиент - {sid} подключен к общей комнате')
-    await  sio.enter_room(sid, 'common_room')
+async def connect(sid, environ, auth):
+    if auth:
+        chat_id = auth['chat_id']
+        print("SocketIO connect")
+        await sio.enter_room(sid, chat_id)
+    else:
+        raise ConnectionRefusedError("No auth")
 
 @sio.event
 async def disconnect(sid):
     print(f'Клиент - {sid} покинул комнату')
     await sio.leave_room(sid, 'common_room')
 
-@sio.event
-async def message(sid, data):
-    print(f'Получено новое сообщение от {sid}: {data}')
-    await sio.emit('message', data=data, room='common_room', skip_sid=sid)
+
+def create_message_message(data):
+    from accounts.models import User
+    from communication.models import Chat, ChatMessage
+    from communication.serializers import MessageSerializer
+
+    data = json.loads(data)
+    sender_id = data["sender_id"]
+    chat_id = data["chat_id"]
+    text = data["text"]
+    sender = get_object_or_404(User, pk=sender_id)
+    chat = get_object_or_404(Chat, short_id=chat_id)
+
+    instance = ChatMessage.objects.create(sender=sender, chat=chat, text=text)
+    instance.save()
+
+    message = MessageSerializer(instance).data
+    message["chat"] = chat_id
+    message["sender"] = str(message["sender"])
+    return message
+
+
+@sio.on('message')
+async def print_message(sid, data):
+    message = await sync_to_async(create_message_message, thread_sensitive=True)(data)
+    await sio.emit("message", message, room=message["chat"])
