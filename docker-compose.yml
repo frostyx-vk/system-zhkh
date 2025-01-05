@@ -47,26 +47,6 @@ services:
     expose:
       - 3001
 
-  redis:
-    image: redis:latest
-    restart: always
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./redisdata:/data
-    env_file:
-      - ./django/zhkh_service/.env
-
-
-  poutiuvbm:
-    container_name: sdfgdfytu
-    restart: always
-    build:
-      context: .
-      dockerfile: ./django/zhkh_service/docker_chat/Dockerfile
-#    command: ./.venv/bin/activate && uvicorn --port 8005 zhkh_service.asgi:application
-
-
 volumes:
   static_volume:
   media_volume:

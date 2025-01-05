@@ -10,15 +10,11 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/asgi/
 import os
 
 import socketio
-from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
 from django.core.asgi import get_asgi_application
 
 from communication.chat import sio
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zhkh_service.settings')
 
-# application = ASGIStaticFilesHandler(
-#     get_asgi_application()
-# )
 application = get_asgi_application()
-# application = socketio.ASGIApp(sio, application)
+application = socketio.ASGIApp(sio, application)
