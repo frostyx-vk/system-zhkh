@@ -22,7 +22,6 @@ services:
       - ./django/zhkh_service:/zhkh_service
     depends_on:
       - db
-      - redis
     ports:
       - "8000:8000"
     expose:
