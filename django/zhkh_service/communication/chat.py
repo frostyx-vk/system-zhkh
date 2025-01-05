@@ -3,7 +3,7 @@ import json
 import socketio
 from asgiref.sync import sync_to_async
 from django.shortcuts import get_object_or_404
-
+from rest_framework.authtoken.models import Token
 
 
 sio = socketio.AsyncServer(async_mode="asgi",cors_allowed_origins="*")
@@ -29,10 +29,16 @@ def create_message_message(data):
     from communication.serializers import MessageSerializer
 
     data = json.loads(data)
-    sender_id = data["sender_id"]
+    sender_token = data["sender_token"]
+
+    token = Token.objects.get(key=sender_token)
+    if not token:
+        raise ConnectionRefusedError("No token")
+
+    user = token.user.pk
     chat_id = data["chat_id"]
     text = data["text"]
-    sender = get_object_or_404(User, pk=sender_id)
+    sender = get_object_or_404(User, pk=user.pk)
     chat = get_object_or_404(Chat, short_id=chat_id)
 
     instance = ChatMessage.objects.create(sender=sender, chat=chat, text=text)

@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListAPIView
@@ -24,10 +25,14 @@ class GetChatAPIView(GenericAPIView):
     serializer_class = ChatSerializer
 
     def get(self, request):
-        recipient = User.objects.filter(is_staff=True).first()
-        chat, created = Chat.objects.get_or_create(owner=request.user, recipient=recipient)
-        serializer = self.serializer_class(instance=chat)
-        return Response({"message": "Chat gotten", "data": serializer.data}, status=status.HTTP_200_OK)
+        if request.user.is_staff:
+            chats = Chat.objects.filter(recipient=request.user)
+            return JsonResponse({'chats': serializers.serialize('json', chats)})
+        else:
+            recipient = User.objects.filter(is_staff=True).first()
+            chat, created = Chat.objects.get_or_create(owner=request.user, recipient=recipient)
+            serializer = self.serializer_class(instance=chat)
+            return Response({"message": "Chat gotten", "data": serializer.data}, status=status.HTTP_200_OK)
 
 
 class CreateChatMessageAPIView(APIView):

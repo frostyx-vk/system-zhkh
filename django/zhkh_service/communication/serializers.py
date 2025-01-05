@@ -19,6 +19,7 @@ class MessageSerializer(ModelSerializer):
 
 
 class ChatSerializer(ModelSerializer):
+    messages = MessageSerializer(many=True, read_only=True)
     class Meta:
         model = Chat
-        fields = ('short_id',)
+        fields = ["messages", "short_id"]
