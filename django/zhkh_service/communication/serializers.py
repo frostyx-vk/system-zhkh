@@ -24,8 +24,9 @@ class MessageSerializer(ModelSerializer):
     def get_token(self, obj):
         from rest_framework.authtoken.models import Token
         token = Token.objects.filter(user=obj.sender).first()
-        return token.key
-
+        if token:
+            return token.key
+        return ''
 
 class ChatSerializer(ModelSerializer):
     messages = MessageSerializer(many=True, read_only=True)
