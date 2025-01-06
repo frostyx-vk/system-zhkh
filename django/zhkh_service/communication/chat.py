@@ -3,7 +3,6 @@ import json
 import socketio
 from asgiref.sync import sync_to_async
 from django.shortcuts import get_object_or_404
-from rest_framework.authtoken.models import Token
 
 
 sio = socketio.AsyncServer(async_mode="asgi",cors_allowed_origins="*")
@@ -27,6 +26,7 @@ def create_message_message(data):
     from accounts.models import User
     from communication.models import Chat, ChatMessage
     from communication.serializers import MessageSerializer
+    from rest_framework.authtoken.models import Token
 
     data = json.loads(data)
     sender_token = data["sender_token"]
