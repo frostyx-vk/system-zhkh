@@ -14,19 +14,23 @@ class MessageProblemSerializer(ModelSerializer):
 
 
 class MessageSerializer(ModelSerializer):
+    token = SerializerMethodField()
+
     class Meta:
         model = ChatMessage
-        fields = '__all__'
+        fields = ('chat', 'sender', 'text', 'created_at', 'status', 'token')
 
-
-class ChatSerializer(ModelSerializer):
-    messages = MessageSerializer(many=True, read_only=True)
-    token = SerializerMethodField()
-    class Meta:
-        model = Chat
-        fields = ['messages', 'short_id', 'token']
 
     def get_token(self, obj):
         from rest_framework.authtoken.models import Token
         token = Token.objects.filter(user=obj.sender).first()
         return token.key
+
+
+class ChatSerializer(ModelSerializer):
+    messages = MessageSerializer(many=True, read_only=True)
+    class Meta:
+        model = Chat
+        fields = ['messages', 'short_id']
+
+
