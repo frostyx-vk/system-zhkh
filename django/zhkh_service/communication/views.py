@@ -61,5 +61,5 @@ class GetMessagesAPIView(ListAPIView):
     def get_queryset(self):
         chat_id = self.request.GET.get('chat_id')
         if chat_id:
-            return ChatMessage.objects.filter(chat_id=chat_id).order_by('-id')
+            return ChatMessage.objects.filter(chat_id=chat_id).order_by('-created_at')
         return ChatMessage.objects.none()
