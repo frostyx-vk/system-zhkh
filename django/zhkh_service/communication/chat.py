@@ -28,7 +28,6 @@ def create_message_message(data):
     from communication.serializers import MessageSerializer
     from rest_framework.authtoken.models import Token
 
-    data = json.loads(data)
     sender_token = data["sender_token"]
 
     token = Token.objects.get(key=sender_token)
