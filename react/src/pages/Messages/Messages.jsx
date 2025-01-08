@@ -7,7 +7,7 @@ import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import { Textarea } from '@chakra-ui/react'
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:8005');
+// const socket = io('http://localhost:8005', { auth: { 'chat_id': '62059f9f-c314-41ef-98a2-6fb0ed4b0258' } });
 
 function Messages() {
 
@@ -17,15 +17,18 @@ function Messages() {
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
+  const [socket, setSocket] = useState(null);
+
   useEffect(() => {
     axios.get('http://localhost:8000/communication/get-chat/',
       { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
       .then(response => {
         if (response.data.chats) {
           setIsAdmin(true);
-          console.log(JSON.parse(response.data.chats))
+          // console.log(JSON.parse(response.data.chats))
           // setMessageList(response.data.data.messages);
         } else {
+          console.log(response.data)
           setIsAdmin(false);
           setChatId(response.data.data.short_id);
           setMessageList(response.data.data.messages);
@@ -38,6 +41,22 @@ function Messages() {
         // toast.error("Ошибка! Информация отсутствует.")
       });
   }, [])
+
+  console.log(chatId)
+
+  useEffect(() => {
+    const socketInstance = io('http://localhost:8005', { auth: { 'chat_id': chatId } });
+    setSocket(socketInstance);
+
+    socketInstance.on('message', (data) => {
+      setMessageList((list) => [...list, data]);
+    });
+
+    return () => {
+      socketInstance.off('message');
+      socketInstance.disconnect()
+    };
+  }, [chatId]);
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
@@ -53,18 +72,7 @@ function Messages() {
     }
   };
 
-  useEffect(() => {
-    socket.on('message', (data) => {
-      setMessageList((list) => [...list, data]);
-    });
-
-    return () => {
-      socket.off('socket_id');
-      socket.off('message');
-    };
-  }, [socket]);
-
-  console.log(messageList)
+  console.log(socket)
 
   return (
     <main className={s.content}>
@@ -76,6 +84,7 @@ function Messages() {
           <div className='personalContent' style={{ color: 'black' }}>
             <div className={s.title}>
               {isAdmin ? 'Сообщения Администратора' : 'Сообщения пользователя'}
+              {/* {socket.connected !== null ? 'Онлайн' : 'Оффлайн'} */}
             </div>
             <div className={s.container}>
               <div className={s.msgContainerWrapper}>
