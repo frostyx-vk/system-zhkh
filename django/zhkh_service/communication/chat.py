@@ -9,7 +9,6 @@ sio = socketio.AsyncServer(async_mode="asgi",cors_allowed_origins="*")
 
 @sio.event
 async def connect(sid, environ, auth):
-    print(auth, '++++++++++++++++++++++++')
     if auth:
         chat_id = auth['chat_id']
         print("SocketIO connect")

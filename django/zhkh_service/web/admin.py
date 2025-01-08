@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from web.models import AboutPortal, Contact, DataDeveloper, News, Service
+from web.models import AboutPortal, Contact, DataDeveloper, News, Service, Documents
 
 
 @admin.register(News)
@@ -28,3 +28,8 @@ class AboutPortalAdmin(admin.ModelAdmin):
 @admin.register(DataDeveloper)
 class DataDeveloperAdmin(admin.ModelAdmin):
     list_display = ('text',)
+
+
+@admin.register(Documents)
+class DocumentsAdmin(admin.ModelAdmin):
+    list_display = ('title',)

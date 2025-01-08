@@ -76,3 +76,16 @@ class DataDeveloper(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class Documents(models.Model):
+    title = models.CharField(verbose_name='Название', max_length=100)
+    description = models.TextField(verbose_name='Описание', blank=True)
+    file = models.FileField(verbose_name='Документ', upload_to='documents/')
+
+    class Meta:
+        verbose_name = 'Документ'
+        verbose_name_plural = 'Документы'
+
+    def __str__(self):
+        return self.title

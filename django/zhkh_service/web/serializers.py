@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from web.models import AboutPortal, Contact, News, Service, DataDeveloper
+from web.models import AboutPortal, Contact, News, Service, DataDeveloper, Documents
 
 
 class NewsSerializer(ModelSerializer):
@@ -31,3 +31,9 @@ class DataDeveloperSerializer(ModelSerializer):
     class Meta:
         model = DataDeveloper
         fields = ('text', )
+
+
+class DocumentsSerializer(ModelSerializer):
+    class Meta:
+        model = Documents
+        fields = ('title', 'file')
