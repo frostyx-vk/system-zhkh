@@ -16,7 +16,9 @@ function Messages() {
   const [chatId, setChatId] = useState('');
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
+  const [usersList, setUsersList] = useState([]);
 
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -25,6 +27,7 @@ function Messages() {
       .then(response => {
         if (response.data.chats) {
           setIsAdmin(true);
+          setUsersList(response.data.chats)
           // console.log(JSON.parse(response.data.chats))
           // setMessageList(response.data.data.messages);
         } else {
@@ -69,6 +72,11 @@ function Messages() {
     }
   };
 
+  function handlerUser(short_id, index) {
+    setChatId(short_id);
+    setSelectedIndex(index);
+  };
+
   return (
     <main className={s.content}>
       <div className='wrapper'>
@@ -79,7 +87,6 @@ function Messages() {
           <div className='personalContent' style={{ color: 'black' }}>
             <div className={s.title}>
               {isAdmin ? 'Сообщения Администратора' : 'Сообщения пользователя'}
-              {/* {socket.connected !== null ? 'Онлайн' : 'Оффлайн'} */}
             </div>
             <div className={s.container}>
               <div className={s.msgContainerWrapper}>
@@ -88,15 +95,17 @@ function Messages() {
                     <div className={s.messageAdminBlock}>
                       <div className={s.messageUsers}>
                         <ul>
-                          <li>Users 1</li>
-                          <li>Users 2</li>
-                          <li>Users 3</li>
+                          {
+                            usersList.map((user, i) => {
+                              return <li onClick={() => handlerUser(user.short_id, i)} key={i} style={{background: selectedIndex === i ? 'lightblue' : 'transparent'}}>{user.owner}</li>
+                            })
+                          }
                         </ul>
                       </div>
                       <div className={s.messageContainer}>
                         {messageList.map((msg, i) => {
                           return (
-                            <div key={i} className={`${s.message} ${msg.sender_id === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
+                            <div key={i} className={`${s.message} ${msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
                               {msg.text}
                             </div>
                           );

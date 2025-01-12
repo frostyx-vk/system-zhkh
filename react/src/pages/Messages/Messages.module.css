@@ -13,6 +13,7 @@
 
 .inputContainer {
   display: flex;
+  padding-top: 10px;
 }
 
 .inputContainer textarea {
@@ -92,7 +93,7 @@ input {
 
 .messageAdminBlock {
   display: flex;
-  gap: 20px;
+  gap: 6px;
   overflow: auto;
   height: 100%;
 }
@@ -103,9 +104,8 @@ input {
 
 .messageUsers ul {
   height: 100%;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: end; */
+  border-right: 1px solid #e0e0e0;
+  padding-right: 2px;
 }
 
 .messageUsers ul li {
@@ -113,7 +113,12 @@ input {
   cursor: pointer;
   width: fit-content;
   font-weight: 600;
-  background: beige;
+  border: 1px solid #e0e0e0;
+  /* background: beige; */
   margin-bottom: 6px;
   border-radius: 12px;
+}
+
+.liActive {
+  background: green;
 }
