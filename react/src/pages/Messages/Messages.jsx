@@ -28,7 +28,6 @@ function Messages() {
           // console.log(JSON.parse(response.data.chats))
           // setMessageList(response.data.data.messages);
         } else {
-          console.log(response.data)
           setIsAdmin(false);
           setChatId(response.data.data.short_id);
           setMessageList(response.data.data.messages);
@@ -41,8 +40,6 @@ function Messages() {
         // toast.error("Ошибка! Информация отсутствует.")
       });
   }, [])
-
-  console.log(chatId)
 
   useEffect(() => {
     const socketInstance = io('http://localhost:8005', { auth: { 'chat_id': chatId } });
@@ -62,7 +59,7 @@ function Messages() {
     if (currentMessage !== '') {
       const messageData = {
         chat_id: chatId,
-        sender_id: localStorage.accessToken,
+        token: localStorage.accessToken, // ключом ранее был sender_id, на бэке нужно будет поменять
         text: currentMessage,
       };
 
@@ -71,8 +68,6 @@ function Messages() {
       setCurrentMessage('');
     }
   };
-
-  console.log(socket)
 
   return (
     <main className={s.content}>
@@ -112,7 +107,7 @@ function Messages() {
                     <div className={s.messageContainer}>
                       {messageList.map((msg, i) => {
                         return (
-                          <div key={i} className={`${s.message} ${msg.sender_id === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
+                          <div key={i} className={`${s.message} ${msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
                             {msg.text}
                           </div>
                         );
