@@ -15,10 +15,11 @@ class MessageProblemSerializer(ModelSerializer):
 
 class MessageSerializer(ModelSerializer):
     token = SerializerMethodField()
+    sender_fullname = SerializerMethodField()
 
     class Meta:
         model = ChatMessage
-        fields = ('chat', 'sender', 'text', 'created_at', 'status', 'token')
+        fields = ('chat', 'sender', 'sender_fullname', 'text', 'created_at', 'status', 'token')
 
 
     def get_token(self, obj):
@@ -28,10 +29,21 @@ class MessageSerializer(ModelSerializer):
             return token.key
         return ''
 
+    def get_sender_fullname(self, obj):
+        return f'{obj.sender.first_name} {obj.sender.last_name}'
+
 class ChatSerializer(ModelSerializer):
     messages = MessageSerializer(many=True, read_only=True)
+    owner = SerializerMethodField()
+    recipient = SerializerMethodField()
     class Meta:
         model = Chat
-        fields = ['messages', 'short_id']
+        fields = ['messages', 'short_id', 'owner', 'recipient']
+
+    def get_owner(self, obj):
+        return f'{obj.owner.first_name} {obj.owner.last_name}'
+
+    def get_recipient(self, obj):
+        return f'{obj.recipient.first_name} {obj.recipient.last_name}'
 
 
