@@ -72,8 +72,16 @@ function Messages() {
     }
   };
 
-  function handlerUser(short_id, index) {
-    setChatId(short_id);
+  function sendFromKeyboard(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      sendMessage(currentMessage)
+    } else return;
+  };
+
+  function handlerUser(user, index) {
+    setChatId(user.short_id);
+    setMessageList(user.messages);
     setSelectedIndex(index);
   };
 
@@ -97,7 +105,12 @@ function Messages() {
                         <ul>
                           {
                             usersList.map((user, i) => {
-                              return <li onClick={() => handlerUser(user.short_id, i)} key={i} style={{background: selectedIndex === i ? 'lightblue' : 'transparent'}}>{user.owner}</li>
+                              return <li
+                                onClick={() => handlerUser(user, i)}
+                                key={i}
+                                style={{ background: selectedIndex === i ? 'lightblue' : 'transparent' }}>
+                                {user.owner}
+                              </li>
                             })
                           }
                         </ul>
@@ -128,6 +141,7 @@ function Messages() {
                     value={currentMessage}
                     id='msg_input'
                     onChange={(e) => setCurrentMessage(e.target.value)}
+                    onKeyDown={(e) => sendFromKeyboard(e)}
                     placeholder='Введите сообщение'
                     size='md'
                     type='text'
