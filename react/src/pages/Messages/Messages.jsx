@@ -62,7 +62,7 @@ function Messages() {
     if (currentMessage !== '') {
       const messageData = {
         chat_id: chatId,
-        token: localStorage.accessToken, // ключом ранее был sender_id, на бэке нужно будет поменять
+        sender_token: localStorage.accessToken, // ключом ранее был sender_id, на бэке нужно будет поменять
         text: currentMessage,
       };
 
@@ -117,6 +117,7 @@ function Messages() {
                       </div>
                       <div className={s.messageContainer}>
                         {messageList.map((msg, i) => {
+                          console.log(msg)
                           return (
                             <div key={i} className={`${s.message} ${msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
                               {msg.text}
