@@ -34,12 +34,11 @@ def create_message_message(data):
     if not token:
         raise ConnectionRefusedError("No token")
 
-    user = token.user.pk
+    user_pk = token.user.pk
     chat_id = data["chat_id"]
     text = data["text"]
-    sender = get_object_or_404(User, pk=user.pk)
+    sender = get_object_or_404(User, pk=user_pk)
     chat = get_object_or_404(Chat, short_id=chat_id)
-
     instance = ChatMessage.objects.create(sender=sender, chat=chat, text=text)
     instance.save()
 
