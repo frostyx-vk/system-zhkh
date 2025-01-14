@@ -21,27 +21,27 @@ function Messages() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [socket, setSocket] = useState(null);
 
-  useEffect(() => {
+  function getMessages() {
     axios.get('http://localhost:8000/communication/get-chat/',
       { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
       .then(response => {
         if (response.data.chats) {
           setIsAdmin(true);
           setUsersList(response.data.chats)
-          // console.log(JSON.parse(response.data.chats))
-          // setMessageList(response.data.data.messages);
         } else {
           setIsAdmin(false);
           setChatId(response.data.data.short_id);
           setMessageList(response.data.data.messages);
         }
-        // console.log(JSON.parse(response.data.chats))
-        // setChatId(response.data.data.short_id);
       })
       .catch((err) => {
         console.log(err)
         // toast.error("Ошибка! Информация отсутствует.")
       });
+  }
+
+  useEffect(() => {
+    getMessages()
   }, [])
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function Messages() {
     if (currentMessage !== '') {
       const messageData = {
         chat_id: chatId,
-        sender_token: localStorage.accessToken, // ключом ранее был sender_id, а потом вообще token, поэтому на бэке нужно будет поменять
+        sender_token: localStorage.accessToken,
         text: currentMessage,
       };
 
@@ -83,6 +83,7 @@ function Messages() {
     setChatId(user.short_id);
     setMessageList(user.messages);
     setSelectedIndex(index);
+    getMessages()
   };
 
   return (
@@ -118,7 +119,7 @@ function Messages() {
                       <div className={s.messageContainer}>
                         {messageList.map((msg, i) => {
                           return (
-                            <div key={i} className={`${s.message} ${msg.sender_token || msg.token  === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
+                            <div key={i} className={`${s.message} ${msg.sender_token || msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
                               {msg.text}
                             </div>
                           );
