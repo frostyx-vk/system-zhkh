@@ -1,11 +1,13 @@
-import json
-
 import socketio
 from asgiref.sync import sync_to_async
 from django.shortcuts import get_object_or_404
 
 
-sio = socketio.AsyncServer(async_mode="asgi",cors_allowed_origins="*")
+static_files = {
+    '/static': './public/static',
+}
+
+sio = socketio.AsyncServer(async_mode="asgi",cors_allowed_origins="*", static_files=static_files)
 
 @sio.event
 async def connect(sid, environ, auth):

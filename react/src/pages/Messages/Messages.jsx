@@ -45,7 +45,7 @@ function Messages() {
   }, [])
 
   useEffect(() => {
-    const socketInstance = io('http://localhost:8005', { auth: { 'chat_id': chatId } });
+    const socketInstance = io('http://localhost:8000', { auth: { 'chat_id': chatId } });
     setSocket(socketInstance);
 
     socketInstance.on('message', (data) => {
