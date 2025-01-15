@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import s from './Messages.module.css'
 import axios from 'axios';
 
@@ -21,6 +21,8 @@ function Messages() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [socket, setSocket] = useState(null);
 
+  const endMessage = useRef(null);
+
   function getMessages() {
     axios.get('http://localhost:8000/communication/get-chat/',
       { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
@@ -41,7 +43,7 @@ function Messages() {
   }
 
   useEffect(() => {
-    getMessages()
+    getMessages();
   }, [])
 
   useEffect(() => {
@@ -57,6 +59,12 @@ function Messages() {
       socketInstance.disconnect()
     };
   }, [chatId]);
+
+  useEffect(() => {
+    if (endMessage.current) {
+      endMessage.current.scrollTop = endMessage.current.scrollHeight;
+    }
+  }, [messageList]);
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
@@ -83,7 +91,7 @@ function Messages() {
     setChatId(user.short_id);
     setMessageList(user.messages);
     setSelectedIndex(index);
-    getMessages()
+    getMessages();
   };
 
   return (
@@ -116,7 +124,7 @@ function Messages() {
                           }
                         </ul>
                       </div>
-                      <div className={s.messageContainer}>
+                      <div ref={endMessage} className={s.messageContainer}>
                         {messageList.map((msg, i) => {
                           return (
                             <div key={i} className={`${s.message} ${msg.sender_token || msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
@@ -127,7 +135,7 @@ function Messages() {
                       </div>
                     </div>
                     :
-                    <div className={s.messageContainer}>
+                    <div ref={endMessage} className={s.messageContainer}>
                       {messageList.map((msg, i) => {
                         return (
                           <div key={i} className={`${s.message} ${msg.sender_token || msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>

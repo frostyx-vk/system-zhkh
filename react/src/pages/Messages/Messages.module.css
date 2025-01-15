@@ -49,14 +49,14 @@
 }
 
 .otherMsg {
-  text-align: right !important;
+  text-align: left !important;
   margin-right: auto !important;
   background-color: rgb(176, 228, 240);
   width: fit-content;
 }
 
 .myMsg {
-  text-align: left !important;
+  text-align: right !important;
   margin-left: auto !important;
   background-color: rgb(176, 240, 184);
   width: fit-content;
