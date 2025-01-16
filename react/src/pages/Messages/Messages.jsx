@@ -7,8 +7,6 @@ import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import { Textarea } from '@chakra-ui/react'
 import { io } from 'socket.io-client';
 
-// const socket = io('http://localhost:8005', { auth: { 'chat_id': '62059f9f-c314-41ef-98a2-6fb0ed4b0258' } });
-
 function Messages() {
 
   const [isAdmin, setIsAdmin] = useState(null);
