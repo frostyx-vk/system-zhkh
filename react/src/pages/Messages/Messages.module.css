@@ -114,11 +114,23 @@ input {
   width: fit-content;
   font-weight: 600;
   border: 1px solid #e0e0e0;
-  /* background: beige; */
   margin-bottom: 6px;
   border-radius: 12px;
+  text-align: center;
 }
 
 .liActive {
   background: green;
+}
+
+.exchangeBlock {
+  text-align: center;
+  height: 100px;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }

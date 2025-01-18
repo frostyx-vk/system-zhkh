@@ -145,20 +145,25 @@ function Messages() {
                       })}
                     </div>
                 }
-                <div className={s.inputContainer}>
-                  <Textarea
-                    value={currentMessage}
-                    id='msg_input'
-                    onChange={(e) => setCurrentMessage(e.target.value)}
-                    onKeyDown={(e) => sendFromKeyboard(e)}
-                    placeholder='Введите сообщение'
-                    size='md'
-                    type='text'
-                    style={{ color: 'black' }}
-                    required
-                  />
-                  <button className={s.sendBtn} onClick={() => sendMessage(currentMessage)} type='button'>Отправить</button>
-                </div>
+                {
+                  !chatId ?
+                    <p className={s.exchangeBlock}>Выберите пользователя из списка слева</p>
+                    :
+                    <div className={s.inputContainer}>
+                      <Textarea
+                        value={currentMessage}
+                        id='msg_input'
+                        onChange={(e) => setCurrentMessage(e.target.value)}
+                        onKeyDown={(e) => sendFromKeyboard(e)}
+                        placeholder='Введите сообщение'
+                        size='md'
+                        type='text'
+                        style={{ color: 'black' }}
+                        required
+                      />
+                      <button className={s.sendBtn} onClick={() => sendMessage(currentMessage)} type='button'>Отправить</button>
+                    </div>
+                }
               </div>
             </div>
           </div>
