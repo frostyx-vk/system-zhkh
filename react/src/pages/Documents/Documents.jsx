@@ -22,25 +22,6 @@ function Documents() {
       });
   }, [])
 
-  // console.log(documents)
-
-  // useEffect(() => {
-  //   const downloadFile = (documents) => {
-  //     for (const doc of documents) {
-  //       console.log(doc)
-  //       const url = URL.createObjectURL(new Blob([doc.file]), {type: "application/pdf"});
-  //       const link = document.createElement("a");
-  //       link.href = url;
-  //       link.setAttribute("download", doc.title);
-  //       document.body.appendChild(link);
-  //       link.click();
-  //       console.log(link)
-  //     }
-  //   }
-
-  //   downloadFile(documents)
-  // }, [documents])
-
   return (
     <main className={s.content}>
       <div className='wrapper'>
@@ -61,7 +42,7 @@ function Documents() {
                   <ul>
                     {documents.map((document, i) => (
                       <li key={i}>
-                        <a download target="_blank" href={document.file}>
+                        <a target="_blank" href={document.file}>
                           <FaRegFilePdf />
                           {document.title}
                         </a>
