@@ -15,4 +15,5 @@ class MessageAdmin(admin.ModelAdmin):
 
 @admin.register(ChatMessage)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('chat', 'status', 'created_at')
+    list_display = ('status', 'created_at')
+    list_filter = ('status', 'chat')

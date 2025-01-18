@@ -34,6 +34,9 @@ class Chat(models.Model):
         verbose_name = 'Чат'
         verbose_name_plural = 'Чаты'
 
+    def __str__(self):
+        return f'{self.owner.username}'
+
 
 class ChatMessage(models.Model):
     class Statuses(models.TextChoices):

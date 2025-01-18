@@ -27,7 +27,11 @@ class GetChatAPIView(GenericAPIView):
     def get(self, request):
         if request.user.is_staff:
             chats = Chat.objects.filter(recipient=request.user)
-            return JsonResponse({'chats': serializers.serialize('json', chats)})
+            response_chat = []
+            for chat in chats:
+                serializer = self.serializer_class(instance=chat)
+                response_chat.append(serializer.data)
+            return JsonResponse({'chats': response_chat})
         else:
             recipient = User.objects.filter(is_staff=True).first()
             chat, created = Chat.objects.get_or_create(owner=request.user, recipient=recipient)
@@ -61,5 +65,5 @@ class GetMessagesAPIView(ListAPIView):
     def get_queryset(self):
         chat_id = self.request.GET.get('chat_id')
         if chat_id:
-            return ChatMessage.objects.filter(chat_id=chat_id).order_by('-id')
+            return ChatMessage.objects.filter(chat_id=chat_id).order_by('-created_at')
         return ChatMessage.objects.none()

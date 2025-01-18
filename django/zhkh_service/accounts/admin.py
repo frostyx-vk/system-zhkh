@@ -6,7 +6,7 @@ from accounts.models import User
 
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('email', 'first_name', 'last_name')
+    list_display = ('username', 'email', 'first_name', 'last_name')
     list_filter = ('is_staff', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
