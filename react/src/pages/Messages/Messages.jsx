@@ -137,7 +137,6 @@ function Messages() {
                     :
                     <div ref={endMessage} className={s.messageContainer}>
                       {messageList.map((msg, i) => {
-                        console.log(messageList)
                         return (
                           <div key={i} className={`${s.message} ${msg.sender_token || msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
                             {msg.text}
