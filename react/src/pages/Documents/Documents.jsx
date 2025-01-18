@@ -9,19 +9,17 @@ import 'react-toastify/dist/ReactToastify.css';
 function Documents() {
   const [documents, setDocuments] = useState([])
 
-  // Разкомментируй как будет API, подставь адрес
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:8000/auth/users/me/',
-  //     { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
-  //     .then(response => {
-  //       setDocuments(response.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //       toast.error("Ошибка! Информация недоступна, зайдите позже")
-  //     });
-  // }, [])
+  useEffect(() => {
+    axios.get('http://localhost:8000/web/documents/',
+      { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
+      .then(response => {
+        setDocuments(response.data);
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error("Ошибка! Информация недоступна, зайдите позже")
+      });
+  }, [])
 
   return (
     <main className={s.content}>
