@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import s from './Messages.module.css'
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 
@@ -36,7 +38,7 @@ function Messages() {
       })
       .catch((err) => {
         console.log(err)
-        // toast.error("Ошибка! Информация отсутствует.")
+        toast.error("Ошибка! Информация отсутствует.")
       });
   }
 
@@ -61,7 +63,7 @@ function Messages() {
   useEffect(() => {
     if (endMessage.current) {
       endMessage.current.scrollTop = endMessage.current.scrollHeight;
-    }
+    };
   }, [messageList]);
 
   const sendMessage = async () => {
@@ -73,7 +75,7 @@ function Messages() {
       };
 
       await socket.emit('message', messageData);
-      setMessageList((list) => [...list, messageData]);
+      // setMessageList((list) => [...list, messageData]);
       setCurrentMessage('');
     }
   };
@@ -135,6 +137,7 @@ function Messages() {
                     :
                     <div ref={endMessage} className={s.messageContainer}>
                       {messageList.map((msg, i) => {
+                        console.log(messageList)
                         return (
                           <div key={i} className={`${s.message} ${msg.sender_token || msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
                             {msg.text}
@@ -161,6 +164,7 @@ function Messages() {
             </div>
           </div>
         </div>
+        <ToastContainer position="top-right" />
       </div>
     </main>
   )
