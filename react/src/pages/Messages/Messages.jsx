@@ -75,7 +75,6 @@ function Messages() {
       };
 
       await socket.emit('message', messageData);
-      // setMessageList((list) => [...list, messageData]);
       setCurrentMessage('');
     }
   };
