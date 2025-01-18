@@ -3,25 +3,24 @@ import s from './Documents.module.css'
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import axios from "axios";
 
+import { FaRegFilePdf } from "react-icons/fa6";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Documents() {
   const [documents, setDocuments] = useState([])
 
-  // Разкомментируй как будет API, подставь адрес
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:8000/auth/users/me/',
-  //     { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
-  //     .then(response => {
-  //       setDocuments(response.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //       toast.error("Ошибка! Информация недоступна, зайдите позже")
-  //     });
-  // }, [])
+  useEffect(() => {
+    axios.get('http://localhost:8000/web/documents/',
+      { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
+      .then(response => {
+        setDocuments(response.data);
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error("Ошибка! Информация недоступна, зайдите позже")
+      });
+  }, [])
 
   return (
     <main className={s.content}>
@@ -36,13 +35,18 @@ function Documents() {
             </div>
             <div className={s.documents}>
               <p>
-                Для информации можете скачать и ознакомиться с перечнем документов:
+                Для информации можете ознакомиться с перечнем документов:
               </p>
               <div>
                 {documents.length > 0 ? (
                   <ul>
-                    {documents.map(document => (
-                      <li key={document.id}>{document.name}</li>
+                    {documents.map((document, i) => (
+                      <li key={i}>
+                        <a target="_blank" href={document.file}>
+                          <FaRegFilePdf />
+                          {document.title}
+                        </a>
+                      </li>
                     ))}
                   </ul>
                 ) : <p>Документы отсутствуют</p>}

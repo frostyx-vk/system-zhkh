@@ -18,6 +18,36 @@
   padding: 14px;
 }
 
+.documents ul {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.documents ul li {
+  width: 110px;
+  height: 118px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.documents a {
+  color: black;
+  line-height: 1;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+.documents a svg {
+  width: 70px;
+  height: 70px;
+  fill: #d14b4b;
+  padding-bottom: 8px;
+}
+
 .documents p {
   color: #839d74;
   font-size: 18px;
