@@ -23,8 +23,9 @@ function Login() {
 
         axios.post('http://localhost:8000/auth/token/login/', userData)
             .then(response => {
-                localStorage.setItem('accessToken', response.data.auth_token);
-                if (localStorage.accessToken) {
+                // localStorage.setItem('accessToken', response.data.auth_token);
+                sessionStorage.setItem('accessToken', response.data.auth_token);
+                if (sessionStorage.accessToken) {
                     navigator('/userpage')
                 };
             })

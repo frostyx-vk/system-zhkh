@@ -8,7 +8,7 @@ import {
     // USERPAGE_API,
 } from '../api/urls'
 
-export const headers = { headers: {"Authorization" : 'Token ' + localStorage.accessToken}}
+export const headers = { headers: {"Authorization" : 'Token ' + sessionStorage.accessToken}}
 
 // export const newsList = await axios.get(`${serverBaseUrl}${NEWS_LIST}`)
 //     .then(res => res.data)

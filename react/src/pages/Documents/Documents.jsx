@@ -12,7 +12,7 @@ function Documents() {
 
   useEffect(() => {
     axios.get('http://localhost:8000/web/documents/',
-      { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
+      { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
         setDocuments(response.data);
       })
