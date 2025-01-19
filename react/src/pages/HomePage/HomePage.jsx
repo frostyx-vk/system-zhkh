@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import flatLogo from '../../illustration/flat.png'
 import s from './HomePage.module.css'
@@ -11,9 +11,6 @@ import { Textarea } from '@chakra-ui/react'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { useNavigate } from 'react-router-dom';
-
 
 function HomePage() {
 
@@ -46,16 +43,6 @@ function HomePage() {
           toast.error("Ошибка! Попробуйте отправить позже");
         }
       });
-
-    // axios.post(`${serverBaseUrl}${MESSAGE_PROBLEM}`, modalData)
-    //   .then(response => {
-    //     if (response.status !== 200) return
-    //     if (localStorage.accessToken) {
-    //       navigator('/userpage')
-    //     }
-    //     // немного не понял, зачем тут перенаправление на страницу юзера?
-    //   })
-
   }
 
   return (

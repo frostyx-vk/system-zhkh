@@ -18,11 +18,10 @@ export default function Header() {
 
     function clearAuth() {
         const data = { name: 'Axios POST with Bearer Token' };
-        const headers = { 'Authorization': 'Token ' + sessionStorage.accessToken};
+        const headers = { 'Authorization': 'Token ' + sessionStorage.accessToken };
         axios.post(`${serverBaseUrl}${LOGOUT}`, data, { headers })
             .then(response => {
                 if (response.status in [200, 201, 204]) return
-                // localStorage.clear();
                 sessionStorage.removeItem('accessToken');
                 navigator('/login');
             })

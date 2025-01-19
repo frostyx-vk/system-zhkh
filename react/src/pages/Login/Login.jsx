@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import s from './Login.module.css'
 import { Input } from '@chakra-ui/react'
 import axios from 'axios';
@@ -23,7 +23,6 @@ function Login() {
 
         axios.post('http://localhost:8000/auth/token/login/', userData)
             .then(response => {
-                // localStorage.setItem('accessToken', response.data.auth_token);
                 sessionStorage.setItem('accessToken', response.data.auth_token);
                 if (sessionStorage.accessToken) {
                     navigator('/userpage')
@@ -32,7 +31,7 @@ function Login() {
             .catch((err) => {
                 console.log(err)
                 toast.error("Ошибка! Попробуйте зайти позже.")
-                // здесь нужно обработать каждую ошибку
+                // здесь нужно обработать каждую ошибку по ошибкам формы
             });
     }
 
