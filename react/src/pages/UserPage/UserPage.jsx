@@ -24,7 +24,7 @@ function UserPage() {
 
   useEffect(() => {
     axios.get('http://localhost:8000/auth/users/me/',
-      { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
+      { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
         setUpdateUserData(response.data);
       })
@@ -37,7 +37,7 @@ function UserPage() {
   function handleUpdateUser(e) {
     e.preventDefault();
     axios.patch('http://localhost:8000/auth/users/me/', { 'email': email, 'phone': phone, 'is_active': true },
-      { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
+      { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
         setUpdateUserData(response.data);
         setPhone('');

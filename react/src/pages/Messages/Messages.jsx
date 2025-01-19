@@ -25,7 +25,7 @@ function Messages() {
 
   function getMessages() {
     axios.get('http://localhost:8000/communication/get-chat/',
-      { headers: { "Authorization": 'Token ' + localStorage.accessToken } })
+      { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
         if (response.data.chats) {
           setIsAdmin(true);
@@ -70,7 +70,7 @@ function Messages() {
     if (currentMessage !== '') {
       const messageData = {
         chat_id: chatId,
-        sender_token: localStorage.accessToken,
+        sender_token: sessionStorage.accessToken,
         text: currentMessage,
       };
 
@@ -126,7 +126,7 @@ function Messages() {
                       <div ref={endMessage} className={s.messageContainer}>
                         {messageList.map((msg, i) => {
                           return (
-                            <div key={i} className={`${s.message} ${msg.sender_token || msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
+                            <div key={i} className={`${s.message} ${msg.sender_token || msg.token === sessionStorage.accessToken ? s.myMsg : s.otherMsg}`}>
                               {msg.text}
                             </div>
                           );
@@ -137,7 +137,7 @@ function Messages() {
                     <div ref={endMessage} className={s.messageContainer}>
                       {messageList.map((msg, i) => {
                         return (
-                          <div key={i} className={`${s.message} ${msg.sender_token || msg.token === localStorage.accessToken ? s.myMsg : s.otherMsg}`}>
+                          <div key={i} className={`${s.message} ${msg.sender_token || msg.token === sessionStorage.accessToken ? s.myMsg : s.otherMsg}`}>
                             {msg.text}
                           </div>
                         );
