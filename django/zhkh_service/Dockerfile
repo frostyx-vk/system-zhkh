@@ -16,3 +16,4 @@ RUN mkdir /zhkh_service/static && mkdir /zhkh_service/media
 
 COPY ./django/zhkh_service .
 RUN pip install -r requirements.txt
+RUN python manage.py collectstatic  --noinput
