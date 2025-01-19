@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from web.models import AboutPortal, Contact, DataDeveloper, News, Service, Documents
+from .models import AboutPortal, Contact, DataDeveloper, News, Service, Documents
+from .forms import DocumentAdminForm
 
 
 @admin.register(News)
@@ -33,3 +34,4 @@ class DataDeveloperAdmin(admin.ModelAdmin):
 @admin.register(Documents)
 class DocumentsAdmin(admin.ModelAdmin):
     list_display = ('title',)
+    form = DocumentAdminForm

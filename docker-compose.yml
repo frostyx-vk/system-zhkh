@@ -28,7 +28,7 @@ services:
       - 8000
     env_file:
       - ./django/zhkh_service/.env
-    command: gunicorn zhkh_service.asgi:application --workers 1 --worker-class uvicorn.workers.UvicornWorker  --bind 0.0.0.0:8000
+    command: gunicorn zhkh_service.asgi:application --workers 1 --worker-class uvicorn.workers.UvicornWorker  --bind 0.0.0.0:8000 --reload
 
   react:
     container_name: front_react
