@@ -1,7 +1,7 @@
 from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 
-from communication.models import MessageProblem, ChatMessage, Chat
+from .models import MessageProblem, ChatMessage, Chat
 
 
 class MessageProblemSerializer(ModelSerializer):
