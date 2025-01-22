@@ -1,9 +1,9 @@
 from django.urls import path
 
-from accounts.views import GetUserDataView
+from accounts.views import GetUserDataPlaceView
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('get-user-data/', GetUserDataView.as_view(), name='get-user-data'),
+    path('get-user-data/', GetUserDataPlaceView.as_view(), name='get-user-data'),
 ]

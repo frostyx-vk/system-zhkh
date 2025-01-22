@@ -3,13 +3,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import UserSerializer
+from .serializers import UserDataPlaceSerializer
 
 
-class GetUserDataView(APIView):
+class GetUserDataPlaceView(APIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = UserSerializer
+    serializer_class = UserDataPlaceSerializer
 
     def get(self, request):
         serializer = self.serializer_class(instance=self.request.user)
-        return Response({"message": "Chat gotten", "data": serializer.data}, status=status.HTTP_200_OK)
+        return Response({"message": "User place data", "data": serializer.data}, status=status.HTTP_200_OK)
