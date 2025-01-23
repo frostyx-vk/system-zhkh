@@ -8,6 +8,12 @@ import { Input } from '@chakra-ui/react'
 function Counters() {
   const [isParking, setIsParking] = useState(null);
   const [userData, setUserData] = useState([]);
+  const [counters, setCounters] = useState({
+    coldWater: 0,
+    hotWater: 0,
+    electricity: 0
+  });
+
 
   useEffect(() => {
     axios.get('http://localhost:8000/accounts/get-user-data/',
@@ -23,6 +29,8 @@ function Counters() {
         // toast.error("Ошибка! Информация отсутствует.")
       });
   }, []);
+
+  console.log(counters.coldWater, counters.hotWater, counters.electricity)
 
   return (
     <main className={s.content}>
@@ -44,25 +52,31 @@ function Counters() {
                 <label>
                   Холодная вода:
                   <Input
-                    // value={}
+                    value={counters.coldWater}
+                    onChange={(e) => setCounters({ ...counters, coldWater: e.target.value })}
                     placeholder='Введите число'
                     size='md'
+                    required
                   />
                 </label>
                 <label>
                   Горячая вода:
                   <Input
-                    // value={}
+                    value={counters.hotWater}
+                    onChange={(e) => setCounters({ ...counters, hotWater: e.target.value })}
                     placeholder='Введите число'
                     size='md'
+                    required
                   />
                 </label>
                 <label>
                   Электричество:
                   <Input
-                    // value={}
+                    value={counters.electricity}
+                    onChange={(e) => setCounters({ ...counters, electricity: e.target.value })}
                     placeholder='Введите число'
                     size='md'
+                    required
                   />
                 </label>
                 <button type='submit'>Отправить</button>
