@@ -9,11 +9,10 @@ function Counters() {
   const [isParking, setIsParking] = useState(null);
   const [userData, setUserData] = useState([]);
   const [counters, setCounters] = useState({
-    coldWater: 0,
-    hotWater: 0,
-    electricity: 0
+    coldWater: '',
+    hotWater: '',
+    electricity: '',
   });
-
 
   useEffect(() => {
     axios.get('http://localhost:8000/accounts/get-user-data/',
@@ -30,7 +29,27 @@ function Counters() {
       });
   }, []);
 
-  console.log(counters.coldWater, counters.hotWater, counters.electricity)
+  function handleChange(e) {
+    if (e.target.value.length > 8) {
+      e.target.value = e.target.value.substring(0, 8);
+    };
+    setCounters({
+      ...counters,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  function handlerForm(e) {
+    e.preventDefault();
+
+    // axios.post('http://localhost:8000/auth/token/login/', counters)
+    //   .then(response => {
+    //     console.log(response.data)
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   });
+  }
 
   return (
     <main className={s.content}>
@@ -45,15 +64,20 @@ function Counters() {
             </div>
             <div className={s.counters}>
               <p>
-                C 20 по 25 число каждого месяца требуется отправлять показания счётчиков<br /><br />
+                C 20 по 25 число каждого месяца требуется отправлять показания счётчиков.<br />
+                Вводить нужно только целое число!<br /><br />
                 Имущество: {userData.type}, {userData.square}м²
               </p>
-              <form>
+              <form onSubmit={handlerForm}>
                 <label>
                   Холодная вода:
                   <Input
+                    type='number'
+                    min={4}
                     value={counters.coldWater}
-                    onChange={(e) => setCounters({ ...counters, coldWater: e.target.value })}
+                    name='coldWater'
+                    onChange={handleChange}
+                    onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
                     placeholder='Введите число'
                     size='md'
                     required
@@ -62,8 +86,11 @@ function Counters() {
                 <label>
                   Горячая вода:
                   <Input
+                    type='number'
+                    name='hotWater'
                     value={counters.hotWater}
-                    onChange={(e) => setCounters({ ...counters, hotWater: e.target.value })}
+                    onChange={handleChange}
+                    onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
                     placeholder='Введите число'
                     size='md'
                     required
@@ -72,8 +99,11 @@ function Counters() {
                 <label>
                   Электричество:
                   <Input
+                    type='number'
+                    name='electricity'
                     value={counters.electricity}
-                    onChange={(e) => setCounters({ ...counters, electricity: e.target.value })}
+                    onChange={handleChange}
+                    onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
                     placeholder='Введите число'
                     size='md'
                     required
