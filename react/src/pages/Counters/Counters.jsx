@@ -6,6 +6,7 @@ import axios from "axios";
 import { Input } from '@chakra-ui/react'
 
 function Counters() {
+  const [err, setErr] = useState(false);
   const [isParking, setIsParking] = useState(null);
   const [userData, setUserData] = useState([]);
   const [counters, setCounters] = useState({
@@ -30,9 +31,12 @@ function Counters() {
   }, []);
 
   function handleChange(e) {
-    if (e.target.value.length > 8) {
-      e.target.value = e.target.value.substring(0, 8);
+    if (e.target.value.length > 5) {
+      e.target.value = e.target.value.substring(0, 5);
     };
+    e.target.value.length < 5 && setErr(true);
+    e.target.value.length === 5 && setErr(false);
+
     setCounters({
       ...counters,
       [e.target.name]: e.target.value
@@ -42,13 +46,16 @@ function Counters() {
   function handlerForm(e) {
     e.preventDefault();
 
-    // axios.post('http://localhost:8000/auth/token/login/', counters)
-    //   .then(response => {
-    //     console.log(response.data)
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   });
+    if (counters.coldWater.length === 5 && counters.hotWater.length === 5 && counters.electricity.length === 5) {
+      console.log(1111)
+      // axios.post('http://localhost:8000/auth/token/login/', counters)
+      //   .then(response => {
+      //     console.log(response.data)
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   });
+    }
   }
 
   return (
@@ -68,12 +75,15 @@ function Counters() {
                 Вводить нужно только целое число!<br /><br />
                 Имущество: {userData.type}, {userData.square}м²
               </p>
+              {
+                err ? <div>Для отправки показаний все числа должно состоять из 5 цифр.</div> : ''
+              }
               <form onSubmit={handlerForm}>
                 <label>
                   Холодная вода:
                   <Input
                     type='number'
-                    min={4}
+                    min={5}
                     value={counters.coldWater}
                     name='coldWater'
                     onChange={handleChange}

@@ -26,6 +26,15 @@
   text-align: center;
 }
 
+.counters div {
+  color: red;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
 .counters form {
   display: flex;
   flex-direction: column;
