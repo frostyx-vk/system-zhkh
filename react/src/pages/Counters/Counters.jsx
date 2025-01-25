@@ -46,16 +46,20 @@ function Counters() {
   function handlerForm(e) {
     e.preventDefault();
 
-    if (counters.coldWater.length === 5 && counters.hotWater.length === 5 && counters.electricity.length === 5) {
-      console.log(1111)
-      // axios.post('http://localhost:8000/auth/token/login/', counters)
-      //   .then(response => {
-      //     console.log(response.data)
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   });
+    for (const values of Object.values(counters)) {
+      if (!isParking && values.length < 5) {
+        return setErr(true);
+      };
     }
+
+    // !err && 
+    //   axios.post('http://localhost:8000/auth/token/login/', counters)
+    //     .then(response => {
+    //       console.log(response.data)
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     });
   }
 
   return (
@@ -76,51 +80,72 @@ function Counters() {
                 Имущество: {userData.type}, {userData.square}м²
               </p>
               {
-                err ? <div>Для отправки показаний все числа должно состоять из 5 цифр.</div> : ''
+                err ? <div>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
               }
-              <form onSubmit={handlerForm}>
-                <label>
-                  Холодная вода:
-                  <Input
-                    type='number'
-                    min={5}
-                    value={counters.coldWater}
-                    name='coldWater'
-                    onChange={handleChange}
-                    onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
-                    placeholder='Введите число'
-                    size='md'
-                    required
-                  />
-                </label>
-                <label>
-                  Горячая вода:
-                  <Input
-                    type='number'
-                    name='hotWater'
-                    value={counters.hotWater}
-                    onChange={handleChange}
-                    onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
-                    placeholder='Введите число'
-                    size='md'
-                    required
-                  />
-                </label>
-                <label>
-                  Электричество:
-                  <Input
-                    type='number'
-                    name='electricity'
-                    value={counters.electricity}
-                    onChange={handleChange}
-                    onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
-                    placeholder='Введите число'
-                    size='md'
-                    required
-                  />
-                </label>
-                <button type='submit'>Отправить</button>
-              </form>
+              {isParking
+                ?
+                <form onSubmit={handlerForm}>
+                  <label>
+                    Электричество:
+                    <Input
+                      type='number'
+                      name='electricity'
+                      value={counters.electricity}
+                      onChange={handleChange}
+                      onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                      placeholder='Введите число'
+                      size='md'
+                      required
+                    />
+                  </label>
+                  <button type='submit'>Отправить</button>
+                </form>
+                :
+                <form onSubmit={handlerForm}>
+                  <label>
+                    Холодная вода:
+                    <Input
+                      type='number'
+                      min={5}
+                      value={counters.coldWater}
+                      name='coldWater'
+                      onChange={handleChange}
+                      onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                      placeholder='Введите число'
+                      size='md'
+                      required
+                    />
+                  </label>
+                  <label>
+                    Горячая вода:
+                    <Input
+                      type='number'
+                      name='hotWater'
+                      value={counters.hotWater}
+                      onChange={handleChange}
+                      onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                      placeholder='Введите число'
+                      size='md'
+                      required
+                    />
+                  </label>
+                  <label>
+                    Электричество:
+                    <Input
+                      type='number'
+                      name='electricity'
+                      value={counters.electricity}
+                      onChange={handleChange}
+                      onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                      placeholder='Введите число'
+                      size='md'
+                      required
+                    />
+                  </label>
+                  <button type='submit'>Отправить</button>
+                </form>
+              }
+
             </div>
           </div>
         </div>
