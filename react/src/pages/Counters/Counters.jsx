@@ -48,7 +48,7 @@ function Counters() {
     e.preventDefault();
 
     for (const values of Object.values(counters)) {
-      if (!isParking && values.length < 5) { // здесь прям нужно подумать!!
+      if (!isParking && values.length < 5 && userData.availability_counters_water) {
         return setErr(true);
       };
     }
