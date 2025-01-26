@@ -19,6 +19,7 @@ function Counters() {
     axios.get('http://localhost:8000/web/get-living-area-data/',
       { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
+        console.log(response.data.data)
         setUserData(response.data.data);
         if (response.data.data.type !== "PARKING") {
           setIsParking(false)
@@ -54,7 +55,7 @@ function Counters() {
 
     !err &&
       axios.post('http://localhost:8000/web/set-counters/', counters,
-          { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } }
+        { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } }
       )
         .then(response => {
           console.log(response.data)
@@ -79,7 +80,9 @@ function Counters() {
               <p>
                 C 20 по 25 число каждого месяца требуется отправлять показания счётчиков.<br />
                 Вводить нужно только целое число!<br /><br />
-                Имущество: {userData.type}, {userData.square}м²
+                Имущество: {
+                  userData.type === 'HABITABLE' ? "Жилое помещение" : (userData.type === 'NOT_RSIDENTIAL' ? 'Нежилое помещение' : 'Парковочное место')
+                }, {userData.address}, {userData.square}м²
               </p>
               {
                 err ? <div>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
