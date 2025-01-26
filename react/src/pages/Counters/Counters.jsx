@@ -48,7 +48,7 @@ function Counters() {
     e.preventDefault();
 
     for (const values of Object.values(counters)) {
-      if (!isParking && values.length < 5) {
+      if (!isParking && values.length < 5) { // здесь прям нужно подумать!!
         return setErr(true);
       };
     }
@@ -82,12 +82,15 @@ function Counters() {
                 Вводить нужно только целое число!<br /><br />
                 Имущество: {
                   userData.type === 'HABITABLE' ? "Жилое помещение" : (userData.type === 'NOT_RSIDENTIAL' ? 'Нежилое помещение' : 'Парковочное место')
-                }, {userData.address}, {userData.square}м²
+                }; {userData.address}; S={userData.square}м²
               </p>
               {
-                err ? <div>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
+                !userData.availability_counters_water ? <div className={s.err}>Отсутствуют счётчики на воду. Сумма оплаты будет рассчитана исходя из среднестандартных норм!</div> : ''
               }
-              {isParking
+              {
+                err ? <div className={s.err}>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
+              }
+              {isParking || !userData.availability_counters_water
                 ?
                 <form onSubmit={handlerForm}>
                   <label>
