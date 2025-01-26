@@ -16,7 +16,7 @@ function Counters() {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:8000/accounts/get-user-data/',
+    axios.get('http://localhost:8000/web/get-living-area-data/',
       { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
         setUserData(response.data.data);
@@ -52,14 +52,16 @@ function Counters() {
       };
     }
 
-    // !err && 
-    //   axios.post('http://localhost:8000/auth/token/login/', counters)
-    //     .then(response => {
-    //       console.log(response.data)
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //     });
+    !err &&
+      axios.post('http://localhost:8000/web/set-counters/', counters,
+          { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } }
+      )
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        });
   }
 
   return (

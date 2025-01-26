@@ -10,8 +10,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'number_ls', 'address', 'square', 'type',
-                                         'phone')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'phone')}),
         (
             _('Permissions'),
             {
@@ -31,8 +30,7 @@ class CustomUserAdmin(UserAdmin):
             None,
             {
                 "classes": ('wide',),
-                "fields": ('username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'number_ls',
-                           'address', 'square', 'type', 'phone'),
+                "fields": ('username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'phone'),
             },
         ),
     )
