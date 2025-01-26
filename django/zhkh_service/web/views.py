@@ -79,7 +79,7 @@ class CountersAPIView(APIView):
         if cold_water:
             indications = Indication.objects.filter(user=self.request.user, tariff=tariff_cold)
             last_indication = self.get_last_indication(tariff_cold, indications)
-            current_cold_indication = cold_water - last_indication
+            current_cold_indication = int(cold_water) - last_indication
             if self.request.user.livingarea.availability_counters_water:
                 cold_sum = current_cold_indication * tariff_cold.ratio
         else:
@@ -93,7 +93,7 @@ class CountersAPIView(APIView):
         if hot_water:
             indications = Indication.objects.filter(user=self.request.user, tariff=tariff_hot)
             last_indication = self.get_last_indication(tariff_hot, indications)
-            current_hot_indication = hot_water - last_indication
+            current_hot_indication = int(hot_water) - last_indication
             if self.request.user.livingarea.availability_counters_water:
                 hot_sum = current_hot_indication * tariff_hot.ratio
         else:
@@ -107,7 +107,7 @@ class CountersAPIView(APIView):
         if electricity:
             indications = Indication.objects.filter(user=self.request.user, tariff=tariff_electricity)
             last_indication = self.get_last_indication(tariff_electricity, indications)
-            current_electricity_indication = electricity - last_indication
+            current_electricity_indication = int(electricity) - last_indication
             if self.request.user.livingarea.resident_count > 1:
                 norm = tariff_electricity.regulations.filter(person_count__gt=1).last()
             else:
