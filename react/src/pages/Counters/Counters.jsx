@@ -85,7 +85,7 @@ function Counters() {
                 }; {userData.address}; S={userData.square}м²
               </p>
               {
-                !userData.availability_counters_water ? <div className={s.err}>Отсутствуют счётчики на воду. Сумма оплаты будет рассчитана исходя из среднестандартных норм!</div> : ''
+                !userData.availability_counters_water ? <div className={isParking ? s.hide : s.err}>Отсутствуют счётчики на воду. Сумма оплаты будет рассчитана исходя из среднестандартных норм!</div> : ''
               }
               {
                 err ? <div className={s.err}>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
