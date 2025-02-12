@@ -151,6 +151,19 @@ class Regulation(models.Model):
         return self.name
 
 
+class Receipt(models.Model):
+    file = models.FileField(verbose_name='Квитанция', upload_to='receipts/')
+    date_created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
+    living_area = models.ForeignKey(LivingArea, on_delete=models.CASCADE, verbose_name='Жил. площадь')
+
+    class Meta:
+        verbose_name = 'Платежный документ'
+        verbose_name_plural = 'Платежный документы'
+
+    def __str__(self):
+        return self.living_area.address
+
+
 class Indication(models.Model):
     last_indication = models.FloatField(verbose_name='Последний показатель', max_length=55)
     date_updated = models.DateTimeField(verbose_name='Дата обновления', auto_now=True)

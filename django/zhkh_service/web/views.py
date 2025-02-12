@@ -76,33 +76,38 @@ class CountersAPIView(APIView):
         tariff_electricity = get_object_or_404(Tariff, key=Tariff.Keys.electricity)
         cold_sum, hot_sum, electricity_sum = 'Не определено', 'Не определено', 'Не определено'
 
-        if cold_water:
-            indications = Indication.objects.filter(user=self.request.user, tariff=tariff_cold)
-            last_indication = self.get_last_indication(tariff_cold, indications)
-            current_cold_indication = int(cold_water) - last_indication
-            if self.request.user.livingarea.availability_counters_water:
-                cold_sum = current_cold_indication * tariff_cold.ratio
-        else:
-            if not self.request.user.livingarea.availability_counters_water:
-                if self.request.user.livingarea.resident_count > 1:
-                    norm = tariff_cold.regulations.filter(person_count__gt=1).last()
-                else:
-                    norm = tariff_cold.regulations.filter(person_count=1).last()
-                cold_sum = norm.value * norm.summ_without_counters
+        if not self.request.user.livingarea.type == LivingArea.TypeProperty.PARKING:
+            if cold_water:
+                indications = Indication.objects.filter(user=self.request.user, tariff=tariff_cold)
+                last_indication = self.get_last_indication(tariff_cold, indications)
+                current_cold_indication = int(cold_water) - last_indication
+                if self.request.user.livingarea.availability_counters_water:
+                    cold_sum = current_cold_indication * tariff_cold.ratio
+            else:
+                if not self.request.user.livingarea.availability_counters_water:
+                    if self.request.user.livingarea.resident_count > 1:
+                        norm = tariff_cold.regulations.filter(person_count__gt=1).last()
+                    else:
+                        norm = tariff_cold.regulations.filter(person_count=1).last()
+                    if not norm:
+                        return Response({'message': 'Indication has not norm'}, status=status.HTTP_400_BAD_REQUEST)
+                    cold_sum = norm.value * norm.standard_summ
 
-        if hot_water:
-            indications = Indication.objects.filter(user=self.request.user, tariff=tariff_hot)
-            last_indication = self.get_last_indication(tariff_hot, indications)
-            current_hot_indication = int(hot_water) - last_indication
-            if self.request.user.livingarea.availability_counters_water:
-                hot_sum = current_hot_indication * tariff_hot.ratio
-        else:
-            if not self.request.user.livingarea.availability_counters_water:
-                if self.request.user.livingarea.resident_count > 1:
-                    norm = tariff_hot.regulations.filter(person_count__gt=1).last()
-                else:
-                    norm = tariff_hot.regulations.filter(person_count=1).last()
-                hot_sum = norm.value * norm.summ_without_counters
+            if hot_water:
+                indications = Indication.objects.filter(user=self.request.user, tariff=tariff_hot)
+                last_indication = self.get_last_indication(tariff_hot, indications)
+                current_hot_indication = int(hot_water) - last_indication
+                if self.request.user.livingarea.availability_counters_water:
+                    hot_sum = current_hot_indication * tariff_hot.ratio
+            else:
+                if not self.request.user.livingarea.availability_counters_water:
+                    if self.request.user.livingarea.resident_count > 1:
+                        norm = tariff_hot.regulations.filter(person_count__gt=1).last()
+                    else:
+                        norm = tariff_hot.regulations.filter(person_count=1).last()
+                    if not norm:
+                        return Response({'message': 'Indication has not norm'}, status=status.HTTP_400_BAD_REQUEST)
+                    hot_sum = norm.value * norm.standard_summ
 
         if electricity:
             indications = Indication.objects.filter(user=self.request.user, tariff=tariff_electricity)
@@ -112,7 +117,8 @@ class CountersAPIView(APIView):
                 norm = tariff_electricity.regulations.filter(person_count__gt=1).last()
             else:
                 norm = tariff_electricity.regulations.filter(person_count=1).last()
-
+            if not norm:
+                return Response({'message': 'Indication has not norm'}, status=status.HTTP_400_BAD_REQUEST)
             if current_electricity_indication <= norm.value:
                 electricity_sum = current_electricity_indication * norm.standard_summ
             else:
