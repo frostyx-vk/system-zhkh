@@ -54,7 +54,7 @@ function Tariffs() {
                         <Tr>
                           <Th>Наименование</Th>
                           <Th>Единица измерения</Th>
-                          <Th isNumeric>Цена</Th>
+                          <Th isNumeric>Цена за единицу, ₽</Th>
                         </Tr>
                       </Thead>
                       <Tbody>
@@ -66,7 +66,7 @@ function Tariffs() {
                         <Tr>
                           <Td>Горячая вода</Td>
                           <Td>м3</Td>
-                          <Td isNumeric>4, 25</Td>
+                          <Td isNumeric>4,25</Td>
                         </Tr>
                         <Tr>
                           <Td>Электричество</Td>
