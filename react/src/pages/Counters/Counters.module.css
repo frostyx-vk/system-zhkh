@@ -1,15 +1,65 @@
 .content {
-    flex: 1 0 auto;
-    background: url("../../illustration/background-zhkh.jpeg");
-  }
+  flex: 1 0 auto;
+  background: url("../../illustration/background-zhkh.jpeg");
+}
 
-  .title {
-    border-radius: 20px 20px 0 0;
-    color: white;
-    background: #90C084;
-    padding: 12px 12px;
-    width: 100%;
-    text-align: center;
-    font-weight: 600;
-    font-size: 18px;
-  }
+.title {
+  border-radius: 20px 20px 0 0;
+  color: white;
+  background: #90C084;
+  padding: 12px 12px;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.counters {
+  padding: 14px;
+}
+
+.counters p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.err {
+  color: red;
+  text-align: center;
+}
+
+.hide {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.counters form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.counters label {
+  color: black;
+  width: 300px;
+}
+
+.counters input {
+  margin-bottom: 10px;
+}
+
+.counters button {
+  color: white;
+  background: #90C084;
+  padding: 8px 24px;
+  border-radius: 12px;
+  margin-top: 8px;
+  float: right;
+  margin-bottom: 1rem;
+}

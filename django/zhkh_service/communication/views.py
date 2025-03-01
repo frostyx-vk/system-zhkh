@@ -1,4 +1,3 @@
-from django.core import serializers
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListAPIView

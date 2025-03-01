@@ -22,6 +22,8 @@ import Counters from './pages/Counters/Counters';
 import Invoice from './pages/Invoice/Invoice';
 import Payments from './pages/Payments/Payments';
 import Documents from './pages/Documents/Documents';
+import Tariffs from './pages/Tariffs/Tariffs';
+import Treatment from './pages/Treatment/Treatment';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
@@ -43,8 +45,11 @@ root.render(
             <Route path='/userpage' element={<UserPage />} />
             <Route path='/messages' element={<Messages />} />
             <Route path='/counters' element={<Counters />} />
+            <Route path='/counters' element={<Counters />} />
             <Route path='/invoice' element={<Invoice />} />
             <Route path='/payments' element={<Payments />} />
+            <Route path='/tariffs' element={<Tariffs />} />
+            <Route path='/treatment' element={<Treatment />} />
             <Route path='/documents' element={<Documents />} />
           </Route>
           <Route path='/reserved' element={<Reserved />} />
