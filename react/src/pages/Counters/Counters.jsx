@@ -4,6 +4,7 @@ import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import axios from "axios";
 
 import { Input } from '@chakra-ui/react'
+import { ToastContainer, toast } from 'react-toastify';
 
 function Counters() {
   const [err, setErr] = useState(false);
@@ -19,7 +20,6 @@ function Counters() {
     axios.get('http://localhost:8000/web/get-living-area-data/',
       { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
-        console.log(response.data.data)
         setUserData(response.data.data);
         if (response.data.data.type !== "PARKING") {
           setIsParking(false)
@@ -58,10 +58,12 @@ function Counters() {
         { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } }
       )
         .then(response => {
-          console.log(response.data)
+          console.log(response.data);
+          toast.success('Данные переданы успешно!');
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
+          toast.error('Ошибка передачи данных! Попробуйте позже.')
         });
   }
 
@@ -155,6 +157,7 @@ function Counters() {
               }
 
             </div>
+            <ToastContainer position="top-right" />
           </div>
         </div>
       </div>
