@@ -4,21 +4,44 @@ import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import axios from "axios";
 
 import { Select } from '@chakra-ui/react'
+import { FaRegFilePdf } from "react-icons/fa6";
+import { ToastContainer, toast } from 'react-toastify';
 
 function Invoice() {
-  const [invoice, setInvoice] = useState([])
+  const [options, setOptions] = useState('');
+  const [invoice, setInvoice] = useState([]);
 
   // useEffect(() => {
   //   axios.get('http://localhost:8000/web/documents/',
   //     { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
   //     .then(response => {
-  //       setDocuments(response.data);
+  //       setOptions(response.data);
   //     })
   //     .catch((err) => {
   //       console.log(err)
   //       toast.error("Ошибка! Информация недоступна, зайдите позже")
   //     });
   // }, [])
+
+  function getInvoce(e) {
+    e.preventDefault();
+    // axios.patch('http://localhost:8000/auth/users/me/', { 'email': email, 'phone': phone, 'is_active': true },
+    //   { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
+    //   .then(response => {
+    //     setUpdateUserData(response.data);
+    //     setPhone('');
+    //     setEmail('');
+    //     toast.success('Информация успешно обновлена!');
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //     toast.error("Ошибка! Попробуйте сохранить информацию позже.")
+    //   });
+
+    console.log('Вызов функции')
+  };
+
+  console.log(options)
 
   return (
     <main className={s.content}>
@@ -35,8 +58,12 @@ function Invoice() {
               <p>
                 Выберете месяц, за который хотите получить платежный документ:
               </p>
-              <form className={s.getBlock}>
-                <Select placeholder='Нажмите для выбора'>
+              <form onSubmit={getInvoce} className={s.getBlock}>
+                <Select
+                  placeholder='Нажмите для выбора'
+                  value={options}
+                  onChange={(e) => setOptions(e.target.value)}
+                >
                   <option value='option1'>Декабрь 2024</option>
                   <option value='option2'>Январь 2025</option>
                   <option value='option3'>Февраль 2025</option>
