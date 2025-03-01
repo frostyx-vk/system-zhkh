@@ -13,3 +13,18 @@
   font-weight: 600;
   font-size: 18px;
 }
+
+.invoice {
+  padding: 14px;
+}
+
+.invoice p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.invoice select {
+  color: black;
+}
