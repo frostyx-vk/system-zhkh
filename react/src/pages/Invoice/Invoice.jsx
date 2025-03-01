@@ -35,16 +35,14 @@ function Invoice() {
               <p>
                 Выберете месяц, за который хотите получить платежный документ:
               </p>
-              <div>
-                <Select placeholder='Select option'>
-                  <option value='option1'>Option 1</option>
-                  <option value='option2'>Option 2</option>
-                  <option value='option3'>Option 3</option>
+              <form className={s.getBlock}>
+                <Select placeholder='Нажмите для выбора'>
+                  <option value='option1'>Декабрь 2024</option>
+                  <option value='option2'>Январь 2025</option>
+                  <option value='option3'>Февраль 2025</option>
                 </Select>
-                <button>
-                  
-                </button>
-              </div>
+                <button type='submit'>Получить</button>
+              </form>
             </div>
           </div>
         </div>
