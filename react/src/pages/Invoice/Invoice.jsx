@@ -28,14 +28,12 @@ function Invoice() {
     // axios.patch('http://localhost:8000/auth/users/me/', { 'email': email, 'phone': phone, 'is_active': true },
     //   { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
     //   .then(response => {
-    //     setUpdateUserData(response.data);
-    //     setPhone('');
-    //     setEmail('');
-    //     toast.success('Информация успешно обновлена!');
+    //     setInvoice(response.data);
+    //     toast.success('Информация успешно получена!');
     //   })
     //   .catch((err) => {
     //     console.log(err)
-    //     toast.error("Ошибка! Попробуйте сохранить информацию позже.")
+    //     toast.error("Ошибка! Попробуйте получить информацию позже.")
     //   });
 
     console.log('Вызов функции')
@@ -70,6 +68,20 @@ function Invoice() {
                 </Select>
                 <button type='submit'>Получить</button>
               </form>
+              <div className={s.invoiceDoc}>
+              {invoice.length > 0 ? (
+                <ul>
+                  {invoice.map((invoice, i) => (
+                    <li key={i}>
+                      {/* <a target="_blank" href={invoice.file}>
+                        <FaRegFilePdf />
+                        {invoice.title}
+                      </a> */}
+                    </li>
+                  ))}
+                </ul>
+              ) : <p>Нажмите "Получить" для получения документа</p>}
+            </div>
             </div>
           </div>
         </div>

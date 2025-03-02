@@ -48,3 +48,14 @@
   display: flex;
   gap: 100px;
 }
+
+.invoiceDoc {
+  color: black;
+}
+
+.invoiceDoc p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 14px;
+}
