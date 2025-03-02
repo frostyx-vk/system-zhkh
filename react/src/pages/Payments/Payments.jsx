@@ -10,6 +10,10 @@ import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer } 
 function Payments() {
   const [payments, setPayments] = useState([])
 
+  function payServices() {
+    console.log('Функция перехода на страницу оплаты')
+  }
+
   return (
     <main className={s.content}>
       <div className='wrapper'>
@@ -26,11 +30,12 @@ function Payments() {
               <TabPanels>
                 <TabPanel className={s.personalTabsContent}>
                   <div className={s.personalTabsContent1}>
-                    <p>Здесь будет оплата</p>
+                    <p>Общая задолженность на {new Date().toISOString().slice(0, 10)} составляет: {5000}₽</p>
+                    <button className={s.paymentsBtn} onClick={payServices}>Оплатить</button>
                   </div>
                 </TabPanel>
                 <TabPanel className={s.personalTabsContent}>
-                  <div className={s.personalTabsContent1}>
+                  <div className={s.personalTabsContent2}>
                     <p>История платежей:</p>
                     <TableContainer>
                       <Table variant='simple'>

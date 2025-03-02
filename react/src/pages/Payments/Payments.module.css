@@ -51,9 +51,29 @@
   color: black;
 }
 
+.personalTabsContent1 {
+  display: grid;
+  place-items: center;
+}
 .personalTabsContent1 p {
   color: #839d74;
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 14px;
+}
+
+.personalTabsContent2 p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.paymentsBtn {
+  color: white;
+  background: #90C084;
+  padding: 8px 24px;
+  border-radius: 12px;
+  margin-top: 8px;
+  margin-bottom: 1rem;
 }
