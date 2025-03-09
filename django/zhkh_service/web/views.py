@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 
 from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea
 from web.serializers import AboutPortalSerializer, ContactSerializer, NewsSerializer, ServiceSerializer, \
-    DocumentsSerializer, LivingAreaSerializer
+    DocumentsSerializer, LivingAreaSerializer, TariffSerializer
 
 
 class PasswordResetCompleteCustomView(PasswordResetCompleteView):
@@ -119,3 +119,9 @@ class CountersAPIView(APIView):
                 electricity_sum = current_electricity_indication * norm.summ_above
 
         return Response({'message': 'Data success save', 'data': [cold_sum, hot_sum, electricity_sum]})
+
+
+class TariffsAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = TariffSerializer
+
