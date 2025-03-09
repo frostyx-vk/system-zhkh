@@ -17,8 +17,12 @@ function Treatment() {
     const file = event.target.files[0];
     setSelectedFile(file);
     setSelectedName(file.name);
-    // Additional validation logic
   };
+
+  function handleForm(e) {
+    e.preventDefault();
+    console.log(selectedFile)
+  }
 
   return (
     <main className={s.content}>
@@ -36,7 +40,7 @@ function Treatment() {
               <TabPanels>
                 <TabPanel className={s.personalTabsContent}>
                   <div className={s.personalTabsContent1}>
-                    <form>
+                    <form onSubmit={handleForm} >
                       <Input type='text'
                         placeholder='Введите название проблемы'
                         size='md'
@@ -56,7 +60,10 @@ function Treatment() {
                           <img src={uploadImg} alt="upload" />
                           <h3> {selectedName || 'Нажмите для загрузки файла'}</h3>
                           <p>Максимальный размер файла 10mb</p>
-                          <input type="file" onChange={handleFileChange} />
+                          <input
+                            required
+                            type="file"
+                            onChange={handleFileChange} />
                         </div>
                       </div>
                       <Button variant="ghost" type='submit'>Отправить</Button>

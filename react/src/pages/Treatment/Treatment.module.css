@@ -48,9 +48,8 @@
 }
 
 .parent {
-  width: 450px;
-  margin: auto;
-  padding: 2rem;
+  width: 300px;
+  padding: 12px;
   background: #ffffff;
   border-radius: 25px;
   box-shadow: 7px 20px 20px rgb(210, 227, 244);
@@ -59,15 +58,26 @@
 .fileUpload {
   text-align: center;
   border: 3px dashed rgb(210, 227, 244);
-  padding: 1.5rem;
+  padding: 10px;
   position: relative;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fileUpload h3 {
+  margin-top: 6px;
 }
 
 .fileUpload p {
-  font-size: 0.87rem;
-  margin-top: 10px;
+  font-size: 0.80rem;
+  margin: 0;
   color: #bbcada;
+}
+
+.fileUpload img {
+  width: 75px;
 }
 
 .fileUpload input {
@@ -81,4 +91,32 @@
   right: 0;
   opacity: 0;
   cursor: pointer;
+}
+
+.personalTabsContent1 form {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.personalTabsContent1 form input {
+  margin-bottom: 10px;
+}
+
+.personalTabsContent1 form textarea {
+  height: 150px;
+  resize: none;
+}
+
+.personalTabsContent1 form button {
+  color: white;
+  background: #90C084;
+  padding: 8px 24px;
+  border-radius: 12px;
+  margin-top: 28px;
+}
+
+.personalTabsContent1 form button:hover {
+  background: #67a557;
 }
