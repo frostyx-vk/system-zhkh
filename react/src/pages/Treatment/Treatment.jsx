@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import s from './Treatment.module.css'
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import uploadImg from "../../illustration/upload.png";
 import axios from "axios";
 
 import { Input } from '@chakra-ui/react'
@@ -9,6 +10,15 @@ import { Textarea } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
 
 function Treatment() {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedName, setSelectedName] = useState('');
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setSelectedName(file.name);
+    // Additional validation logic
+  };
 
   return (
     <main className={s.content}>
@@ -41,7 +51,14 @@ function Treatment() {
                         minLength="20"
                       // onChange={e => setContent(e.target.value)}
                       />
-                      <input type="file" />
+                      <div className={s.parent}>
+                        <div className={s.fileUpload}>
+                          <img src={uploadImg} alt="upload" />
+                          <h3> {selectedName || 'Нажмите для загрузки файла'}</h3>
+                          <p>Максимальный размер файла 10mb</p>
+                          <input type="file" onChange={handleFileChange} />
+                        </div>
+                      </div>
                       <Button variant="ghost" type='submit'>Отправить</Button>
                     </form>
                   </div>
