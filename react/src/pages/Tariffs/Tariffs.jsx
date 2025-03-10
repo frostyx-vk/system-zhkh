@@ -4,32 +4,23 @@ import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import axios from "axios";
 
 import { ToastContainer, toast } from 'react-toastify';
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from '@chakra-ui/react'
 
 function Tariffs() {
   const [tarifData, setTarifData] = useState([])
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:8000/web/documents/',
-  //     { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
-  //     .then(response => {
-  //       setTarifData(response.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //       toast.error("Ошибка! Информация недоступна, зайдите позже")
-  //     });
-  // }, [])
+  useEffect(() => {
+    axios.get('http://localhost:8000/web/tariffs/',
+      { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
+      .then(response => {
+        setTarifData(response.data);
+        console.log(response.data)
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error("Ошибка! Информация недоступна, зайдите позже")
+      });
+  }, [])
 
   return (
     <main className={s.content}>
