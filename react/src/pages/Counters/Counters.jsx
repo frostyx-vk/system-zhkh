@@ -4,6 +4,7 @@ import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import axios from "axios";
 
 import { Input } from '@chakra-ui/react'
+import { ToastContainer, toast } from 'react-toastify';
 
 function Counters() {
   const [err, setErr] = useState(false);
@@ -47,20 +48,22 @@ function Counters() {
     e.preventDefault();
 
     for (const values of Object.values(counters)) {
-      if (!isParking && values.length < 5) {
+      if (!isParking && values.length < 5 && userData.availability_counters_water) {
         return setErr(true);
       };
     }
 
     !err &&
       axios.post('http://localhost:8000/web/set-counters/', counters,
-          { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } }
+        { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } }
       )
         .then(response => {
-          console.log(response.data)
+          console.log(response.data);
+          toast.success('Данные переданы успешно!');
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
+          toast.error('Ошибка передачи данных! Попробуйте позже.')
         });
   }
 
@@ -79,12 +82,17 @@ function Counters() {
               <p>
                 C 20 по 25 число каждого месяца требуется отправлять показания счётчиков.<br />
                 Вводить нужно только целое число!<br /><br />
-                Имущество: {userData.type}, {userData.square}м²
+                Имущество: {
+                  userData.type === 'HABITABLE' ? "Жилое помещение" : (userData.type === 'NOT_RSIDENTIAL' ? 'Нежилое помещение' : 'Парковочное место')
+                }; {userData.address}; S={userData.square}м²
               </p>
               {
-                err ? <div>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
+                !userData.availability_counters_water ? <div className={isParking ? s.hide : s.err}>Отсутствуют счётчики на воду. Сумма оплаты будет рассчитана исходя из среднестандартных норм!</div> : ''
               }
-              {isParking
+              {
+                err ? <div className={s.err}>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
+              }
+              {isParking || !userData.availability_counters_water
                 ?
                 <form onSubmit={handlerForm}>
                   <label>
@@ -149,6 +157,7 @@ function Counters() {
               }
 
             </div>
+            <ToastContainer position="top-right" />
           </div>
         </div>
       </div>
