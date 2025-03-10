@@ -22,7 +22,6 @@ class LivingArea(models.Model):
     square = models.PositiveIntegerField(verbose_name='Площадь')
     type = models.CharField(choices=TypeProperty.choices, default=TypeProperty.HABITABLE, max_length=255)
     resident_count = models.PositiveIntegerField(verbose_name='Кол-во прописанных человек', default=0)
-    availability_counters_water = models.BooleanField(verbose_name='Наличие счетчиков на воду', default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 
     class Meta:
