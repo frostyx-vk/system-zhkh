@@ -124,4 +124,4 @@ class CountersAPIView(APIView):
 class TariffsAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = TariffSerializer
-
+    queryset = Tariff.objects.all()
