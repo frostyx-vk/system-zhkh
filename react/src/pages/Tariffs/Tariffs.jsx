@@ -38,7 +38,7 @@ function Tariffs() {
                 Для информации можете ознакомиться с перечнем тарифов:
               </p>
               <div>
-                {tarifData ? (
+                {tarifData.length > 0 ? (
                   <TableContainer>
                     <Table variant='simple'>
                       <Thead>
@@ -49,21 +49,15 @@ function Tariffs() {
                         </Tr>
                       </Thead>
                       <Tbody>
-                        <Tr>
-                          <Td>Холодная вода</Td>
-                          <Td>м3</Td>
-                          <Td isNumeric>3,43</Td>
-                        </Tr>
-                        <Tr>
-                          <Td>Горячая вода</Td>
-                          <Td>м3</Td>
-                          <Td isNumeric>4,25</Td>
-                        </Tr>
-                        <Tr>
-                          <Td>Электричество</Td>
-                          <Td>кВт·ч</Td>
-                          <Td isNumeric>50</Td>
-                        </Tr>
+                        {
+                          tarifData.map((tarif) => {
+                            return <Tr key={tarif.id}>
+                              <Td>{tarif.name}</Td>
+                              <Td>{tarif.unit}</Td>
+                              <Td isNumeric>{tarif.ratio}</Td>
+                            </Tr>
+                          })
+                        }
                       </Tbody>
                     </Table>
                   </TableContainer>
