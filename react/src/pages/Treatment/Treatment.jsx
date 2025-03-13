@@ -78,7 +78,6 @@ function Treatment() {
                           <h3> {selectedName || 'Нажмите для загрузки файла'}</h3>
                           <p>Максимальный размер файла 10mb</p>
                           <input
-                            required
                             type="file"
                             onChange={handleFileChange} />
                         </div>
