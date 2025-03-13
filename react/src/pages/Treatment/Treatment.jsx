@@ -8,6 +8,7 @@ import axios from "axios";
 import { Input } from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
+import { ToastContainer, toast } from 'react-toastify';
 
 function Treatment() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -33,6 +34,8 @@ function Treatment() {
     setSelectedName('');
     setTitle('');
     setDescription('');
+    setSelectedFile(null);
+    toast.success('Обращение отправлено, следите за его статусом.');
   }
 
   return (
@@ -91,6 +94,7 @@ function Treatment() {
                 </TabPanel>
               </TabPanels>
             </Tabs>
+            <ToastContainer position="top-right" />
           </div>
         </div>
       </div>
