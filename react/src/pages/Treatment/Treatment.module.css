@@ -57,7 +57,7 @@
 
 .fileUpload {
   text-align: center;
-  border: 3px dashed rgb(210, 227, 244);
+  border: 3px dashed #90C084;
   padding: 10px;
   position: relative;
   cursor: pointer;

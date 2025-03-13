@@ -12,6 +12,8 @@ import { Button } from '@chakra-ui/react'
 function Treatment() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedName, setSelectedName] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -19,9 +21,18 @@ function Treatment() {
     setSelectedName(file.name);
   };
 
+  let treatmentData = {
+    title,
+    description,
+    selectedFile
+  };
+
   function handleForm(e) {
     e.preventDefault();
-    console.log(selectedFile)
+    console.log(treatmentData);
+    setSelectedName('');
+    setTitle('');
+    setDescription('');
   }
 
   return (
@@ -41,19 +52,22 @@ function Treatment() {
                 <TabPanel className={s.personalTabsContent}>
                   <div className={s.personalTabsContent1}>
                     <form onSubmit={handleForm} >
-                      <Input type='text'
+                      <Input
+                        type='text'
                         placeholder='Введите название проблемы'
+                        value={title}
                         size='md'
                         required
                         minLength="5"
-                      // onChange={e => setTitle(e.target.value)}
+                        onChange={e => setTitle(e.target.value)}
                       />
                       <Textarea
                         placeholder='Введите описание проблемы'
+                        value={description}
                         size='md'
                         required
                         minLength="20"
-                      // onChange={e => setContent(e.target.value)}
+                        onChange={e => setDescription(e.target.value)}
                       />
                       <div className={s.parent}>
                         <div className={s.fileUpload}>
