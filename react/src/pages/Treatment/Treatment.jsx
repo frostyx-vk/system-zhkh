@@ -8,6 +8,8 @@ import axios from "axios";
 import { Input } from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
+import { Spinner } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from '@chakra-ui/react'
 import { ToastContainer, toast } from 'react-toastify';
 
 function Treatment() {
@@ -15,6 +17,7 @@ function Treatment() {
   const [selectedName, setSelectedName] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [load, setLoad] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -36,6 +39,14 @@ function Treatment() {
     setDescription('');
     setSelectedFile(null);
     toast.success('Обращение отправлено, следите за его статусом.');
+  };
+
+  function handlerTab() {
+    setLoad(false)
+    setTimeout(() => {
+      console.log('Получил данные');
+      setLoad(true)
+    }, 200);
   }
 
   return (
@@ -49,7 +60,7 @@ function Treatment() {
             <Tabs variant='soft-rounded' colorScheme='green'>
               <TabList className={s.personalTabs}>
                 <Tab>Подать обращение</Tab>
-                <Tab>Статус обращений</Tab>
+                <Tab onClick={handlerTab}>Статус обращений</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel className={s.personalTabsContent}>
@@ -62,6 +73,7 @@ function Treatment() {
                         size='md'
                         required
                         minLength="5"
+                        maxLength='30'
                         onChange={e => setTitle(e.target.value)}
                       />
                       <Textarea
@@ -87,9 +99,41 @@ function Treatment() {
                   </div>
                 </TabPanel>
                 <TabPanel className={s.personalTabsContent}>
-                  <div>
-
-                  </div>
+                  {
+                    load ?
+                      <div className={s.statusList}>
+                        <TableContainer>
+                          <Table variant='simple'>
+                            <Thead>
+                              <Tr>
+                                <Th>Название обращения</Th>
+                                <Th>Дата обращения</Th>
+                                <Th>Статус</Th>
+                              </Tr>
+                            </Thead>
+                            <Tbody>
+                              <Tr>
+                                <Td>Прорвало трубу</Td>
+                                <Td>01.02.2025 13:50</Td>
+                                <Td>В работе</Td>
+                              </Tr>
+                              <Tr>
+                                <Td>Затопило</Td>
+                                <Td>14.03.2025 17:42</Td>
+                                <Td>На рассмотрении</Td>
+                              </Tr>
+                              <Tr>
+                                <Td>Навалили на общем балконе</Td>
+                                <Td>19.03.2025 23:58</Td>
+                                <Td>Выполнено</Td>
+                              </Tr>
+                            </Tbody>
+                          </Table>
+                        </TableContainer>
+                      </div>
+                      :
+                      <Spinner color='green.500' size='lg' />
+                  }
                 </TabPanel>
               </TabPanels>
             </Tabs>
