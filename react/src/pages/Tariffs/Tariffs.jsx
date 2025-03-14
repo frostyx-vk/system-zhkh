@@ -14,7 +14,6 @@ function Tariffs() {
       { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
         setTarifData(response.data);
-        console.log(response.data)
       })
       .catch((err) => {
         console.log(err)
