@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.views import PasswordResetCompleteView
+from django.db import transaction
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import ListAPIView
@@ -9,7 +11,7 @@ from rest_framework.views import APIView
 
 from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea
 from web.serializers import AboutPortalSerializer, ContactSerializer, NewsSerializer, ServiceSerializer, \
-    DocumentsSerializer, LivingAreaSerializer, TariffSerializer
+    DocumentsSerializer, LivingAreaSerializer, IndicationSerializer, TariffSerializer
 
 
 class PasswordResetCompleteCustomView(PasswordResetCompleteView):
@@ -63,6 +65,16 @@ class CountersAPIView(APIView):
             last_indication = indications.last().last_indication
         return last_indication
 
+    def create_indication(self, data):
+        indication_serializer = IndicationSerializer(data=data)
+        if indication_serializer.is_valid():
+            indication_serializer.save()
+        else:
+            print(indication_serializer.errors)
+            return JsonResponse({'error': indication_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+    @transaction.atomic
     def post(self, request):
         cold_water = request.data.get('coldWater')
         hot_water = request.data.get('hotWater')
@@ -76,33 +88,36 @@ class CountersAPIView(APIView):
         tariff_electricity = get_object_or_404(Tariff, key=Tariff.Keys.electricity)
         cold_sum, hot_sum, electricity_sum = 'Не определено', 'Не определено', 'Не определено'
 
-        if cold_water:
-            indications = Indication.objects.filter(user=self.request.user, tariff=tariff_cold)
-            last_indication = self.get_last_indication(tariff_cold, indications)
-            current_cold_indication = int(cold_water) - last_indication
-            if self.request.user.livingarea.availability_counters_water:
+        if self.request.user.livingarea.type != LivingArea.TypeProperty.PARKING:
+            if cold_water:
+                indications = Indication.objects.filter(user=self.request.user, tariff=tariff_cold)
+                last_indication = self.get_last_indication(tariff_cold, indications)
+                current_cold_indication = int(cold_water) - last_indication
                 cold_sum = current_cold_indication * tariff_cold.ratio
-        else:
-            if not self.request.user.livingarea.availability_counters_water:
-                if self.request.user.livingarea.resident_count > 1:
-                    norm = tariff_cold.regulations.filter(person_count__gt=1).last()
-                else:
-                    norm = tariff_cold.regulations.filter(person_count=1).last()
-                cold_sum = norm.value * norm.summ_without_counters
+                data = {
+                    'last_indication': cold_water,
+                    'user': self.request.user.pk,
+                    'tariff': tariff_cold.pk,
+                    'finish_price': cold_sum
+                }
+                self.create_indication(data)
+            else:
+                return Response({'message': 'Indication cold water has not value'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if hot_water:
-            indications = Indication.objects.filter(user=self.request.user, tariff=tariff_hot)
-            last_indication = self.get_last_indication(tariff_hot, indications)
-            current_hot_indication = int(hot_water) - last_indication
-            if self.request.user.livingarea.availability_counters_water:
+            if hot_water:
+                indications = Indication.objects.filter(user=self.request.user, tariff=tariff_hot)
+                last_indication = self.get_last_indication(tariff_hot, indications)
+                current_hot_indication = int(hot_water) - last_indication
                 hot_sum = current_hot_indication * tariff_hot.ratio
-        else:
-            if not self.request.user.livingarea.availability_counters_water:
-                if self.request.user.livingarea.resident_count > 1:
-                    norm = tariff_hot.regulations.filter(person_count__gt=1).last()
-                else:
-                    norm = tariff_hot.regulations.filter(person_count=1).last()
-                hot_sum = norm.value * norm.summ_without_counters
+                data = {
+                    'last_indication': hot_water,
+                    'user': self.request.user.pk,
+                    'tariff': tariff_cold.pk,
+                    'finish_price': hot_sum
+                }
+                self.create_indication(data)
+            else:
+                return Response({'message': 'Indication hot water has not value'}, status=status.HTTP_400_BAD_REQUEST)
 
         if electricity:
             indications = Indication.objects.filter(user=self.request.user, tariff=tariff_electricity)
@@ -112,11 +127,19 @@ class CountersAPIView(APIView):
                 norm = tariff_electricity.regulations.filter(person_count__gt=1).last()
             else:
                 norm = tariff_electricity.regulations.filter(person_count=1).last()
-
+            if not norm:
+                return Response({'message': 'Indication has not norm'}, status=status.HTTP_400_BAD_REQUEST)
             if current_electricity_indication <= norm.value:
                 electricity_sum = current_electricity_indication * norm.standard_summ
             else:
                 electricity_sum = current_electricity_indication * norm.summ_above
+            data = {
+                'last_indication': electricity,
+                'user': self.request.user.pk,
+                'tariff': tariff_electricity.pk,
+                'finish_price': electricity_sum
+            }
+            self.create_indication(data)
 
         return Response({'message': 'Data success save', 'data': [cold_sum, hot_sum, electricity_sum]})
 
