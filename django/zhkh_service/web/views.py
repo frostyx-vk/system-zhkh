@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 
 from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea
 from web.serializers import AboutPortalSerializer, ContactSerializer, NewsSerializer, ServiceSerializer, \
-    DocumentsSerializer, LivingAreaSerializer, IndicationSerializer
+    DocumentsSerializer, LivingAreaSerializer, IndicationSerializer, TariffSerializer
 
 
 class PasswordResetCompleteCustomView(PasswordResetCompleteView):
@@ -142,3 +142,9 @@ class CountersAPIView(APIView):
             self.create_indication(data)
 
         return Response({'message': 'Data success save', 'data': [cold_sum, hot_sum, electricity_sum]})
+
+
+class TariffsAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = TariffSerializer
+    queryset = Tariff.objects.all()

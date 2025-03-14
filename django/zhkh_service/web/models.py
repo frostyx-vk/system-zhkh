@@ -124,6 +124,7 @@ class Tariff(models.Model):
     name = models.CharField(verbose_name='Название', max_length=100)
     ratio = models.FloatField(verbose_name='Кол-во рублей за ед.', max_length=15, blank=True)
     key = models.CharField(verbose_name='Ключ', max_length=255, choices=Keys.choices)
+    unit = models.CharField(verbose_name='Единица измерения', null=True, blank=True, max_length=255)
 
 
     class Meta:
