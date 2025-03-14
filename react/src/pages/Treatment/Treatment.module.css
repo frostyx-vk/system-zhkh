@@ -120,3 +120,7 @@
 .personalTabsContent1 form button:hover {
   background: #67a557;
 }
+
+.spinner {
+  text-align: center;
+}

@@ -46,7 +46,7 @@ function Treatment() {
     setTimeout(() => {
       console.log('Получил данные');
       setLoad(true)
-    }, 200);
+    }, 100);
   }
 
   return (
@@ -132,7 +132,9 @@ function Treatment() {
                         </TableContainer>
                       </div>
                       :
-                      <Spinner color='green.500' size='lg' />
+                      <div className={s.spinner}>
+                        <Spinner color='green.500' size='lg' />
+                      </div>
                   }
                 </TabPanel>
               </TabPanels>
