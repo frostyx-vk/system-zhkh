@@ -36,10 +36,12 @@
 
 .homeSecondBlock button {
     width: 500px;
+    height: 50px;
+    box-shadow: 1px 1px 10px #888888;
 }
 
 .leftButtonUp button {
-    color: green;
+    color:#4bb23d;
 }
 
 .leftButtonDown button {
@@ -47,11 +49,11 @@
 }
 
 .rightButtonUp button {
-    color: rgb(114, 114, 221);
+    color: #48a2c3;
 }
 
 .rightButtonDown button {
-    color: rgb(183, 75, 75);
+    color: #c44d43;
 }
 
 .modalForm {

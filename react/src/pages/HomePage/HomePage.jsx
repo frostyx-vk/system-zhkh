@@ -71,25 +71,25 @@ function HomePage() {
           </div>
           <div className={s.leftButtonDown}>
             <Button leftIcon={<ViewIcon boxSize={6} />}>
-              Видеонаблюдение онлайн
+              Узнать статус обращений
             </Button>
           </div>
         </div>
         <div className={s.homeSecondBlockRight}>
           <div className={s.rightButtonUp}>
-            <Button leftIcon={<PlusSquareIcon boxSize={6} />}>
-              Список домов
+            <Button leftIcon={<ChatIcon boxSize={6} />}>
+              Чат с УК
             </Button>
             <Button leftIcon={<LinkIcon boxSize={6} />}>
-              Управляющие компании
+              Узнать тарифы
             </Button>
           </div>
           <div className={s.rightButtonDown}>
             <Button onClick={onOpen} leftIcon={<WarningIcon boxSize={6} />}>
               Заявить о проблеме
             </Button>
-            <Button leftIcon={<ChatIcon boxSize={6} />}>
-              Онлайн-собрание жильцов
+            <Button leftIcon={<PlusSquareIcon boxSize={6} />}>
+              Получить документы УК
             </Button>
           </div>
         </div>
