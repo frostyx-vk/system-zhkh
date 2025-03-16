@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 
-from web.models import AboutPortal, Contact, News, Service, DataDeveloper, Documents, LivingArea, Indication, Tariff
+from web.models import AboutPortal, Contact, News, Service, DataDeveloper, Documents, LivingArea, Indication, Tariff, \
+    Receipt
 
 
 class NewsSerializer(ModelSerializer):
@@ -54,4 +55,10 @@ class IndicationSerializer(ModelSerializer):
 class TariffSerializer(ModelSerializer):
     class Meta:
         model = Tariff
+        fields = '__all__'
+
+
+class ReceiptSerializer(ModelSerializer):
+    class Meta:
+        model = Receipt
         fields = '__all__'
