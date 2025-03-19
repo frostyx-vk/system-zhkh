@@ -22,7 +22,6 @@ class LivingArea(models.Model):
     square = models.PositiveIntegerField(verbose_name='Площадь')
     type = models.CharField(choices=TypeProperty.choices, default=TypeProperty.HABITABLE, max_length=255)
     resident_count = models.PositiveIntegerField(verbose_name='Кол-во прописанных человек', default=0)
-    availability_counters_water = models.BooleanField(verbose_name='Наличие счетчиков на воду', default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 
     class Meta:
@@ -125,6 +124,7 @@ class Tariff(models.Model):
     name = models.CharField(verbose_name='Название', max_length=100)
     ratio = models.FloatField(verbose_name='Кол-во рублей за ед.', max_length=15, blank=True)
     key = models.CharField(verbose_name='Ключ', max_length=255, choices=Keys.choices)
+    unit = models.CharField(verbose_name='Единица измерения', null=True, blank=True, max_length=255)
 
 
     class Meta:
@@ -149,6 +149,19 @@ class Regulation(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Receipt(models.Model):
+    file = models.FileField(verbose_name='Квитанция', upload_to='receipts/')
+    date_created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
+    living_area = models.ForeignKey(LivingArea, on_delete=models.CASCADE, verbose_name='Жил. площадь')
+
+    class Meta:
+        verbose_name = 'Платежный документ'
+        verbose_name_plural = 'Платежный документы'
+
+    def __str__(self):
+        return self.living_area.address
 
 
 class Indication(models.Model):

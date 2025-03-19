@@ -8,17 +8,22 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import { useDisclosure } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function HomePage() {
-
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+
+  const navigate = useNavigate();
+
+  const navigateToUserPage = () => {
+    navigate('/userpage');
+  };
 
   function handlerModalForm(event) {
     event.preventDefault();
@@ -43,7 +48,8 @@ function HomePage() {
           toast.error("Ошибка! Попробуйте отправить позже");
         }
       });
-  }
+  };
+
 
   return (
     <main className='content wrapper'>
@@ -59,37 +65,37 @@ function HomePage() {
       <div className={s.homeSecondBlock}>
         <div className={s.homeSecondBlockLeft}>
           <div className={s.leftButtonUp}>
-            <Button leftIcon={<EditIcon boxSize={6} />}>
+            <Button onClick={navigateToUserPage} leftIcon={<EditIcon boxSize={6} />}>
               Внести показания счетчиков
             </Button>
-            <Button leftIcon={<CalendarIcon boxSize={6} />}>
+            <Button onClick={navigateToUserPage} leftIcon={<CalendarIcon boxSize={6} />}>
               Электронная квитанция ЖКХ
             </Button>
-            <Button leftIcon={<BellIcon boxSize={6} />}>
+            <Button onClick={navigateToUserPage} leftIcon={<BellIcon boxSize={6} />}>
               Оплатить услуги ЖКХ
             </Button>
           </div>
           <div className={s.leftButtonDown}>
-            <Button leftIcon={<ViewIcon boxSize={6} />}>
-              Видеонаблюдение онлайн
+            <Button onClick={navigateToUserPage} leftIcon={<ViewIcon boxSize={6} />}>
+              Узнать статус обращений
             </Button>
           </div>
         </div>
         <div className={s.homeSecondBlockRight}>
           <div className={s.rightButtonUp}>
-            <Button leftIcon={<PlusSquareIcon boxSize={6} />}>
-              Список домов
+            <Button onClick={navigateToUserPage} leftIcon={<ChatIcon boxSize={6} />}>
+              Чат с УК
             </Button>
-            <Button leftIcon={<LinkIcon boxSize={6} />}>
-              Управляющие компании
+            <Button onClick={navigateToUserPage} leftIcon={<LinkIcon boxSize={6} />}>
+              Узнать тарифы
             </Button>
           </div>
           <div className={s.rightButtonDown}>
             <Button onClick={onOpen} leftIcon={<WarningIcon boxSize={6} />}>
               Заявить о проблеме
             </Button>
-            <Button leftIcon={<ChatIcon boxSize={6} />}>
-              Онлайн-собрание жильцов
+            <Button onClick={navigateToUserPage} leftIcon={<PlusSquareIcon boxSize={6} />}>
+              Получить документы УК
             </Button>
           </div>
         </div>
