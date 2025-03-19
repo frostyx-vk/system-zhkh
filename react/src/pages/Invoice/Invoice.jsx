@@ -11,17 +11,18 @@ function Invoice() {
   const [options, setOptions] = useState('');
   const [invoice, setInvoice] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:8000/web/documents/',
-  //     { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
-  //     .then(response => {
-  //       setOptions(response.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //       toast.error("Ошибка! Информация недоступна, зайдите позже")
-  //     });
-  // }, [])
+  useEffect(() => {
+    axios.get('http://localhost:8000/web/receipts/',
+      { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
+      .then(response => {
+        setOptions(response.data);
+        console.log(response.data)
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error("Ошибка! Информация недоступна, зайдите позже")
+      });
+  }, [])
 
   function getInvoce(e) {
     e.preventDefault();
@@ -38,8 +39,6 @@ function Invoice() {
 
     console.log('Вызов функции')
   };
-
-  console.log(options)
 
   return (
     <main className={s.content}>
