@@ -9,9 +9,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea
+from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea, Receipt
 from web.serializers import AboutPortalSerializer, ContactSerializer, NewsSerializer, ServiceSerializer, \
-    DocumentsSerializer, LivingAreaSerializer, IndicationSerializer, TariffSerializer
+    DocumentsSerializer, LivingAreaSerializer, IndicationSerializer, TariffSerializer, ReceiptSerializer
 
 
 class PasswordResetCompleteCustomView(PasswordResetCompleteView):
@@ -148,3 +148,11 @@ class TariffsAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = TariffSerializer
     queryset = Tariff.objects.all()
+
+
+class ReceiptListAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ReceiptSerializer
+
+    def get_queryset(self):
+        return Receipt.objects.filter(living_area__user=self.request.user)
