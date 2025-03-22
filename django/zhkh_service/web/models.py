@@ -10,6 +10,13 @@ def is_nan_validator(value):
     if math.isnan(value):
         raise ValidationError('Недопустимое значение поля. Поле не может быть NaN')
 
+def validate_file_extension(value):
+    import os
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.pdf']
+    if not ext in valid_extensions:
+        raise ValidationError(u'Доступно только PDF')
+
 
 class LivingArea(models.Model):
     class TypeProperty(models.TextChoices):
@@ -152,7 +159,7 @@ class Regulation(models.Model):
 
 
 class Receipt(models.Model):
-    file = models.FileField(verbose_name='Квитанция', upload_to='receipts/')
+    file = models.FileField(verbose_name='Квитанция', upload_to='receipts/', validators=[validate_file_extension])
     date_created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
     living_area = models.ForeignKey(LivingArea, on_delete=models.CASCADE, verbose_name='Жил. площадь')
 
