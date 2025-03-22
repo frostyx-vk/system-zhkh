@@ -57,9 +57,12 @@ function Payments() {
                 <TabPanel className={s.personalTabsContent}>
                   <div className={s.personalTabsContent1}>
                     <p>Общая задолженность на {new Date().toISOString().slice(0, 10).split("-").reverse().join("-").replace(/-/g, '.')} составляет: {parseInt(finishPrice.message)} ₽</p>
-                    <button className={s.paymentsBtn} onClick={payServices}>
-                      <a href={`http://0.0.0.0:8000/web/pay/yk/${parseInt(finishPrice.message)}/?token=${sessionStorage.accessToken}`}>Оплатить</a>
-                    </button>
+                    {
+                      parseInt(finishPrice.message) > 0 ?
+                        <button className={s.paymentsBtn} onClick={payServices}>
+                          <a href={`http://0.0.0.0:8000/web/pay/yk/${parseInt(finishPrice.message)}/?token=${sessionStorage.accessToken}`}>Оплатить</a>
+                        </button> : ''
+                    }
                   </div>
                 </TabPanel>
                 <TabPanel className={s.personalTabsContent}>
