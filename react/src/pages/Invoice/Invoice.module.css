@@ -85,3 +85,8 @@
   fill: #d14b4b;
   padding-bottom: 8px;
 }
+
+.spinner {
+  text-align: center;
+  margin-top: 20px;
+}
