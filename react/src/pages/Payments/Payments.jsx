@@ -10,9 +10,39 @@ import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer } 
 function Payments() {
   const [payments, setPayments] = useState([])
 
+  const [finishPrice, setFinishPrice] = useState([]);
+
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/web/get-sum-payment/${sessionStorage.accessToken}/`)
+      .then(res => setFinishPrice(res.data))
+      .catch(err => {
+        if (err.response) {
+          console.log('Отсутствует ответ')
+        } else if (err.request) {
+          console.log('Ошибка запроса')
+        } else {
+          console.log('Другая ошибка')
+        }
+      });
+  }, [])
+
   function payServices() {
     console.log('Функция перехода на страницу оплаты')
+    axios.get(`http://localhost:8000/web/pay/payment-history/${sessionStorage.accessToken}/`,
+          { headers: { "Authorization": 'Token ' + sessionStorage.accessToken }})
+      .then(res => setPayments(res.data))
+        .catch(err => {
+          if (err.response) {
+            console.log('Отсутствует ответ')
+          } else if (err.request) {
+            console.log('Ошибка запроса')
+          } else {
+            console.log('Другая ошибка')
+          }
+        });
   }
+    console.log(payments)
 
   return (
     <main className={s.content}>
@@ -25,13 +55,16 @@ function Payments() {
             <Tabs variant='soft-rounded' colorScheme='green'>
               <TabList className={s.personalTabs}>
                 <Tab>Оплата</Tab>
-                <Tab>История платежей</Tab>
+                <Tab onClick={payServices}>История платежей</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel className={s.personalTabsContent}>
                   <div className={s.personalTabsContent1}>
-                    <p>Общая задолженность на {new Date().toISOString().slice(0, 10)} составляет: {5000}₽</p>
-                    <button className={s.paymentsBtn} onClick={payServices}>Оплатить</button>
+                    <p>Общая задолженность на {new Date().toISOString().slice(0, 10)} составляет: {parseInt(finishPrice.message)}₽</p>
+                    <button className={s.paymentsBtn} onClick={payServices}>
+                      <a href={`http://0.0.0.0:8000/web/pay/yk/${parseInt(finishPrice.message)}/?token=${sessionStorage.accessToken}`}>Оплатить</a>
+                    </button>
+
                   </div>
                 </TabPanel>
                 <TabPanel className={s.personalTabsContent}>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата</title>
+</head>
+<body>
+    <div class="wrapper" style="margin-left: 78px;">
+    <div class="paydetail-wrapper">
+      <div class="paydetail-content">
+        <div class="paydetail-content__colums">
+          <div>
+            <p>Номер платежа: {{ object.pk }}</p>
+          </div>
+          <div>
+            <p>Дата оплаты: {{ object.date_created }}</p>
+          </div>
+          <div>
+            <p>Пользователь: {{ request.user.profile }}</p>
+          </div>
+          <div>
+            <p>Сумма к оплате: {{ object.order_amount }} руб.</p>
+          </div>
+
+          <div class="paydetail-content__paybtn">
+            {% if view.payment_success %}
+              <div class="paydetail-content__succes">
+                <p>Оплата прошла успешно!</p>
+              </div>
+            {% elif view.payment_failed %}
+              <div class="paydetail-content__succes">
+                <p>При оплате возникла ошибка</p>
+              </div>
+            {% else %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

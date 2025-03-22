@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import AboutPortal, Contact, DataDeveloper, News, Service, Documents, Tariff, Indication, LivingArea, \
-    Regulation
+    Regulation, Payment
 from .forms import DocumentAdminForm
 
 
@@ -59,3 +59,4 @@ class IndicationAdmin(admin.ModelAdmin):
 class LivingAreaAdmin(admin.ModelAdmin):
     list_display = ('address', 'number_ls', 'square', 'type')
 
+admin.site.register(Payment)

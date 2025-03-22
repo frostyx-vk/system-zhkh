@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from web.models import AboutPortal, Contact, News, Service, DataDeveloper, Documents, LivingArea
+from web.models import AboutPortal, Contact, News, Service, DataDeveloper, Documents, LivingArea, Payment
 
 
 class NewsSerializer(ModelSerializer):
@@ -43,3 +43,9 @@ class LivingAreaSerializer(ModelSerializer):
     class Meta:
         model = LivingArea
         fields = ('address', 'number_ls', 'square', 'type', 'availability_counters_water')
+
+
+class PaymentSerializer(ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = ('order_amount', 'date_created')
