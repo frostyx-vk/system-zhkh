@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import s from './Invoice.module.css'
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import axios from "axios";
@@ -8,11 +8,16 @@ import { FaRegFilePdf } from "react-icons/fa6";
 import { ToastContainer, toast } from 'react-toastify';
 
 function Invoice() {
-  const [options, setOptions] = useState('');
-  const [invoice, setInvoice] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [invoice, setInvoice] = useState('');
+  const [invoiceName, setInvoiceName] = useState('');
+  const [selectedOption, setSelectedOption] = useState();
+
+  const ref = useRef(null);
+
   useEffect(() => {
     axios.get('http://localhost:8000/web/receipts/',
-      {headers: {"Authorization": 'Token ' + sessionStorage.accessToken}})
+      { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
         setOptions(response.data);
       })
@@ -22,22 +27,10 @@ function Invoice() {
       });
   }, [])
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:8000/web/documents/',
-  //     { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
-  //     .then(response => {
-  //       setOptions(response.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //       toast.error("Ошибка! Информация недоступна, зайдите позже")
-  //     });
-  // }, [])
-
   function getInvoce(e) {
     e.preventDefault();
-
-    console.log('Вызов функции')
+    setInvoice(selectedOption);
+    setInvoiceName(ref.current.getAttribute('data-name'));
   };
 
   console.log(options)
@@ -60,34 +53,34 @@ function Invoice() {
               <form onSubmit={getInvoce} className={s.getBlock}>
                 <Select
                   placeholder='Нажмите для выбора'
-                  value={options}
-                  onChange={(e) => setOptions(e.target.value)}
+                  onChange={(event) => setSelectedOption(event.target.value)}
                 >
-                  <option value='option1'>Декабрь 2024</option>
-                  <option value='option2'>Январь 2025</option>
-                  <option value='option3'>Февраль 2025</option>
+                  {options.map((opt) => (
+                    <option key={opt.id}
+                      ref={ref}
+                      value={opt.file}
+                      data-name={opt.date_created.slice(0, 7)}>
+                      {opt.date_created.slice(0, 7)}
+                    </option>
+                  ))}
                 </Select>
                 <button type='submit'>Получить</button>
               </form>
               <div className={s.invoiceDoc}>
-              {invoice.length > 0 ? (
-                <ul>
-                  {invoice.map((invoice, i) => (
-                    <li key={i}>
-                      {/* <a target="_blank" href={invoice.file}>
-                        <FaRegFilePdf />
-                        {invoice.title}
-                      </a> */}
-                    </li>
-                  ))}
-                </ul>
-              ) : <p>Нажмите "Получить" для получения документа</p>}
-            </div>
+                {invoice.length > 0 ? (
+                  <div className={s.invoiceFile}>
+                    <a target="_blank" href={invoice}>
+                      <FaRegFilePdf />
+                      Платёжный документ за {invoiceName}
+                    </a>
+                  </div>
+                ) : <p>Нажмите "Получить" для получения документа</p>}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </main >
   )
 }
 
