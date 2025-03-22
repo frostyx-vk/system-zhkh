@@ -10,6 +10,17 @@ import { ToastContainer, toast } from 'react-toastify';
 function Invoice() {
   const [options, setOptions] = useState('');
   const [invoice, setInvoice] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:8000/web/receipts/',
+      {headers: {"Authorization": 'Token ' + sessionStorage.accessToken}})
+      .then(response => {
+        setOptions(response.data);
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error("Ошибка! Информация недоступна, зайдите позже")
+      });
+  }, [])
 
   // useEffect(() => {
   //   axios.get('http://localhost:8000/web/documents/',
@@ -25,16 +36,6 @@ function Invoice() {
 
   function getInvoce(e) {
     e.preventDefault();
-    // axios.patch('http://localhost:8000/auth/users/me/', { 'email': email, 'phone': phone, 'is_active': true },
-    //   { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
-    //   .then(response => {
-    //     setInvoice(response.data);
-    //     toast.success('Информация успешно получена!');
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //     toast.error("Ошибка! Попробуйте получить информацию позже.")
-    //   });
 
     console.log('Вызов функции')
   };
