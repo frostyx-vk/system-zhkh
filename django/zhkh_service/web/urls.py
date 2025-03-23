@@ -1,7 +1,7 @@
 from django.urls import path
 
 from web.views import AboutPortalAPIView, ContactAPIView, NewsListAPIView, ServiceAPIView, DocumentsSerializerAPIView, \
-    CountersAPIView, LivingAreaDataAPIView, AppealCreateAPIView
+    CountersAPIView, LivingAreaDataAPIView, AppealCreateAPIView, AppealListAPIView
 
 app_name = 'web'
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path('set-counters/', CountersAPIView.as_view(), name='set-counters'),
     path('get-living-area-data/', LivingAreaDataAPIView.as_view(), name='living-area-data'),
     path('appeal-create/', AppealCreateAPIView.as_view(), name='appeal-create'),
+    path('appeals/<str:token>/', AppealListAPIView.as_view(), name='appeal-list'),
 ]

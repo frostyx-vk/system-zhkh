@@ -1,7 +1,10 @@
+from aiohttp.http_exceptions import HttpBadRequest
 from django.conf import settings
 from django.contrib.auth.views import PasswordResetCompleteView
+from django.http import HttpRequest, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -124,3 +127,24 @@ class CountersAPIView(APIView):
 class AppealCreateAPIView(CreateAPIView):
     serializer_class = AppealSerializer
     queryset = Appeal.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        sender = Token.objects.get(key=request.data['token']).user.pk
+        data = request.data
+        if sender:
+            data['sender'] = sender
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            return HttpResponseBadRequest()
+        return Response({'message': 'Обращение успешно отправлено!'})
+
+
+class AppealListAPIView(ListAPIView):
+    serializer_class = AppealSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = Token.objects.get(key=self.kwargs['token']).user
+        return Appeal.objects.filter(sender=user)

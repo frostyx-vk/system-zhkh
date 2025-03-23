@@ -24,12 +24,11 @@ function Treatment() {
     setSelectedFile(file);
     setSelectedName(file.name);
   };
-
-  let treatmentData = {
-    title,
-    description,
-    selectedFile
-  };
+  let treatmentData = new FormData();
+  treatmentData.append('name', title);
+  treatmentData.append('text', description)
+  treatmentData.append('file', selectedFile);
+  treatmentData.append('token', sessionStorage.accessToken)
 
   function handleForm(e) {
     e.preventDefault();
@@ -81,7 +80,7 @@ function Treatment() {
               <TabPanels>
                 <TabPanel className={s.personalTabsContent}>
                   <div className={s.personalTabsContent1}>
-                    <form onSubmit={handleForm} >
+                    <form onSubmit={handleForm} encType={'multipart/form-data'}>
                       <Input
                         type='text'
                         placeholder='Введите название проблемы'
