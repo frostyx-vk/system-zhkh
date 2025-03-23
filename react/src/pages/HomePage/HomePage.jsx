@@ -18,6 +18,8 @@ function HomePage() {
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedName, setSelectedName] = useState('');
 
   const navigate = useNavigate();
 
@@ -25,16 +27,26 @@ function HomePage() {
     navigate('/userpage');
   };
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setSelectedName(file.name);
+  };
+
   function handlerModalForm(event) {
     event.preventDefault();
 
-    let modalData = {
-      email,
-      title,
-      content
-    };
+    let problemData = new FormData();
+    problemData.append('e-mail', email);
+    problemData.append('name', title);
+    problemData.append('text', content)
+    problemData.append('file', selectedFile);
 
-    axios.post('http://localhost:8000/communication/create-message-problem/', modalData)
+    for (var pair of problemData.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]); 
+  }
+
+    axios.post('http://localhost:8000/communication/create-message-problem/', problemData)
       .then(res => {
         toast.success(res.data.status + '!');
         onClose();
@@ -130,6 +142,15 @@ function HomePage() {
                   minLength="20"
                   onChange={e => setContent(e.target.value)}
                 />
+                <div className={s.parent}>
+                  <div className={s.fileUpload}>
+                    <h3> {selectedName || 'Нажмите для загрузки файла'}</h3>
+                    <p>Максимальный размер файла 10mb</p>
+                    <input
+                      type="file"
+                      onChange={handleFileChange} />
+                  </div>
+                </div>
               </ModalBody>
 
               <ModalFooter>
