@@ -13,3 +13,80 @@
   font-weight: 600;
   font-size: 18px;
 }
+
+.invoice {
+  padding: 14px;
+}
+
+.invoice p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.invoice select {
+  color: black;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 5px;
+  cursor: pointer;
+}
+
+.invoice button {
+  color: white;
+  background: #90C084;
+  padding: 8px 24px;
+  border-radius: 12px;
+}
+
+.getBlock {
+  display: flex;
+  gap: 100px;
+}
+
+.invoiceDoc {
+  color: black;
+}
+
+.invoiceDoc p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 14px;
+}
+
+.invoiceFile {
+  width: 140px;
+  text-align: center;
+}
+
+.invoiceFile a {
+  color: black;
+  line-height: 1.2;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.invoiceFile a svg {
+  width: 70px;
+  height: 70px;
+  fill: #d14b4b;
+  padding-bottom: 8px;
+}
+
+.spinner {
+  text-align: center;
+  margin-top: 20px;
+}

@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from web.views import AboutPortalAPIView, ContactAPIView, NewsListAPIView, ServiceAPIView, DocumentsSerializerAPIView, \
-    CountersAPIView, LivingAreaDataAPIView, yookassa_request, PaymentWidgetView, PaymentSuccessView, \
+    CountersAPIView, LivingAreaDataAPIView, TariffsAPIView, ReceiptListAPIView, yookassa_request, PaymentWidgetView, PaymentSuccessView, \
     YooKassaCallbackView, PaymentSumAPIView, PaymentHistoryListAPIView
 
 app_name = 'web'
@@ -13,6 +13,9 @@ urlpatterns = [
     path('about-portal/', AboutPortalAPIView.as_view(), name='about-portal'),
     path('documents/', DocumentsSerializerAPIView.as_view(), name='documents'),
     path('set-counters/', CountersAPIView.as_view(), name='set-counters'),
+    path('get-living-area-data/', LivingAreaDataAPIView.as_view(), name='living-area-data'),
+    path('tariffs/', TariffsAPIView.as_view(), name='tariffs'),
+    path('receipts/', ReceiptListAPIView.as_view(), name='receipts'),
     path('get-living-area-data/', LivingAreaDataAPIView.as_view(), name='living-area-data'),
 
     path('get-sum-payment/<str:token>/', PaymentSumAPIView.as_view(), name='get-sum-payment'),

@@ -18,4 +18,9 @@
   font-size: 18px;
   text-align:justify;
   font-style: italic;
+  font-weight: 500;
+}
+
+.dateNews {
+  margin-right: 10px;
 }

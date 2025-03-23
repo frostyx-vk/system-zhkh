@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import AboutPortal, Contact, DataDeveloper, News, Service, Documents, Tariff, Indication, LivingArea, \
-    Regulation, Payment
+    Regulation, Payment, Receipt
 from .forms import DocumentAdminForm
 
 
@@ -37,6 +37,10 @@ class DocumentsAdmin(admin.ModelAdmin):
     list_display = ('title',)
     form = DocumentAdminForm
 
+
+@admin.register(Receipt)
+class ReceiptAdmin(admin.ModelAdmin):
+    list_display = ('date_created',)
 
 class RegulationAdminInline(admin.TabularInline):
     model = Regulation

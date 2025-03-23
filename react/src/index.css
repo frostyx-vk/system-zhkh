@@ -65,12 +65,12 @@ button {
   height: 100%;
   background: white;
   border-radius: 20px;
-    box-shadow: 1px 1px 10px #888888;
+  box-shadow: 1px 1px 10px #888888;
 }
 
 .personalContent {
   width: 65%;
   background: white;
   border-radius: 20px;
-    box-shadow: 1px 1px 10px #888888;
+  box-shadow: 1px 1px 10px #888888;
 }
