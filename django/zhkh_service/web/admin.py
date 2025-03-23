@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import AboutPortal, Contact, DataDeveloper, News, Service, Documents, Tariff, Indication, LivingArea, \
-    Regulation
+    Regulation, Appeal
 from .forms import DocumentAdminForm
 
 
@@ -59,3 +59,8 @@ class IndicationAdmin(admin.ModelAdmin):
 class LivingAreaAdmin(admin.ModelAdmin):
     list_display = ('address', 'number_ls', 'square', 'type')
 
+
+@admin.register(Appeal)
+class AppealAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name', 'text')

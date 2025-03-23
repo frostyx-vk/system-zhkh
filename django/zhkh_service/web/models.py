@@ -164,3 +164,25 @@ class Indication(models.Model):
 
     def __str__(self):
         return str(self.last_indication)
+
+
+class Appeal(models.Model):
+    class Statuses(models.TextChoices):
+        IN_WORK = 'IN_WORK', 'В работе'
+        MODERATION = 'MODERATION', 'На рассмотрении'
+        COMPLETED = 'COMPLETED', 'Выполнено'
+
+    name = models.CharField(max_length=255, verbose_name='Название')
+    text = models.TextField(verbose_name='Текст обращения')
+    file = models.FileField(verbose_name='Файл', upload_to='appeals/', blank=True)
+    sender = models.ForeignKey('accounts.User', on_delete=models.CASCADE, verbose_name='Отправитель', related_name='sender_appeals')
+    status = models.CharField(max_length=255, verbose_name='Статус', choices=Statuses.choices, default=Statuses.IN_WORK)
+    responsible = models.ForeignKey('accounts.User', on_delete=models.CASCADE, verbose_name='Ответственный',
+                                    blank=True, null=True, related_name='responsible_appeals')
+
+    class Meta:
+        verbose_name = 'Обращение'
+        verbose_name_plural = 'Обращения'
+
+    def __str__(self):
+        return self.name

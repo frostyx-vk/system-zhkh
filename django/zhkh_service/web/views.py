@@ -2,14 +2,14 @@ from django.conf import settings
 from django.contrib.auth.views import PasswordResetCompleteView
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea
+from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea, Appeal
 from web.serializers import AboutPortalSerializer, ContactSerializer, NewsSerializer, ServiceSerializer, \
-    DocumentsSerializer, LivingAreaSerializer
+    DocumentsSerializer, LivingAreaSerializer, AppealSerializer
 
 
 class PasswordResetCompleteCustomView(PasswordResetCompleteView):
@@ -119,3 +119,8 @@ class CountersAPIView(APIView):
                 electricity_sum = current_electricity_indication * norm.summ_above
 
         return Response({'message': 'Data success save', 'data': [cold_sum, hot_sum, electricity_sum]})
+
+
+class AppealCreateAPIView(CreateAPIView):
+    serializer_class = AppealSerializer
+    queryset = Appeal.objects.all()
