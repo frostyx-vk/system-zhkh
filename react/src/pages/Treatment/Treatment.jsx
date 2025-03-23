@@ -55,7 +55,7 @@ function Treatment() {
 
   function handlerTab() {
     setLoad(false);
-    axios.get(`http://localhost:8000/web/aаppeals/${sessionStorage.accessToken}/`,
+    axios.get(`http://localhost:8000/web/appeals/${sessionStorage.accessToken}/`,
       { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(res => {
         setLoad(true);
