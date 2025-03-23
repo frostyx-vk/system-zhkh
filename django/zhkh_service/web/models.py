@@ -1,3 +1,6 @@
+from uuid import uuid4
+
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -184,3 +187,18 @@ class Indication(models.Model):
 
     def __str__(self):
         return str(self.last_indication)
+
+
+class Payment(models.Model):
+    order_amount = models.FloatField('Сумма')
+    uuid = models.CharField('ID заказа', max_length=64, default=uuid4)
+    date_created = models.DateTimeField('Дата создания', auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    active = models.BooleanField('Статус оплаты', default=False)
+
+    def __str__(self):
+        return f'{self.user} - {self.pk}'
+
+    class Meta:
+        verbose_name = 'Оплата'
+        verbose_name_plural = 'Оплаты'
