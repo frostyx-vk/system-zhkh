@@ -4,7 +4,6 @@ import s from './News.module.css'
 import { useNavigate } from 'react-router-dom';
 
 function News() {
-
   const [news, setNews] = useState([]);
 
   let navigator = useNavigate();
@@ -24,6 +23,8 @@ function News() {
       });
   }, [])
 
+  console.log(news)
+
   return (
     <main className='content'>
       <div className='wrapper'>{
@@ -34,9 +35,12 @@ function News() {
                 {item.title}
               </div>
               <div>
-                {
-                  item.date_created.slice(0, -8).replace(/T/, ' ')
-                }
+                <span className={s.dateNews}>
+                  {item.date_created.slice(0, 10).split('-').reverse().join('-').replace(/-/g, '.')}
+                </span>
+                <span>
+                  {item.date_created.slice(11, 19)}
+                </span>
               </div>
             </div>
             <div className={s.newsDescriptions}>
