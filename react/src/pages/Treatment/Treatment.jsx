@@ -33,7 +33,23 @@ function Treatment() {
 
   function handleForm(e) {
     e.preventDefault();
-    console.log(treatmentData);
+    console.log(treatmentData)
+
+    axios.post('http://localhost:8000/web/appeal-create/', treatmentData)
+      .then(res => {
+        console.log(res.data)
+        toast.success(res.data.status + '!');
+      })
+      .catch(err => {
+        if (err.response) {
+          toast.error("Ошибка! Попробуйте отправить позже");
+        } else if (err.request) {
+          toast.error("Ошибка! Попробуйте отправить позже");
+        } else {
+          toast.error("Ошибка! Попробуйте отправить позже");
+        }
+      });
+
     setSelectedName('');
     setTitle('');
     setDescription('');
