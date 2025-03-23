@@ -17,7 +17,7 @@ function Treatment() {
   const [selectedName, setSelectedName] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [statusData, setStatusData] = useState('');
+  const [statusData, setStatusData] = useState([]);
   const [load, setLoad] = useState(false);
 
   const handleFileChange = (event) => {
@@ -33,37 +33,36 @@ function Treatment() {
 
   function handleForm(e) {
     e.preventDefault();
+    setLoad(true);
 
     axios.post('http://localhost:8000/web/appeal-create/', treatmentData)
       .then(res => {
         toast.success(res.data.message);
+        setLoad(false);
         setSelectedName('');
         setTitle('');
         setDescription('');
         setSelectedFile(null);
       })
       .catch(err => {
-        if (err.response) {
-          toast.error("Ошибка! Попробуйте отправить позже");
-        } else if (err.request) {
-          toast.error("Ошибка! Попробуйте отправить позже");
-        } else {
-          toast.error("Ошибка! Попробуйте отправить позже");
-        }
+        console.log(err);
+        setLoad(true);
+        toast.error("Ошибка! Попробуйте отправить позже");
       });
   };
 
   function handlerTab() {
-    setLoad(false);
+    setLoad(true);
     axios.get(`http://localhost:8000/web/appeals/${sessionStorage.accessToken}/`,
       { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(res => {
-        setLoad(true);
+        setLoad(false);
         setStatusData(res.data);
         console.log(res.data)
       })
       .catch(err => {
-        setLoad(false);
+        console.log(err);
+        setLoad(true);
         toast.error("Ошибка! Попробуйте зайти позже");
       });
   }
@@ -83,43 +82,54 @@ function Treatment() {
               </TabList>
               <TabPanels>
                 <TabPanel className={s.personalTabsContent}>
-                  <div className={s.personalTabsContent1}>
-                    <form onSubmit={handleForm} encType={'multipart/form-data'}>
-                      <Input
-                        type='text'
-                        placeholder='Введите название проблемы'
-                        value={title}
-                        size='md'
-                        required
-                        minLength="5"
-                        maxLength='30'
-                        onChange={e => setTitle(e.target.value)}
-                      />
-                      <Textarea
-                        placeholder='Введите описание проблемы'
-                        value={description}
-                        size='md'
-                        required
-                        minLength="20"
-                        onChange={e => setDescription(e.target.value)}
-                      />
-                      <div className={s.parent}>
-                        <div className={s.fileUpload}>
-                          <img src={uploadImg} alt="upload" />
-                          <h3> {selectedName || 'Нажмите для загрузки файла'}</h3>
-                          <p>Максимальный размер файла 10mb</p>
-                          <input
-                            type="file"
-                            onChange={handleFileChange} />
-                        </div>
+                  {
+                    load ?
+                      <div className={s.spinner}>
+                        <Spinner color='green.500' size='lg' />
                       </div>
-                      <Button variant="ghost" type='submit'>Отправить</Button>
-                    </form>
-                  </div>
+                      :
+                      <div className={s.personalTabsContent1}>
+                        <form onSubmit={handleForm} encType={'multipart/form-data'}>
+                          <Input
+                            type='text'
+                            placeholder='Введите название проблемы'
+                            value={title}
+                            size='md'
+                            required
+                            minLength="5"
+                            maxLength='30'
+                            onChange={e => setTitle(e.target.value)}
+                          />
+                          <Textarea
+                            placeholder='Введите описание проблемы'
+                            value={description}
+                            size='md'
+                            required
+                            minLength="20"
+                            onChange={e => setDescription(e.target.value)}
+                          />
+                          <div className={s.parent}>
+                            <div className={s.fileUpload}>
+                              <img src={uploadImg} alt="upload" />
+                              <h3> {selectedName || 'Нажмите для загрузки файла'}</h3>
+                              <p>Максимальный размер файла 10mb</p>
+                              <input
+                                type="file"
+                                onChange={handleFileChange} />
+                            </div>
+                          </div>
+                          <Button variant="ghost" type='submit'>Отправить</Button>
+                        </form>
+                      </div>
+                  }
                 </TabPanel>
                 <TabPanel className={s.personalTabsContent}>
                   {
                     load ?
+                      <div className={s.spinner}>
+                        <Spinner color='green.500' size='lg' />
+                      </div>
+                      :
                       <div className={s.statusList}>
                         <TableContainer>
                           <Table variant='simple'>
@@ -147,10 +157,6 @@ function Treatment() {
                             </Tbody>
                           </Table>
                         </TableContainer>
-                      </div>
-                      :
-                      <div className={s.spinner}>
-                        <Spinner color='green.500' size='lg' />
                       </div>
                   }
                 </TabPanel>
