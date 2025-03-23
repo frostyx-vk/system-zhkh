@@ -24,6 +24,7 @@ function Invoice() {
       .then(response => {
         setLoading(false);
         setOptions(response.data);
+        console.log(response.data)
       })
       .catch((err) => {
         setLoading(true);
@@ -70,8 +71,8 @@ function Invoice() {
                         <option key={opt.id}
                           ref={ref}
                           value={opt.file}
-                          data-name={opt.date_created.slice(0, 7)}>
-                          {opt.date_created.slice(0, 7)}
+                          data-name={opt.date_created.slice(0, 10).split("-").reverse().join("-").replace(/-/g, '.')}>
+                          {opt.date_created.slice(0, 10).split("-").reverse().join("-").replace(/-/g, '.')}
                         </option>
                       ))}
                     </Select>
