@@ -196,7 +196,7 @@ class PaymentHistoryListAPIView(ListAPIView):
 
     def get_queryset(self):
         user = Token.objects.get(key=self.kwargs['token']).user
-        return Payment.objects.filter(user=user)
+        return Payment.objects.filter(user=user, active=True)
 
 
 def yookassa_request(request, value):
@@ -284,6 +284,7 @@ class PaymentSuccessView(DetailView):
             obj = self.get_object()
             obj.active = True
             obj.save()
+            Payment.objects.filter(user=obj.user, active=False).delete()
         return super().get(request, *args, **kwargs)
 
 
