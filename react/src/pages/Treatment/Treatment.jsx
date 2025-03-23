@@ -17,6 +17,7 @@ function Treatment() {
   const [selectedName, setSelectedName] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [statusData, setStatusData] = useState('');
   const [load, setLoad] = useState(false);
 
   const handleFileChange = (event) => {
@@ -32,12 +33,14 @@ function Treatment() {
 
   function handleForm(e) {
     e.preventDefault();
-    console.log(treatmentData)
 
     axios.post('http://localhost:8000/web/appeal-create/', treatmentData)
       .then(res => {
-        console.log(res.data)
-        toast.success(res.data.status + '!');
+        toast.success(res.data.message);
+        setSelectedName('');
+        setTitle('');
+        setDescription('');
+        setSelectedFile(null);
       })
       .catch(err => {
         if (err.response) {
@@ -48,20 +51,21 @@ function Treatment() {
           toast.error("Ошибка! Попробуйте отправить позже");
         }
       });
-
-    setSelectedName('');
-    setTitle('');
-    setDescription('');
-    setSelectedFile(null);
-    toast.success('Обращение отправлено, следите за его статусом.');
   };
 
   function handlerTab() {
-    setLoad(false)
-    setTimeout(() => {
-      console.log('Получил данные');
-      setLoad(true)
-    }, 100);
+    setLoad(false);
+    axios.get(`http://localhost:8000/web/aаppeals/${sessionStorage.accessToken}/`,
+      { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
+      .then(res => {
+        setLoad(true);
+        setStatusData(res.data);
+        console.log(res.data)
+      })
+      .catch(err => {
+        setLoad(false);
+        toast.error("Ошибка! Попробуйте зайти позже");
+      });
   }
 
   return (
@@ -127,21 +131,19 @@ function Treatment() {
                               </Tr>
                             </Thead>
                             <Tbody>
-                              <Tr>
-                                <Td>Прорвало трубу</Td>
-                                <Td>01.02.2025 13:50</Td>
-                                <Td>В работе</Td>
-                              </Tr>
-                              <Tr>
-                                <Td>Затопило</Td>
-                                <Td>14.03.2025 17:42</Td>
-                                <Td>На рассмотрении</Td>
-                              </Tr>
-                              <Tr>
-                                <Td>Навалили на общем балконе</Td>
-                                <Td>19.03.2025 23:58</Td>
-                                <Td>Выполнено</Td>
-                              </Tr>
+                              {
+                                statusData.map((item, i) => {
+                                  return (
+                                    <Tr key={item.id}>
+                                      <Td>{item.name}</Td>
+                                      <Td>01.02.2025 13:50</Td>
+                                      <Td style={{ fontWeight: '600' }} className={item.status === 'IN_WORK' ? s.work : item.status === 'COMPLETED' ? s.completed : ''}>
+                                        {item.status === 'IN_WORK' ? 'В работе' : item.status === 'COMPLETED' ? 'Выполнено' : 'На рассмотрении'}
+                                      </Td>
+                                    </Tr>
+                                  )
+                                })
+                              }
                             </Tbody>
                           </Table>
                         </TableContainer>

@@ -124,3 +124,11 @@
 .spinner {
   text-align: center;
 }
+
+.work {
+  color: rgb(233, 198, 43);
+}
+
+.completed {
+  color: #90C084;
+}
