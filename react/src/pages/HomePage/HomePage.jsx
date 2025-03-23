@@ -50,10 +50,12 @@ function HomePage() {
       });
   };
 
-
   return (
     <main className='content wrapper'>
       <div className={s.homeFirstBlock}>
+        <span className={s.round1}></span>
+        <span className={s.round2}></span>
+        <span className={s.round3}></span>
         <img src={flatLogo} alt="image" width={200} />
         <div className={s.titleBlock}>
           <div className={s.title}>
