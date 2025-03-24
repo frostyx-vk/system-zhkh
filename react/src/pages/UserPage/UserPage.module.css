@@ -59,11 +59,9 @@
   float: right;
   margin-bottom: 1rem;
 }
-
-
-
-
-
+.spinner {
+  text-align: center;
+}
 .personalTabsContent1 form button:hover {
   background: #67a557;
 }
