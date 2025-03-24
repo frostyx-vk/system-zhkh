@@ -59,7 +59,6 @@ function Treatment() {
       .then(res => {
         setLoad(false);
         setStatusData(res.data);
-        console.log(res.data)
       })
       .catch(err => {
         console.log(err);
