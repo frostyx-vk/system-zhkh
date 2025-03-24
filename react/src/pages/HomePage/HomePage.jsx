@@ -18,7 +18,7 @@ function HomePage() {
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState('');
   const [selectedName, setSelectedName] = useState('');
 
   const navigate = useNavigate();
@@ -33,6 +33,15 @@ function HomePage() {
     setSelectedName(file.name);
   };
 
+  function clearFields() {
+    setEmail('');
+    setTitle('');
+    setContent('');
+    setSelectedFile('');
+    setSelectedName('');
+    onClose();
+  };
+
   function handlerModalForm(event) {
     event.preventDefault();
 
@@ -43,22 +52,17 @@ function HomePage() {
     problemData.append('file', selectedFile);
 
     for (var pair of problemData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
-  }
+      console.log(pair[0] + ', ' + pair[1]);
+    }
 
     axios.post('http://localhost:8000/communication/create-message-problem/', problemData)
       .then(res => {
         toast.success(res.data.status + '!');
-        onClose();
+        clearFields();
       })
       .catch(err => {
-        if (err.response) {
-          toast.error("Ошибка! Попробуйте отправить позже");
-        } else if (err.request) {
-          toast.error("Ошибка! Попробуйте отправить позже");
-        } else {
-          toast.error("Ошибка! Попробуйте отправить позже");
-        }
+        console.log(err);
+        toast.error("Ошибка! Попробуйте отправить позже");
       });
   };
 
@@ -117,9 +121,9 @@ function HomePage() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay>
           <ModalContent>
-            <form onSubmit={handlerModalForm} action="" className={s.modalForm}>
+            <form onSubmit={handlerModalForm} className={s.modalForm}>
               <ModalHeader>Заявить о проблеме</ModalHeader>
-              <ModalCloseButton />
+              <ModalCloseButton onClick={clearFields}/>
 
               <ModalBody>
                 <Input type='email'
@@ -154,7 +158,7 @@ function HomePage() {
               </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                <Button colorScheme="blue" mr={3} onClick={clearFields}>
                   Выйти
                 </Button>
                 <Button variant="ghost" type='submit'>Отправить</Button>
