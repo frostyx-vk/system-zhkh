@@ -13,7 +13,7 @@ import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from '@chakra-ui/reac
 import { ToastContainer, toast } from 'react-toastify';
 
 function Treatment() {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState('');
   const [selectedName, setSelectedName] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -25,14 +25,11 @@ function Treatment() {
     setSelectedFile(file);
     setSelectedName(file.name);
   };
+
   let treatmentData = new FormData();
   treatmentData.append('name', title);
   treatmentData.append('text', description)
-  if (!selectedFile) {
-    treatmentData.append('file', '');
-  } else {
-    treatmentData.append('file', selectedFile);
-  }
+  treatmentData.append('file', selectedFile);
   treatmentData.append('token', sessionStorage.accessToken)
 
   function handleForm(e) {
@@ -46,7 +43,7 @@ function Treatment() {
         setSelectedName('');
         setTitle('');
         setDescription('');
-        setSelectedFile(null);
+        setSelectedFile('');
       })
       .catch(err => {
         console.log(err);
@@ -148,9 +145,12 @@ function Treatment() {
                               {
                                 statusData.map((item, i) => {
                                   return (
-                                    <Tr key={item.id}>
+                                    <Tr key={i}>
                                       <Td>{item.name}</Td>
-                                      <Td>01.02.2025 13:50</Td>
+                                      <Td className={s.tableData}>
+                                        <span>{item.date_created.slice(0, 10).split('-').reverse().join('-').replace(/-/g, '.')}</span>
+                                        <span>{item.date_created.slice(11, 19)}</span>
+                                      </Td>
                                       <Td style={{ fontWeight: '600' }} className={item.status === 'IN_WORK' ? s.work : item.status === 'COMPLETED' ? s.completed : ''}>
                                         {item.status === 'IN_WORK' ? 'В работе' : item.status === 'COMPLETED' ? 'Выполнено' : 'На рассмотрении'}
                                       </Td>

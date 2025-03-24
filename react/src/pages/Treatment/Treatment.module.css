@@ -132,3 +132,8 @@
 .completed {
   color: #90C084;
 }
+
+.tableData {
+  display: flex;
+  gap: 10px;
+}
