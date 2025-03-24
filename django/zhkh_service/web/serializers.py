@@ -48,4 +48,9 @@ class LivingAreaSerializer(ModelSerializer):
 class AppealSerializer(ModelSerializer):
     class Meta:
         model = Appeal
-        fields = '__all__'
+        fields = ('name', 'text', 'file', 'status', 'date_created')
+
+    def save(self, **kwargs):
+        validated_data = self.validated_data
+        validated_data['sender'] = kwargs['sender']
+        return super().save(**validated_data)

@@ -28,7 +28,11 @@ function Treatment() {
   let treatmentData = new FormData();
   treatmentData.append('name', title);
   treatmentData.append('text', description)
-  treatmentData.append('file', selectedFile);
+  if (!selectedFile) {
+    treatmentData.append('file', '');
+  } else {
+    treatmentData.append('file', selectedFile);
+  }
   treatmentData.append('token', sessionStorage.accessToken)
 
   function handleForm(e) {

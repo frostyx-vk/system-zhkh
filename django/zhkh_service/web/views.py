@@ -129,13 +129,10 @@ class AppealCreateAPIView(CreateAPIView):
     queryset = Appeal.objects.all()
 
     def post(self, request, *args, **kwargs):
-        sender = Token.objects.get(key=request.data['token']).user.pk
-        data = request.data
-        if sender:
-            data['sender'] = sender
+        sender = Token.objects.get(key=request.data['token']).user
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(sender=sender)
         else:
             return HttpResponseBadRequest()
         return Response({'message': 'Обращение успешно отправлено!'})
