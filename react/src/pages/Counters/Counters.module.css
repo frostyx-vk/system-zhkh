@@ -63,3 +63,7 @@
   float: right;
   margin-bottom: 1rem;
 }
+
+.counters button:hover {
+  background: #67a557;
+}

@@ -202,3 +202,26 @@ class Payment(models.Model):
     class Meta:
         verbose_name = 'Оплата'
         verbose_name_plural = 'Оплаты'
+
+
+class Appeal(models.Model):
+    class Statuses(models.TextChoices):
+        IN_WORK = 'IN_WORK', 'В работе'
+        MODERATION = 'MODERATION', 'На рассмотрении'
+        COMPLETED = 'COMPLETED', 'Выполнено'
+
+    name = models.CharField(max_length=255, verbose_name='Название')
+    text = models.TextField(verbose_name='Текст обращения')
+    file = models.FileField(verbose_name='Файл', upload_to='appeals/', blank=True, null=True)
+    sender = models.ForeignKey('accounts.User', on_delete=models.CASCADE, verbose_name='Отправитель', related_name='sender_appeals')
+    status = models.CharField(max_length=255, verbose_name='Статус', choices=Statuses.choices, default=Statuses.MODERATION)
+    responsible = models.ForeignKey('accounts.User', on_delete=models.CASCADE, verbose_name='Ответственный',
+                                    blank=True, null=True, related_name='responsible_appeals')
+    date_created = models.DateTimeField(verbose_name='Дата обращения', auto_now=True)
+
+    class Meta:
+        verbose_name = 'Обращение'
+        verbose_name_plural = 'Обращения'
+
+    def __str__(self):
+        return self.name

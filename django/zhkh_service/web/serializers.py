@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 
 from web.models import AboutPortal, Contact, News, Service, DataDeveloper, Documents, LivingArea, Indication, Tariff, \
-    Receipt, Payment
+    Receipt, Payment, Appeal
 
 
 class NewsSerializer(ModelSerializer):
@@ -68,3 +68,14 @@ class PaymentSerializer(ModelSerializer):
     class Meta:
         model = Payment
         fields = ('order_amount', 'date_created')
+
+
+class AppealSerializer(ModelSerializer):
+    class Meta:
+        model = Appeal
+        fields = ('name', 'text', 'file', 'status', 'date_created')
+
+    def save(self, **kwargs):
+        validated_data = self.validated_data
+        validated_data['sender'] = kwargs['sender']
+        return super().save(**validated_data)

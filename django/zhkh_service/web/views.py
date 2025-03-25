@@ -3,12 +3,13 @@ import hashlib
 import json
 from uuid import uuid4
 
+from aiohttp.http_exceptions import HttpBadRequest
 import requests
+from django.http import HttpRequest, HttpResponseBadRequest, JsonResponse, HttpResponse, HttpResponseRedirect
+from django.db import transaction
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetCompleteView
-from django.db import transaction
-from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
@@ -18,15 +19,16 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.models import User
-from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea, Receipt, Payment
+from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea, Receipt, Payment, Appeal
 from web.serializers import AboutPortalSerializer, ContactSerializer, NewsSerializer, ServiceSerializer, \
-    DocumentsSerializer, LivingAreaSerializer, PaymentSerializer, IndicationSerializer, TariffSerializer, ReceiptSerializer
+    DocumentsSerializer, LivingAreaSerializer, PaymentSerializer, IndicationSerializer, TariffSerializer, ReceiptSerializer, \
+    AppealSerializer
 
 
 class PasswordResetCompleteCustomView(PasswordResetCompleteView):
@@ -316,3 +318,26 @@ class YooKassaCallbackView(View):
             yookassa_sha_salt=settings.YOOKASSA_SHA_SALT,
         ).encode('utf-8')).hexdigest()
         return sha1
+
+
+class AppealCreateAPIView(CreateAPIView):
+    serializer_class = AppealSerializer
+    queryset = Appeal.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        sender = Token.objects.get(key=request.data['token']).user
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(sender=sender)
+        else:
+            return HttpResponseBadRequest()
+        return Response({'message': 'Обращение успешно отправлено!'})
+
+
+class AppealListAPIView(ListAPIView):
+    serializer_class = AppealSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = Token.objects.get(key=self.kwargs['token']).user
+        return Appeal.objects.filter(sender=user)

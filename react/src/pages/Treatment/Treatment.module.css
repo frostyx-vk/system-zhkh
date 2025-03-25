@@ -3,13 +3,137 @@
   background: url("../../illustration/background-zhkh.jpeg");
 }
 
-.title {
-  border-radius: 20px 20px 0 0;
+.personalTabs button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.personalTabs button {
+  color: black;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.personalTabs button[aria-selected=true] {
   color: white;
   background: #90C084;
   padding: 12px 12px;
-  width: 100%;
-  text-align: center;
-  font-weight: 600;
+  transition: none !important;
+}
+
+.personalTabs button[aria-selected=false] {
+  transition: none !important;
+}
+
+.personalTabs button:first-child[aria-selected=true] {
+  border-radius: 20px 0 0 0;
+}
+
+.personalTabs button:last-child[aria-selected=true] {
+  border-radius: 0 20px 0 0;
+}
+
+.personalTabsContent {
+  color: black;
+}
+
+.personalTabsContent1 p {
+  color: #839d74;
   font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.parent {
+  width: 300px;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 25px;
+  box-shadow: 7px 20px 20px rgb(210, 227, 244);
+}
+
+.fileUpload {
+  text-align: center;
+  border: 3px dashed #90C084;
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fileUpload h3 {
+  margin-top: 6px;
+}
+
+.fileUpload p {
+  font-size: 0.80rem;
+  margin: 0;
+  color: #bbcada;
+}
+
+.fileUpload img {
+  width: 75px;
+}
+
+.fileUpload input {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.personalTabsContent1 form {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.personalTabsContent1 form input {
+  margin-bottom: 10px;
+}
+
+.personalTabsContent1 form textarea {
+  height: 150px;
+  resize: none;
+}
+
+.personalTabsContent1 form button {
+  color: white;
+  background: #90C084;
+  padding: 8px 24px;
+  border-radius: 12px;
+  margin-top: 28px;
+}
+
+.personalTabsContent1 form button:hover {
+  background: #67a557;
+}
+
+.spinner {
+  text-align: center;
+}
+
+.work {
+  color: rgb(233, 198, 43);
+}
+
+.completed {
+  color: #90C084;
+}
+
+.tableData {
+  display: flex;
+  gap: 10px;
 }
