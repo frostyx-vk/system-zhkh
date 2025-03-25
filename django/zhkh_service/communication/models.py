@@ -15,6 +15,7 @@ class MessageProblem(models.Model):
     content = models.TextField('Сообщение')
     email = models.EmailField('Электронная почта')
     status = models.CharField(choices=Status.choices, default=Status.NEW, max_length=100, verbose_name='Статус')
+    file = models.FileField(verbose_name='Файл', upload_to='files/', blank=True, null=True)
     date_created = models.DateTimeField('Дата создания', auto_now_add=True)
 
     class Meta:
