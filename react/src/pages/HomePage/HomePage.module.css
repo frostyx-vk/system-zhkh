@@ -3,6 +3,11 @@
     align-items: center;
     justify-content: space-evenly;
     margin-top: 70px;
+    position: relative;
+}
+
+.homeFirstBlock img {
+    z-index: 10;
 }
 
 .title {
@@ -22,13 +27,19 @@
     justify-content: space-around;
 }
 
-.homeSecondBlockLeft, .homeSecondBlockRight, .leftButtonUp, .leftButtonDown, .rightButtonUp, .rightButtonDown {
+.homeSecondBlockLeft,
+.homeSecondBlockRight,
+.leftButtonUp,
+.leftButtonDown,
+.rightButtonUp,
+.rightButtonDown {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.homeSecondBlockLeft, .homeSecondBlockRight {
+.homeSecondBlockLeft,
+.homeSecondBlockRight {
     display: flex;
     height: 240px;
     justify-content: space-between;
@@ -36,10 +47,12 @@
 
 .homeSecondBlock button {
     width: 500px;
+    height: 50px;
+    box-shadow: 1px 1px 10px #888888;
 }
 
 .leftButtonUp button {
-    color: green;
+    color: #4bb23d;
 }
 
 .leftButtonDown button {
@@ -47,11 +60,11 @@
 }
 
 .rightButtonUp button {
-    color: rgb(114, 114, 221);
+    color: #48a2c3;
 }
 
 .rightButtonDown button {
-    color: rgb(183, 75, 75);
+    color: #c44d43;
 }
 
 .modalForm {
@@ -61,7 +74,38 @@
 .modalForm input:first-child {
     margin-bottom: 16px;
 }
+
 .modalForm textarea {
     height: 180px;
     margin-top: 16px;
+}
+
+.round1 {
+    position: absolute;
+    background: #A5CD9B;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    margin-right: 590px;
+    opacity: 0.4;
+}
+
+.round2 {
+    position: absolute;
+    background: #AFD0A5;
+    width: 390px;
+    height: 390px;
+    border-radius: 50%;
+    margin-right: 590px;
+    opacity: 0.4;
+}
+
+.round3 {
+    position: absolute;
+    background: #B4D4AA;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    margin-right: 590px;
+    opacity: 0.4;
 }

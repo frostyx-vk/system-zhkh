@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата</title>
+</head>
+<body>
+    <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
+    <div id="payment-form"></div>
+
+    <script>
+      const checkout = new window.YooMoneyCheckoutWidget({
+          confirmation_token: '{{ ct_token }}',
+          error_callback: function (error) {
+              console.log(error)
+          }
+      });
+      checkout.on('success', () => {
+          window.location.href = '{% url 'web:payment_success' pk=payment.pk %}';
+      });
+
+      checkout.on('fail', () => {
+          window.location.href = '{% url 'web:payment_fail' pk=payment.pk %}';
+      });
+      checkout.render('payment-form');
+    </script>
+</body>
+</html>

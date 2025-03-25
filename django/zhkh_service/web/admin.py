@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import AboutPortal, Contact, DataDeveloper, News, Service, Documents, Tariff, Indication, LivingArea, \
-    Regulation, Appeal
+    Regulation, Payment, Receipt, Appeal
 from .forms import DocumentAdminForm
 
 
@@ -38,6 +38,10 @@ class DocumentsAdmin(admin.ModelAdmin):
     form = DocumentAdminForm
 
 
+@admin.register(Receipt)
+class ReceiptAdmin(admin.ModelAdmin):
+    list_display = ('date_created',)
+
 class RegulationAdminInline(admin.TabularInline):
     model = Regulation
     extra = 1
@@ -59,6 +63,7 @@ class IndicationAdmin(admin.ModelAdmin):
 class LivingAreaAdmin(admin.ModelAdmin):
     list_display = ('address', 'number_ls', 'square', 'type')
 
+admin.site.register(Payment)
 
 @admin.register(Appeal)
 class AppealAdmin(admin.ModelAdmin):

@@ -1,3 +1,6 @@
+from uuid import uuid4
+
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -9,6 +12,13 @@ def is_nan_validator(value):
     import math
     if math.isnan(value):
         raise ValidationError('Недопустимое значение поля. Поле не может быть NaN')
+
+def validate_file_extension(value):
+    import os
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.pdf']
+    if not ext in valid_extensions:
+        raise ValidationError(u'Доступно только PDF')
 
 
 class LivingArea(models.Model):
@@ -22,7 +32,6 @@ class LivingArea(models.Model):
     square = models.PositiveIntegerField(verbose_name='Площадь')
     type = models.CharField(choices=TypeProperty.choices, default=TypeProperty.HABITABLE, max_length=255)
     resident_count = models.PositiveIntegerField(verbose_name='Кол-во прописанных человек', default=0)
-    availability_counters_water = models.BooleanField(verbose_name='Наличие счетчиков на воду', default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 
     class Meta:
@@ -125,6 +134,7 @@ class Tariff(models.Model):
     name = models.CharField(verbose_name='Название', max_length=100)
     ratio = models.FloatField(verbose_name='Кол-во рублей за ед.', max_length=15, blank=True)
     key = models.CharField(verbose_name='Ключ', max_length=255, choices=Keys.choices)
+    unit = models.CharField(verbose_name='Единица измерения', null=True, blank=True, max_length=255)
 
 
     class Meta:
@@ -151,6 +161,19 @@ class Regulation(models.Model):
         return self.name
 
 
+class Receipt(models.Model):
+    file = models.FileField(verbose_name='Квитанция', upload_to='receipts/', validators=[validate_file_extension])
+    date_created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
+    living_area = models.ForeignKey(LivingArea, on_delete=models.CASCADE, verbose_name='Жил. площадь')
+
+    class Meta:
+        verbose_name = 'Платежный документ'
+        verbose_name_plural = 'Платежный документы'
+
+    def __str__(self):
+        return self.living_area.address
+
+
 class Indication(models.Model):
     last_indication = models.FloatField(verbose_name='Последний показатель', max_length=55)
     date_updated = models.DateTimeField(verbose_name='Дата обновления', auto_now=True)
@@ -164,6 +187,21 @@ class Indication(models.Model):
 
     def __str__(self):
         return str(self.last_indication)
+
+
+class Payment(models.Model):
+    order_amount = models.FloatField('Сумма')
+    uuid = models.CharField('ID заказа', max_length=64, default=uuid4)
+    date_created = models.DateTimeField('Дата создания', auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    active = models.BooleanField('Статус оплаты', default=False)
+
+    def __str__(self):
+        return f'{self.user} - {self.pk}'
+
+    class Meta:
+        verbose_name = 'Оплата'
+        verbose_name_plural = 'Оплаты'
 
 
 class Appeal(models.Model):
