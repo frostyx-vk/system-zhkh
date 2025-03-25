@@ -46,9 +46,9 @@ function HomePage() {
     event.preventDefault();
 
     let problemData = new FormData();
-    problemData.append('e-mail', email);
-    problemData.append('name', title);
-    problemData.append('text', content)
+    problemData.append('email', email);
+    problemData.append('title', title);
+    problemData.append('content', content)
     problemData.append('file', selectedFile);
 
     for (var pair of problemData.entries()) {
@@ -121,7 +121,7 @@ function HomePage() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay>
           <ModalContent>
-            <form onSubmit={handlerModalForm} className={s.modalForm}>
+            <form onSubmit={handlerModalForm} className={s.modalForm} encType={'multipart/form-data'}>
               <ModalHeader>Заявить о проблеме</ModalHeader>
               <ModalCloseButton onClick={clearFields}/>
 

@@ -7,7 +7,7 @@ from .models import MessageProblem, ChatMessage, Chat
 class MessageProblemSerializer(ModelSerializer):
     class Meta:
         model = MessageProblem
-        fields = ('title', 'content', 'email', 'status', 'date_created')
+        fields = ('title', 'content', 'email', 'status', 'file', 'date_created')
 
     def update(self, instance, validated_data):
         return instance
