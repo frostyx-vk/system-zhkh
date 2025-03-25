@@ -51,10 +51,6 @@ function HomePage() {
     problemData.append('content', content)
     problemData.append('file', selectedFile);
 
-    for (var pair of problemData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
-
     axios.post('http://localhost:8000/communication/create-message-problem/', problemData)
       .then(res => {
         toast.success(res.data.status + '!');
