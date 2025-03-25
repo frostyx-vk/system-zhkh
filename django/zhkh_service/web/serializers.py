@@ -68,7 +68,6 @@ class PaymentSerializer(ModelSerializer):
     class Meta:
         model = Payment
         fields = ('order_amount', 'date_created')
-        fields = ('address', 'number_ls', 'square', 'type', 'availability_counters_water')
 
 
 class AppealSerializer(ModelSerializer):
