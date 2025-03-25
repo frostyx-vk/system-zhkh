@@ -24,7 +24,6 @@ function Invoice() {
       .then(response => {
         setLoading(false);
         setOptions(response.data);
-        console.log(response.data)
       })
       .catch((err) => {
         setLoading(true);
