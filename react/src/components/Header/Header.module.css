@@ -43,3 +43,24 @@
     color: #90C084;
 }
 
+.arrow1 {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-top: 5px solid white;
+    transform: rotate(-30deg);
+    position: absolute;
+    margin-top: -1px;
+    margin-left: -3px;
+}
+
+.arrow2 {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-right: 5px solid white;
+    transform: rotate(-60deg);
+    position: absolute;
+    margin-top: -1px;
+    margin-left: 4px;
+}
