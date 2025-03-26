@@ -12,7 +12,7 @@ function Invoice() {
   const [options, setOptions] = useState([]);
   const [invoice, setInvoice] = useState('');
   const [invoiceName, setInvoiceName] = useState('');
-  const [selectedOption, setSelectedOption] = useState();
+  const [selectedOption, setSelectedOption] = useState('');
   const [loading, setLoading] = useState(false);
 
   const ref = useRef(null);
