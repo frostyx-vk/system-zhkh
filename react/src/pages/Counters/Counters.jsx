@@ -5,6 +5,8 @@ import axios from "axios";
 
 import { Input } from '@chakra-ui/react'
 import { ToastContainer, toast } from 'react-toastify';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from '@chakra-ui/react'
 
 function Counters() {
   const [err, setErr] = useState(false);
@@ -48,7 +50,7 @@ function Counters() {
     e.preventDefault();
 
     for (const values of Object.values(counters)) {
-      if (!isParking && values.length < 5 && userData.availability_counters_water) {
+      if (!isParking && values.length < 5) {
         return setErr(true);
       };
     }
@@ -81,88 +83,117 @@ function Counters() {
             <NavPersonal />
           </div>
           <div className='personalContent'>
-            <div className={s.title}>
-              Передача показаний счетчиков
-            </div>
-            <div className={s.counters}>
-              <p>
-                C 20 по 25 число каждого месяца требуется отправлять показания счётчиков.<br />
-                Вводить нужно только целое число!<br /><br />
-                Имущество: {
-                  userData.type === 'HABITABLE' ? "Жилое помещение" : (userData.type === 'NOT_RSIDENTIAL' ? 'Нежилое помещение' : 'Парковочное место')
-                }; {userData.address}; Плоащадь S={userData.square}м²
-              </p>
-              {/* {
-                !userData.availability_counters_water ? <div className={isParking ? s.hide : s.err}>Отсутствуют счётчики на воду. Сумма оплаты будет рассчитана исходя из среднестандартных норм!</div> : ''
-              } */}
-              {
-                err ? <div className={s.err}>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
-              }
-              {isParking
-                ?
-                <form onSubmit={handlerForm}>
-                  <label>
-                    Электричество:
-                    <Input
-                      type='number'
-                      name='electricity'
-                      value={counters.electricity}
-                      onChange={handleChange}
-                      onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
-                      placeholder='Введите число'
-                      size='md'
-                      required
-                    />
-                  </label>
-                  <button type='submit'>Отправить</button>
-                </form>
-                :
-                <form onSubmit={handlerForm}>
-                  <label>
-                    Холодная вода:
-                    <Input
-                      type='number'
-                      min={5}
-                      value={counters.coldWater}
-                      name='coldWater'
-                      onChange={handleChange}
-                      onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
-                      placeholder='Введите число'
-                      size='md'
-                      required
-                    />
-                  </label>
-                  <label>
-                    Горячая вода:
-                    <Input
-                      type='number'
-                      name='hotWater'
-                      value={counters.hotWater}
-                      onChange={handleChange}
-                      onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
-                      placeholder='Введите число'
-                      size='md'
-                      required
-                    />
-                  </label>
-                  <label>
-                    Электричество:
-                    <Input
-                      type='number'
-                      name='electricity'
-                      value={counters.electricity}
-                      onChange={handleChange}
-                      onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
-                      placeholder='Введите число'
-                      size='md'
-                      required
-                    />
-                  </label>
-                  <button type='submit'>Отправить</button>
-                </form>
-              }
+            <Tabs variant='soft-rounded' colorScheme='green'>
+              <TabList className={s.personalTabs}>
+                <Tab>Передача показаний счетчиков</Tab>
+                <Tab>История передачи показаний</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel className={s.personalTabsContent}>
+                  <div className={s.personalTabsContent1}>
+                    <div className={s.counters}>
+                      <p>
+                        C 20 по 25 число каждого месяца требуется отправлять показания счётчиков.<br />
+                        Вводить нужно только целое число!<br /><br />
+                        Имущество: {
+                          userData.type === 'HABITABLE' ? "Жилое помещение" : (userData.type === 'NOT_RSIDENTIAL' ? 'Нежилое помещение' : 'Парковочное место')
+                        }; {userData.address}; Площадь S={userData.square}м²
+                      </p>
+                      {
+                        err ? <div className={s.err}>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
+                      }
+                      {isParking
+                        ?
+                        <form onSubmit={handlerForm}>
+                          <label>
+                            Электричество:
+                            <Input
+                              type='number'
+                              name='electricity'
+                              value={counters.electricity}
+                              onChange={handleChange}
+                              onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                              placeholder='Введите число'
+                              size='md'
+                              required
+                            />
+                          </label>
+                          <button type='submit'>Отправить</button>
+                        </form>
+                        :
+                        <form onSubmit={handlerForm}>
+                          <label>
+                            Холодная вода:
+                            <Input
+                              type='number'
+                              value={counters.coldWater}
+                              name='coldWater'
+                              onChange={handleChange}
+                              onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                              placeholder='Введите число'
+                              size='md'
+                              required
+                            />
+                          </label>
+                          <label>
+                            Горячая вода:
+                            <Input
+                              type='number'
+                              name='hotWater'
+                              value={counters.hotWater}
+                              onChange={handleChange}
+                              onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                              placeholder='Введите число'
+                              size='md'
+                              required
+                            />
+                          </label>
+                          <label>
+                            Электричество:
+                            <Input
+                              type='number'
+                              name='electricity'
+                              value={counters.electricity}
+                              onChange={handleChange}
+                              onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                              placeholder='Введите число'
+                              size='md'
+                              required
+                            />
+                          </label>
+                          <button type='submit'>Отправить</button>
+                        </form>
+                      }
+                    </div>
+                  </div>
+                </TabPanel>
+                <TabPanel className={s.personalTabsContent}>
+                  <div className={s.personalTabsContent2}>
+                    <TableContainer>
+                      <Table variant='simple'>
+                        <Thead>
+                          <Tr>
+                            <Th>Дата передачи показаний</Th>
+                            <Th isNumeric>Переданные показания</Th>
+                          </Tr>
+                        </Thead>
+                        <Tbody>
+                          {/* {
+                      paymentsList.map((item, i) => {
+                        return <Tr key={i}>
+                          <Td>{item.date_created.slice(0, 10).split("-").reverse().join("-").replace(/-/g, '.')}</Td>
+                          <Td isNumeric>{item.order_amount}</Td>
+                        </Tr>
+                      })
+                    } */}
+                        </Tbody>
+                      </Table>
+                    </TableContainer>
+                  </div>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
 
-            </div>
             <ToastContainer position="top-right" />
           </div>
         </div>
