@@ -26,8 +26,8 @@ function Counters() {
         } else setIsParking(true);
       })
       .catch((err) => {
-        console.log(err)
-        // toast.error("Ошибка! Информация отсутствует.")
+        console.log(err);
+        toast.error("Ошибка! Информация отсутствует.")
       });
   }, []);
 
@@ -60,6 +60,12 @@ function Counters() {
         .then(response => {
           console.log(response.data);
           toast.success('Данные переданы успешно!');
+          setCounters({
+            ...counters,
+            coldWater: '',
+            hotWater: '',
+            electricity: '',
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -84,15 +90,15 @@ function Counters() {
                 Вводить нужно только целое число!<br /><br />
                 Имущество: {
                   userData.type === 'HABITABLE' ? "Жилое помещение" : (userData.type === 'NOT_RSIDENTIAL' ? 'Нежилое помещение' : 'Парковочное место')
-                }; {userData.address}; S={userData.square}м²
+                }; {userData.address}; Плоащадь S={userData.square}м²
               </p>
-              {
+              {/* {
                 !userData.availability_counters_water ? <div className={isParking ? s.hide : s.err}>Отсутствуют счётчики на воду. Сумма оплаты будет рассчитана исходя из среднестандартных норм!</div> : ''
-              }
+              } */}
               {
                 err ? <div className={s.err}>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
               }
-              {isParking || !userData.availability_counters_water
+              {isParking
                 ?
                 <form onSubmit={handlerForm}>
                   <label>
