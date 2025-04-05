@@ -13,8 +13,10 @@ function Counters() {
   const [isParking, setIsParking] = useState(null);
   const [userData, setUserData] = useState([]);
   const [counters, setCounters] = useState({
-    coldWater: '',
-    hotWater: '',
+    coldWater1: '',
+    hotWater1: '',
+    coldWater2: '',
+    hotWater2: '',
     electricity: '',
   });
 
@@ -49,11 +51,11 @@ function Counters() {
   function handlerForm(e) {
     e.preventDefault();
 
-    for (const values of Object.values(counters)) {
-      if (!isParking && values.length < 5) {
-        return setErr(true);
-      };
-    }
+    // for (const values of Object.values(counters)) {
+    //   if (!isParking && values.length < 5) {
+    //     return setErr(true);
+    //   };
+    // }
 
     !err &&
       axios.post('http://localhost:8000/web/set-counters/', counters,
@@ -64,8 +66,10 @@ function Counters() {
           toast.success('Данные переданы успешно!');
           setCounters({
             ...counters,
-            coldWater: '',
-            hotWater: '',
+            coldWater1: '',
+            hotWater1: '',
+            coldWater2: '',
+            hotWater2: '',
             electricity: '',
           });
         })
@@ -74,6 +78,20 @@ function Counters() {
           toast.error('Ошибка передачи данных! Попробуйте позже.')
         });
   }
+
+  function getHistoryCounters() {
+    axios.get('http://localhost:8000/web/indications-history/',
+      { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Ошибка! Информация отсутствует.")
+      });
+  }
+
+  console.log(userData)
 
   return (
     <main className={s.content}>
@@ -86,7 +104,7 @@ function Counters() {
             <Tabs variant='soft-rounded' colorScheme='green'>
               <TabList className={s.personalTabs}>
                 <Tab>Передача показаний счетчиков</Tab>
-                <Tab>История передачи показаний</Tab>
+                <Tab onClick={getHistoryCounters}>История передачи показаний</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel className={s.personalTabsContent}>
@@ -102,32 +120,15 @@ function Counters() {
                       {
                         err ? <div className={s.err}>Для отправки показаний все числа должны состоять из 5 цифр.</div> : ''
                       }
-                      {isParking
+                      {userData.tube === 'ONE'
                         ?
                         <form onSubmit={handlerForm}>
                           <label>
-                            Электричество:
+                            Холодная вода (ХВС):
                             <Input
                               type='number'
-                              name='electricity'
-                              value={counters.electricity}
-                              onChange={handleChange}
-                              onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
-                              placeholder='Введите число'
-                              size='md'
-                              required
-                            />
-                          </label>
-                          <button type='submit'>Отправить</button>
-                        </form>
-                        :
-                        <form onSubmit={handlerForm}>
-                          <label>
-                            Холодная вода:
-                            <Input
-                              type='number'
-                              value={counters.coldWater}
-                              name='coldWater'
+                              value={counters.coldWater1}
+                              name='coldWater1'
                               onChange={handleChange}
                               onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
                               placeholder='Введите число'
@@ -136,11 +137,11 @@ function Counters() {
                             />
                           </label>
                           <label>
-                            Горячая вода:
+                            Горячая вода (ГВС):
                             <Input
                               type='number'
-                              name='hotWater'
-                              value={counters.hotWater}
+                              name='hotWater1'
+                              value={counters.hotWater1}
                               onChange={handleChange}
                               onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
                               placeholder='Введите число'
@@ -163,7 +164,94 @@ function Counters() {
                           </label>
                           <button type='submit'>Отправить</button>
                         </form>
+                        : userData.tube === 'TWO' ?
+                          <form onSubmit={handlerForm}>
+                            <label>
+                              Холодная вода (ХВС1):
+                              <Input
+                                type='number'
+                                value={counters.coldWater1}
+                                name='coldWater1'
+                                onChange={handleChange}
+                                onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                                placeholder='Введите число'
+                                size='md'
+                                required
+                              />
+                            </label>
+                            <label>
+                              Горячая вода (ГВС1):
+                              <Input
+                                type='number'
+                                name='hotWater1'
+                                value={counters.hotWater1}
+                                onChange={handleChange}
+                                onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                                placeholder='Введите число'
+                                size='md'
+                                required
+                              />
+                            </label>
+                            <label>
+                              Холодная вода (ХВС2):
+                              <Input
+                                type='number'
+                                value={counters.coldWater2}
+                                name='coldWater2'
+                                onChange={handleChange}
+                                onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                                placeholder='Введите число'
+                                size='md'
+                                required
+                              />
+                            </label>
+                            <label>
+                              Горячая вода (ГВС2):
+                              <Input
+                                type='number'
+                                name='hotWater2'
+                                value={counters.hotWater2}
+                                onChange={handleChange}
+                                onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                                placeholder='Введите число'
+                                size='md'
+                                required
+                              />
+                            </label>
+                            <label>
+                              Электричество:
+                              <Input
+                                type='number'
+                                name='electricity'
+                                value={counters.electricity}
+                                onChange={handleChange}
+                                onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                                placeholder='Введите число'
+                                size='md'
+                                required
+                              />
+                            </label>
+                            <button type='submit'>Отправить</button>
+                          </form>
+                          :
+                          <form onSubmit={handlerForm}>
+                            <label>
+                              Электричество:
+                              <Input
+                                type='number'
+                                name='electricity'
+                                value={counters.electricity}
+                                onChange={handleChange}
+                                onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
+                                placeholder='Введите число'
+                                size='md'
+                                required
+                              />
+                            </label>
+                            <button type='submit'>Отправить</button>
+                          </form>
                       }
+
                     </div>
                   </div>
                 </TabPanel>
