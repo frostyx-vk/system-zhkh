@@ -40,7 +40,8 @@
   color: black;
 }
 
-.personalTabsContent1 p {
+.personalTabsContent1 p,
+.personalTabsContent2 {
   color: #839d74;
   font-size: 18px;
   font-weight: 500;
@@ -50,7 +51,8 @@
 .personalTabsContent1 input {
   margin-bottom: 10px;
 }
-.personalTabsContent1 form button {
+
+.personalTabsContent1 form button, .savePassBtn {
   color: white;
   background: #90C084;
   padding: 8px 24px;
@@ -59,9 +61,27 @@
   float: right;
   margin-bottom: 1rem;
 }
+
 .spinner {
   text-align: center;
 }
+
 .personalTabsContent1 form button:hover {
   background: #67a557;
+}
+
+input[type='password'] {
+  font-weight: 600;
+}
+
+.inputPass1 {
+  margin-top: 10px;
+}
+
+.inputPass2 {
+  margin-top: 10px;
+}
+
+.inputBtn1, .inputBtn2 {
+  margin-top: 20px;
 }

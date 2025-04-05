@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import s from './UserPage.module.css'
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import { Input, InputGroup, InputLeftAddon } from '@chakra-ui/react'
+import { Input, InputGroup, InputLeftAddon, InputRightElement } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 import axios from "axios";
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,6 +16,15 @@ function UserPage() {
   const [email, setEmail] = useState('');
   const [updateUserData, setUpdateUserData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
+  const [inputPass, setInputPass] = useState('');
+  const [inputPassRepeat, setInputPassRepeat] = useState('');
+  const handleClickInput1 = () => setShow1(!show1);
+  const handleClickInput2 = () => setShow2(!show2);
+
+  console.log(inputPass, inputPassRepeat)
 
   function handlePhone(e) {
     if (e.target.value.length > 10) {
@@ -54,6 +64,14 @@ function UserPage() {
       });
 
     e.currentTarget.blur();
+  }
+
+  function changePassword() {
+    if (inputPass === inputPassRepeat) {
+      console.log('Всё четко!')
+    } else {
+      console.log('Чёт не работает')
+    }
   }
 
   return (
@@ -138,8 +156,39 @@ function UserPage() {
                       </div>
                   }
                 </TabPanel>
-                <TabPanel className={s.personalTabsContent}>
-                  <p>Здесь нужно будет сделать такой же смысл смены пароля как и при кнопке "Забыли пароль" ?</p>
+                <TabPanel className={s.personalTabsContent2}>
+                  <p>Сменить пароль:</p>
+                  <InputGroup size='md'>
+                    <Input
+                      pr='4.5rem'
+                      type={show1 ? 'text' : 'password'}
+                      placeholder='Введите новый пароль'
+                      className={s.inputPass1}
+                      value={inputPass}
+                      onChange={(e) => setInputPass(e.target.value)}
+                    />
+                    <InputRightElement width='5.5rem'>
+                      <Button h='1.75rem' size='sm' onClick={handleClickInput1} className={s.inputBtn1}>
+                        {show1 ? 'Скрыть' : 'Увидеть'}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                  <InputGroup size='md'>
+                    <Input
+                      pr='4.5rem'
+                      type={show2 ? 'text' : 'password'}
+                      placeholder='Повторите новый пароль'
+                      className={s.inputPass2}
+                      value={inputPassRepeat}
+                      onChange={(e) => setInputPassRepeat(e.target.value)}
+                    />
+                    <InputRightElement width='5.5rem'>
+                      <Button h='1.75rem' size='sm' onClick={handleClickInput2} className={s.inputBtn2}>
+                        {show2 ? 'Скрыть' : 'Увидеть'}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                  <button onClick={changePassword} type='button' className={s.savePassBtn}>Сохранить</button>
                 </TabPanel>
               </TabPanels>
             </Tabs>
