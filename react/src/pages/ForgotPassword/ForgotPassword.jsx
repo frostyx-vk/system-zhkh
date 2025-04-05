@@ -7,11 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import {
-    serverBaseUrl,
-    RESET_PASSWORD
-} from '../../api/urls'
-
 function ForgotPassword() {
     const [email, setUserEmail] = useState('')
 
@@ -21,12 +16,17 @@ function ForgotPassword() {
         e.preventDefault();
         let formData = new FormData()
         formData.append('email', email)
-        axios.post(`${serverBaseUrl}${RESET_PASSWORD}`, formData)
-            .then(response => {
-                console.log(response)
+
+        axios.post('http://localhost:8000/auth/users/reset_password/', formData)
+            .then(res => {
+                console.log(res)
+                toast.success("Запрос на восстановление пароля успешно отправлен на электронный адрес!");
+                setUserEmail('')
             })
-        toast.success("Запрос на восстановление пароля успешно отправлен!");
-        setUserEmail('')
+            .catch((err) => {
+                console.log(err)
+                toast.error("Ошибка! Попробуйте позже.");
+            });
     }
 
     return (
