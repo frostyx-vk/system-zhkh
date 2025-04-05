@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import s from './UserPage.module.css'
 import NavPersonal from '../../components/NavPersonal/NavPersonal'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import { Input, InputGroup, InputLeftAddon, InputRightElement } from '@chakra-ui/react'
+import { Input, InputGroup, InputLeftAddon } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
 import axios from "axios";
 
@@ -16,15 +16,7 @@ function UserPage() {
   const [email, setEmail] = useState('');
   const [updateUserData, setUpdateUserData] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const [show1, setShow1] = useState(false);
-  const [show2, setShow2] = useState(false);
-  const [inputPass, setInputPass] = useState('');
-  const [inputPassRepeat, setInputPassRepeat] = useState('');
-  const handleClickInput1 = () => setShow1(!show1);
-  const handleClickInput2 = () => setShow2(!show2);
-
-  console.log(inputPass, inputPassRepeat)
+  const [passEmail, setPassEmail] = useState('');
 
   function handlePhone(e) {
     if (e.target.value.length > 10) {
@@ -66,13 +58,29 @@ function UserPage() {
     e.currentTarget.blur();
   }
 
-  function changePassword() {
-    if (inputPass === inputPassRepeat) {
-      console.log('Всё четко!')
+  function changePassword(e) {
+    e.preventDefault();
+    let formData = new FormData()
+    formData.append('email', passEmail)
+    setLoading(true);
+
+    if (updateUserData.email === passEmail) {
+      axios.post('http://localhost:8000/auth/users/reset_password/', formData)
+        .then(res => {
+          setLoading(false);
+          toast.success("Запрос на восстановление пароля успешно отправлен на электронный адрес!");
+          setPassEmail('');
+        })
+        .catch((err) => {
+          setLoading(true);
+          console.log(err);
+          toast.error("Ошибка! Попробуйте позже.");
+        });
     } else {
-      console.log('Чёт не работает')
-    }
-  }
+      toast.error("Введите e-mail от своей учётной записи!");
+      setLoading(false);
+    };
+  };
 
   return (
     <main className={s.content}>
@@ -157,38 +165,25 @@ function UserPage() {
                   }
                 </TabPanel>
                 <TabPanel className={s.personalTabsContent2}>
-                  <p>Сменить пароль:</p>
-                  <InputGroup size='md'>
-                    <Input
-                      pr='4.5rem'
-                      type={show1 ? 'text' : 'password'}
-                      placeholder='Введите новый пароль'
-                      className={s.inputPass1}
-                      value={inputPass}
-                      onChange={(e) => setInputPass(e.target.value)}
-                    />
-                    <InputRightElement width='5.5rem'>
-                      <Button h='1.75rem' size='sm' onClick={handleClickInput1} className={s.inputBtn1}>
-                        {show1 ? 'Скрыть' : 'Увидеть'}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                  <InputGroup size='md'>
-                    <Input
-                      pr='4.5rem'
-                      type={show2 ? 'text' : 'password'}
-                      placeholder='Повторите новый пароль'
-                      className={s.inputPass2}
-                      value={inputPassRepeat}
-                      onChange={(e) => setInputPassRepeat(e.target.value)}
-                    />
-                    <InputRightElement width='5.5rem'>
-                      <Button h='1.75rem' size='sm' onClick={handleClickInput2} className={s.inputBtn2}>
-                        {show2 ? 'Скрыть' : 'Увидеть'}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                  <button onClick={changePassword} type='button' className={s.savePassBtn}>Сохранить</button>
+                  <p>Для смены пароля введите свой е-mail.<br />
+                    Далее измените пароль исходя из инструкции в письме.</p>
+                  {
+                    loading ?
+                      <div className={s.spinner}>
+                        <Spinner size='lg' color='green.500' />
+                      </div>
+                      :
+                      <form onSubmit={changePassword} className='' method="post" action=''>
+                        <Input type='email'
+                          placeholder='Введите Email привязанный к аккаунту'
+                          required
+                          size='md'
+                          name="email"
+                          value={passEmail}
+                          onChange={e => setPassEmail(e.target.value)} />
+                        <button type='submit'>Отправить</button>
+                      </form>
+                  }
                 </TabPanel>
               </TabPanels>
             </Tabs>
