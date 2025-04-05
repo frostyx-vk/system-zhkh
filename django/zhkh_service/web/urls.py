@@ -1,8 +1,11 @@
 from django.urls import path, include
 
+from web.serializers import IndicationSerializer
 from web.views import AboutPortalAPIView, ContactAPIView, NewsListAPIView, ServiceAPIView, DocumentsSerializerAPIView, \
-    CountersAPIView, LivingAreaDataAPIView, TariffsAPIView, ReceiptListAPIView, yookassa_request, PaymentWidgetView, PaymentSuccessView, \
-    YooKassaCallbackView, PaymentSumAPIView, PaymentHistoryListAPIView, AppealCreateAPIView, AppealListAPIView
+    CountersAPIView, LivingAreaDataAPIView, TariffsAPIView, ReceiptListAPIView, yookassa_request, PaymentWidgetView, \
+    PaymentSuccessView, \
+    YooKassaCallbackView, PaymentSumAPIView, PaymentHistoryListAPIView, AppealCreateAPIView, AppealListAPIView, \
+    IndicationsHistory
 
 app_name = 'web'
 
@@ -17,6 +20,7 @@ urlpatterns = [
     path('tariffs/', TariffsAPIView.as_view(), name='tariffs'),
     path('receipts/', ReceiptListAPIView.as_view(), name='receipts'),
     path('get-living-area-data/', LivingAreaDataAPIView.as_view(), name='living-area-data'),
+    path('indications-history/', IndicationsHistory.as_view(), name='indications-history'),
 
     path('get-sum-payment/<str:token>/', PaymentSumAPIView.as_view(), name='get-sum-payment'),
 

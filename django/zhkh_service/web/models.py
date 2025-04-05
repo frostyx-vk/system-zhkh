@@ -27,10 +27,15 @@ class LivingArea(models.Model):
         NOT_RESIDENTIAL = 'NOT_RESIDENTIAL', 'Не жилое'
         PARKING = 'PARKING', 'Парковочное место'
 
+    class TubeCount(models.TextChoices):
+        ONE = 'ONE', 'Один водосток'
+        TWO = 'TWO', 'Два водостока'
+
     address = models.CharField(verbose_name='Адрес', max_length=255, unique=True)
     number_ls = models.PositiveIntegerField(verbose_name='Номер лицевого счета', unique=True)
     square = models.PositiveIntegerField(verbose_name='Площадь')
     type = models.CharField(choices=TypeProperty.choices, default=TypeProperty.HABITABLE, max_length=255)
+    tube = models.CharField(choices=TubeCount.choices, default='', max_length=255, null=True, blank=True)
     resident_count = models.PositiveIntegerField(verbose_name='Кол-во прописанных человек', default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 

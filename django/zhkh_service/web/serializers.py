@@ -1,3 +1,4 @@
+
 from rest_framework.serializers import ModelSerializer
 
 from web.models import AboutPortal, Contact, News, Service, DataDeveloper, Documents, LivingArea, Indication, Tariff, \
@@ -43,7 +44,7 @@ class DocumentsSerializer(ModelSerializer):
 class LivingAreaSerializer(ModelSerializer):
     class Meta:
         model = LivingArea
-        fields = ('address', 'number_ls', 'square', 'type')
+        fields = ('address', 'number_ls', 'tube', 'square', 'type')
 
 
 class IndicationSerializer(ModelSerializer):

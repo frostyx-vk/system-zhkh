@@ -90,12 +90,17 @@ class CountersAPIView(APIView):
             print(indication_serializer.errors)
             return JsonResponse({'error': indication_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+    def check_correct_indication(self, indication, last_indication):
+        return indication > last_indication
 
     @transaction.atomic
     def post(self, request):
         cold_water = request.data.get('coldWater')
         hot_water = request.data.get('hotWater')
         electricity = request.data.get('electricity')
+
+        cold_water2 = request.data.get('coldWater2')
+        hot_water2 = request.data.get('hotWater2')
 
         if not self.request.user.livingarea:
             return Response({'message': 'User has not living area'})
@@ -105,58 +110,85 @@ class CountersAPIView(APIView):
         tariff_electricity = get_object_or_404(Tariff, key=Tariff.Keys.electricity)
         cold_sum, hot_sum, electricity_sum = 'Не определено', 'Не определено', 'Не определено'
 
+        cold_water_list, hot_water_list = [], []
+        if cold_water:
+            cold_water_list.append(cold_water)
+        if cold_water2:
+            cold_water_list.append(cold_water2)
+        if hot_water:
+            hot_water_list.append(hot_water)
+        if hot_water2:
+            hot_water_list.append(hot_water2)
+
         if self.request.user.livingarea.type != LivingArea.TypeProperty.PARKING:
-            if cold_water:
-                indications = Indication.objects.filter(user=self.request.user, tariff=tariff_cold)
-                last_indication = self.get_last_indication(tariff_cold, indications)
-                current_cold_indication = int(cold_water) - last_indication
-                cold_sum = current_cold_indication * tariff_cold.ratio
-                data = {
-                    'last_indication': cold_water,
-                    'user': self.request.user.pk,
-                    'tariff': tariff_cold.pk,
-                    'finish_price': cold_sum
-                }
-                self.create_indication(data)
+            if len(cold_water_list)> 0:
+                for cold_water in cold_water_list:
+                    indications = Indication.objects.filter(user=self.request.user, tariff=tariff_cold)
+                    last_indication = self.get_last_indication(tariff_cold, indications)
+                    check = self.check_correct_indication(int(cold_water), last_indication)
+                    if check:
+                        current_cold_indication = int(cold_water) - last_indication
+                        cold_sum = current_cold_indication * tariff_cold.ratio
+                        data = {
+                            'last_indication': cold_water,
+                            'user': self.request.user.pk,
+                            'tariff': tariff_cold.pk,
+                            'finish_price': cold_sum
+                        }
+                        self.create_indication(data)
+                    else:
+                        return Response({'message': 'Indication cold water entered incorrectly'},
+                                        status=status.HTTP_400_BAD_REQUEST)
             else:
                 return Response({'message': 'Indication cold water has not value'}, status=status.HTTP_400_BAD_REQUEST)
 
-            if hot_water:
-                indications = Indication.objects.filter(user=self.request.user, tariff=tariff_hot)
-                last_indication = self.get_last_indication(tariff_hot, indications)
-                current_hot_indication = int(hot_water) - last_indication
-                hot_sum = current_hot_indication * tariff_hot.ratio
-                data = {
-                    'last_indication': hot_water,
-                    'user': self.request.user.pk,
-                    'tariff': tariff_cold.pk,
-                    'finish_price': hot_sum
-                }
-                self.create_indication(data)
+            if len(hot_water_list) > 0:
+                for hot_water in hot_water_list:
+                    indications = Indication.objects.filter(user=self.request.user, tariff=tariff_hot)
+                    last_indication = self.get_last_indication(tariff_hot, indications)
+                    check = self.check_correct_indication(int(hot_water), last_indication)
+                    if check:
+                        current_hot_indication = int(hot_water) - last_indication
+                        hot_sum = current_hot_indication * tariff_hot.ratio
+                        data = {
+                            'last_indication': hot_water,
+                            'user': self.request.user.pk,
+                            'tariff': tariff_cold.pk,
+                            'finish_price': hot_sum
+                        }
+                        self.create_indication(data)
+                    else:
+                        return Response({'message': 'Indication hot water entered incorrectly'},
+                                        status=status.HTTP_400_BAD_REQUEST)
             else:
                 return Response({'message': 'Indication hot water has not value'}, status=status.HTTP_400_BAD_REQUEST)
 
         if electricity:
             indications = Indication.objects.filter(user=self.request.user, tariff=tariff_electricity)
             last_indication = self.get_last_indication(tariff_electricity, indications)
-            current_electricity_indication = int(electricity) - last_indication
-            if self.request.user.livingarea.resident_count > 1:
-                norm = tariff_electricity.regulations.filter(person_count__gt=1).last()
+            check = self.check_correct_indication(int(electricity), last_indication)
+            if check:
+                current_electricity_indication = int(electricity) - last_indication
+                if self.request.user.livingarea.resident_count > 1:
+                    norm = tariff_electricity.regulations.filter(person_count__gt=1).last()
+                else:
+                    norm = tariff_electricity.regulations.filter(person_count=1).last()
+                if not norm:
+                    return Response({'message': 'Indication has not norm'}, status=status.HTTP_400_BAD_REQUEST)
+                if current_electricity_indication <= norm.value:
+                    electricity_sum = current_electricity_indication * norm.standard_summ
+                else:
+                    electricity_sum = current_electricity_indication * norm.summ_above
+                data = {
+                    'last_indication': electricity,
+                    'user': self.request.user.pk,
+                    'tariff': tariff_electricity.pk,
+                    'finish_price': electricity_sum
+                }
+                self.create_indication(data)
             else:
-                norm = tariff_electricity.regulations.filter(person_count=1).last()
-            if not norm:
-                return Response({'message': 'Indication has not norm'}, status=status.HTTP_400_BAD_REQUEST)
-            if current_electricity_indication <= norm.value:
-                electricity_sum = current_electricity_indication * norm.standard_summ
-            else:
-                electricity_sum = current_electricity_indication * norm.summ_above
-            data = {
-                'last_indication': electricity,
-                'user': self.request.user.pk,
-                'tariff': tariff_electricity.pk,
-                'finish_price': electricity_sum
-            }
-            self.create_indication(data)
+                return Response({'message': 'Indication electricity entered incorrectly'},
+                                status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'message': 'Data success save', 'data': [cold_sum, hot_sum, electricity_sum]})
 
@@ -341,3 +373,12 @@ class AppealListAPIView(ListAPIView):
     def get_queryset(self):
         user = Token.objects.get(key=self.kwargs['token']).user
         return Appeal.objects.filter(sender=user)
+
+
+class IndicationsHistory(ListAPIView):
+    serializer_class = IndicationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = Token.objects.get(key=self.kwargs['token']).user
+        return Indication.objects.filter(sender=user)
