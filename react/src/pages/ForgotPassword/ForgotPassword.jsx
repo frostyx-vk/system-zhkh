@@ -16,11 +16,11 @@ function ForgotPassword() {
         e.preventDefault();
         let formData = new FormData()
         formData.append('email', email)
-        
+
         axios.post('http://localhost:8000/auth/users/reset_password/', formData)
             .then(res => {
                 console.log(res)
-                toast.success("Запрос на восстановление пароля успешно отправлен!");
+                toast.success("Запрос на восстановление пароля успешно отправлен на электронный адрес!");
                 setUserEmail('')
             })
             .catch((err) => {
