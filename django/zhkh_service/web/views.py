@@ -25,7 +25,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.models import User
-from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea, Receipt, Payment, Appeal
+from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea, Receipt, Payment, \
+    Appeal, IndicationType
 from web.serializers import AboutPortalSerializer, ContactSerializer, NewsSerializer, ServiceSerializer, \
     DocumentsSerializer, LivingAreaSerializer, PaymentSerializer, IndicationSerializer, TariffSerializer, ReceiptSerializer, \
     AppealSerializer
@@ -78,7 +79,7 @@ class CountersAPIView(APIView):
 
     def get_last_indication(self, tariff, indications):
         last_indication = 0
-        if indications.exists():
+        if indications:
             last_indication = indications.last().last_indication
         return last_indication
 
@@ -87,11 +88,85 @@ class CountersAPIView(APIView):
         if indication_serializer.is_valid():
             indication_serializer.save()
         else:
-            print(indication_serializer.errors)
             return JsonResponse({'error': indication_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def check_correct_indication(self, indication, last_indication):
         return indication > last_indication
+
+    def save_indication(self, indication, last_indication, tariff, type_tube):
+        current_indication_first = int(indication) - last_indication
+        total_sum = current_indication_first * tariff.ratio
+        if type_tube == 'standard':
+            indication_type = IndicationType.objects.get(tube_type='')
+        elif type_tube == 'first_tube':
+            indication_type = IndicationType.objects.get(tube_type=IndicationType.TubeType.FIRST)
+        else:
+            indication_type = IndicationType.objects.get(tube_type=IndicationType.TubeType.SECOND)
+
+        data = {
+            'last_indication': indication,
+            'user': self.request.user.pk,
+            'tariff': tariff.pk,
+            'finish_price': total_sum,
+            'type': indication_type.pk,
+        }
+        print(data, '******************')
+        self.create_indication(data)
+        return total_sum
+
+    def save_indication_water_by_type(self, water1, water2, waters, tariff, total_sum):
+        last_indication, last_indication_first, last_indication_second = 0, 0, 0
+        indications_first, indications, indications_second = self.check_data_water(
+            water1, water2, waters, tariff
+        )
+        if indications:
+            last_indication = self.get_last_indication(tariff, indications)
+        else:
+            last_indication_first = self.get_last_indication(tariff, indications_first)
+            last_indication_second = self.get_last_indication(tariff, indications_second)
+
+        if len(waters) == 1:
+            check = self.check_correct_indication(int(water1), last_indication)
+            if not check:
+                return Response({'message': 'Indication cold water entered incorrectly'},
+                                status=status.HTTP_400_BAD_REQUEST)
+            total_sum.append(self.save_indication(water1, last_indication, tariff, 'standard'))
+        else:
+            check_first = self.check_correct_indication(int(water1), last_indication_first)
+            check_second = self.check_correct_indication(int(water2), last_indication_second)
+            if not check_first or not check_second:
+                return Response({'message': 'Indication cold water entered incorrectly'},
+                                status=status.HTTP_400_BAD_REQUEST)
+            total_sum.append(self.save_indication(water1, last_indication_first, tariff, 'first_tube'))
+            total_sum.append(self.save_indication(water2, last_indication_second, tariff, 'second_tube'))
+
+    def check_data_water(self, water1, water2, waters, tariff):
+        indications_first, indications, indications_second = None, None, None
+        if water1 and water2:
+            if self.request.user.livingarea.tube != LivingArea.TubeCount.TWO:
+                raise ValueError('Tube count dose not match')
+            waters.append(water1)
+            waters.append(water2)
+            indications_first = Indication.objects.filter(
+                user=self.request.user, tariff=tariff,
+                type=IndicationType.objects.get(tube_type=IndicationType.TubeType.FIRST)
+            )
+            indications_second = Indication.objects.filter(
+                user=self.request.user, tariff=tariff,
+                type=IndicationType.objects.get(tube_type=IndicationType.TubeType.SECOND)
+            )
+        elif water1 and not water2:
+            if self.request.user.livingarea.tube == LivingArea.TubeCount.TWO:
+                raise ValueError('Data water is not valid')
+            waters.append(water1)
+            indications = Indication.objects.filter(
+                user=self.request.user, tariff=tariff,
+                type=IndicationType.objects.get(tube_type=IndicationType.TubeType.FIRST)
+            )
+        elif not water1 and water2 or not water1 and not water2:
+            raise ValueError('Data water is not valid')
+
+        return indications_first, indications_second, indications
 
     @transaction.atomic
     def post(self, request):
@@ -108,60 +183,13 @@ class CountersAPIView(APIView):
         tariff_cold = get_object_or_404(Tariff, key=Tariff.Keys.cold)
         tariff_hot = get_object_or_404(Tariff, key=Tariff.Keys.hot)
         tariff_electricity = get_object_or_404(Tariff, key=Tariff.Keys.electricity)
-        cold_sum, hot_sum, electricity_sum = 'Не определено', 'Не определено', 'Не определено'
 
-        cold_water_list, hot_water_list = [], []
-        if cold_water:
-            cold_water_list.append(cold_water)
-        if cold_water2:
-            cold_water_list.append(cold_water2)
-        if hot_water:
-            hot_water_list.append(hot_water)
-        if hot_water2:
-            hot_water_list.append(hot_water2)
+        cold_waters, hot_waters, total_sum = [], [], []
+        electricity_sum = 'Не определено'
 
         if self.request.user.livingarea.type != LivingArea.TypeProperty.PARKING:
-            if len(cold_water_list)> 0:
-                for cold_water in cold_water_list:
-                    indications = Indication.objects.filter(user=self.request.user, tariff=tariff_cold)
-                    last_indication = self.get_last_indication(tariff_cold, indications)
-                    check = self.check_correct_indication(int(cold_water), last_indication)
-                    if check:
-                        current_cold_indication = int(cold_water) - last_indication
-                        cold_sum = current_cold_indication * tariff_cold.ratio
-                        data = {
-                            'last_indication': cold_water,
-                            'user': self.request.user.pk,
-                            'tariff': tariff_cold.pk,
-                            'finish_price': cold_sum
-                        }
-                        self.create_indication(data)
-                    else:
-                        return Response({'message': 'Indication cold water entered incorrectly'},
-                                        status=status.HTTP_400_BAD_REQUEST)
-            else:
-                return Response({'message': 'Indication cold water has not value'}, status=status.HTTP_400_BAD_REQUEST)
-
-            if len(hot_water_list) > 0:
-                for hot_water in hot_water_list:
-                    indications = Indication.objects.filter(user=self.request.user, tariff=tariff_hot)
-                    last_indication = self.get_last_indication(tariff_hot, indications)
-                    check = self.check_correct_indication(int(hot_water), last_indication)
-                    if check:
-                        current_hot_indication = int(hot_water) - last_indication
-                        hot_sum = current_hot_indication * tariff_hot.ratio
-                        data = {
-                            'last_indication': hot_water,
-                            'user': self.request.user.pk,
-                            'tariff': tariff_cold.pk,
-                            'finish_price': hot_sum
-                        }
-                        self.create_indication(data)
-                    else:
-                        return Response({'message': 'Indication hot water entered incorrectly'},
-                                        status=status.HTTP_400_BAD_REQUEST)
-            else:
-                return Response({'message': 'Indication hot water has not value'}, status=status.HTTP_400_BAD_REQUEST)
+            self.save_indication_water_by_type(cold_water, cold_water2, cold_waters, tariff_cold, total_sum)
+            self.save_indication_water_by_type(hot_water, hot_water2, hot_waters, tariff_hot, total_sum)
 
         if electricity:
             indications = Indication.objects.filter(user=self.request.user, tariff=tariff_electricity)
@@ -179,18 +207,20 @@ class CountersAPIView(APIView):
                     electricity_sum = current_electricity_indication * norm.standard_summ
                 else:
                     electricity_sum = current_electricity_indication * norm.summ_above
+                indication_type = IndicationType.objects.get(tube_type='')
                 data = {
                     'last_indication': electricity,
                     'user': self.request.user.pk,
                     'tariff': tariff_electricity.pk,
-                    'finish_price': electricity_sum
+                    'finish_price': electricity_sum,
+                    'type': indication_type.pk,
                 }
                 self.create_indication(data)
             else:
                 return Response({'message': 'Indication electricity entered incorrectly'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({'message': 'Data success save', 'data': [cold_sum, hot_sum, electricity_sum]})
+        return Response({'message': 'Data success save', 'data': total_sum + [electricity_sum]})
 
 
 class TariffsAPIView(ListAPIView):

@@ -1,4 +1,4 @@
-
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from web.models import AboutPortal, Contact, News, Service, DataDeveloper, Documents, LivingArea, Indication, Tariff, \
@@ -47,16 +47,22 @@ class LivingAreaSerializer(ModelSerializer):
         fields = ('address', 'number_ls', 'tube', 'square', 'type')
 
 
-class IndicationSerializer(ModelSerializer):
-    class Meta:
-        model = Indication
-        fields = '__all__'
-
-
 class TariffSerializer(ModelSerializer):
     class Meta:
         model = Tariff
         fields = '__all__'
+
+
+
+class IndicationSerializer(ModelSerializer):
+    tariff_key = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Indication
+        fields = '__all__'
+
+    def get_tariff_key(self, obj):
+        return obj.tariff.key
 
 
 class ReceiptSerializer(ModelSerializer):

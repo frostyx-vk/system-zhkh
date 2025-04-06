@@ -179,9 +179,27 @@ class Receipt(models.Model):
         return self.living_area.address
 
 
+class IndicationType(models.Model):
+    class TubeType(models.TextChoices):
+        FIRST = 'FIRST', 'Первый водосток'
+        SECOND = 'SECOND', 'Второй водосток'
+
+    name = models.CharField(verbose_name='Название', max_length=100)
+    tube_type = models.CharField(verbose_name='Тип водостока', choices=TubeType.choices, blank=True, max_length=100)
+
+    class Meta:
+        verbose_name = 'Тип показателя'
+        verbose_name_plural = 'Типы показателей'
+
+    def __str__(self):
+        return self.name
+
+
+
 class Indication(models.Model):
     last_indication = models.FloatField(verbose_name='Последний показатель', max_length=55)
     date_updated = models.DateTimeField(verbose_name='Дата обновления', auto_now=True)
+    type = models.ForeignKey(IndicationType, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     tariff = models.ForeignKey(Tariff, on_delete=models.CASCADE, verbose_name='Тариф')
     finish_price = models.FloatField(verbose_name='Итоговая сумма')
