@@ -12,6 +12,7 @@ function Counters() {
   const [err, setErr] = useState(false);
   const [isParking, setIsParking] = useState(null);
   const [userData, setUserData] = useState([]);
+  const [historyData, setHistoryData] = useState([]);
   const [counters, setCounters] = useState({
     coldWater: '',
     hotWater: '',
@@ -83,15 +84,13 @@ function Counters() {
     axios.get(`http://localhost:8000/web/indications-history/${sessionStorage.accessToken}/`,
       { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(res => {
-        console.log(res.data)
+        setHistoryData(res.data);
       })
       .catch((err) => {
         console.log(err);
         toast.error("Ошибка! Информация отсутствует.")
       });
   }
-
-  console.log(userData)
 
   return (
     <main className={s.content}>
@@ -257,26 +256,32 @@ function Counters() {
                 </TabPanel>
                 <TabPanel className={s.personalTabsContent}>
                   <div className={s.personalTabsContent2}>
-                    <TableContainer>
-                      <Table variant='simple'>
-                        <Thead>
-                          <Tr>
-                            <Th>Дата передачи показаний</Th>
-                            <Th isNumeric>Переданные показания</Th>
-                          </Tr>
-                        </Thead>
-                        <Tbody>
-                          {/* {
-                      paymentsList.map((item, i) => {
-                        return <Tr key={i}>
-                          <Td>{item.date_created.slice(0, 10).split("-").reverse().join("-").replace(/-/g, '.')}</Td>
-                          <Td isNumeric>{item.order_amount}</Td>
-                        </Tr>
-                      })
-                    } */}
-                        </Tbody>
-                      </Table>
-                    </TableContainer>
+                    {
+                      historyData.length > 0 ?
+                        <TableContainer>
+                          <Table variant='simple'>
+                            <Thead>
+                              <Tr>
+                                <Th>Дата передачи показаний</Th>
+                                <Th>Наименование</Th>
+                                <Th isNumeric>Переданные показания</Th>
+                              </Tr>
+                            </Thead>
+                            <Tbody>
+                              {
+                                historyData.map((item, i) => {
+                                  return <Tr key={item.id}>
+                                    <Td>{item.date_updated.slice(0, 10).split("-").reverse().join("-").replace(/-/g, '.')}</Td>
+                                    <Td >{item.tariff_key === 'coldWater' ? 'Холодная вода' : item.tariff_key === 'hotWater' ? 'Горячая вода' : 'Электричество'}</Td>
+                                    <Td isNumeric>{item.last_indication}</Td>
+                                  </Tr>
+                                })
+                              }
+                            </Tbody>
+                          </Table>
+                        </TableContainer> :
+                        <p>История передачи показаний отсутствует</p>
+                    }
                   </div>
                 </TabPanel>
               </TabPanels>
