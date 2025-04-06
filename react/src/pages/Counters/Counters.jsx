@@ -13,8 +13,8 @@ function Counters() {
   const [isParking, setIsParking] = useState(null);
   const [userData, setUserData] = useState([]);
   const [counters, setCounters] = useState({
-    coldWater1: '',
-    hotWater1: '',
+    coldWater: '',
+    hotWater: '',
     coldWater2: '',
     hotWater2: '',
     electricity: '',
@@ -66,8 +66,8 @@ function Counters() {
           toast.success('Данные переданы успешно!');
           setCounters({
             ...counters,
-            coldWater1: '',
-            hotWater1: '',
+            coldWater: '',
+            hotWater: '',
             coldWater2: '',
             hotWater2: '',
             electricity: '',
@@ -127,8 +127,8 @@ function Counters() {
                             Холодная вода (ХВС):
                             <Input
                               type='number'
-                              value={counters.coldWater1}
-                              name='coldWater1'
+                              value={counters.coldWater}
+                              name='coldWater'
                               onChange={handleChange}
                               onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
                               placeholder='Введите число'
@@ -140,8 +140,8 @@ function Counters() {
                             Горячая вода (ГВС):
                             <Input
                               type='number'
-                              name='hotWater1'
-                              value={counters.hotWater1}
+                              name='hotWater'
+                              value={counters.hotWater}
                               onChange={handleChange}
                               onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
                               placeholder='Введите число'
@@ -170,8 +170,8 @@ function Counters() {
                               Холодная вода (ХВС1):
                               <Input
                                 type='number'
-                                value={counters.coldWater1}
-                                name='coldWater1'
+                                value={counters.coldWater}
+                                name='coldWater'
                                 onChange={handleChange}
                                 onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
                                 placeholder='Введите число'
@@ -183,8 +183,8 @@ function Counters() {
                               Горячая вода (ГВС1):
                               <Input
                                 type='number'
-                                name='hotWater1'
-                                value={counters.hotWater1}
+                                name='hotWater'
+                                value={counters.hotWater}
                                 onChange={handleChange}
                                 onKeyDown={(e) => ['e', 'E', '+', '-', '.', ','].includes(e.key) && e.preventDefault()}
                                 placeholder='Введите число'
