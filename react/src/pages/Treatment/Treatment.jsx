@@ -97,7 +97,7 @@ function Treatment() {
                             size='md'
                             required
                             minLength="5"
-                            maxLength='30'
+                            maxLength='25'
                             onChange={e => setTitle(e.target.value)}
                           />
                           <Textarea
