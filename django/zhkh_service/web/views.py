@@ -381,4 +381,4 @@ class IndicationsHistory(ListAPIView):
 
     def get_queryset(self):
         user = Token.objects.get(key=self.kwargs['token']).user
-        return Indication.objects.filter(sender=user)
+        return Indication.objects.filter(user=user)
