@@ -27,10 +27,15 @@ class LivingArea(models.Model):
         NOT_RESIDENTIAL = 'NOT_RESIDENTIAL', 'Не жилое'
         PARKING = 'PARKING', 'Парковочное место'
 
+    class TubeCount(models.TextChoices):
+        ONE = 'ONE', 'Один водосток'
+        TWO = 'TWO', 'Два водостока'
+
     address = models.CharField(verbose_name='Адрес', max_length=255, unique=True)
     number_ls = models.PositiveIntegerField(verbose_name='Номер лицевого счета', unique=True)
     square = models.PositiveIntegerField(verbose_name='Площадь')
     type = models.CharField(choices=TypeProperty.choices, default=TypeProperty.HABITABLE, max_length=255)
+    tube = models.CharField(choices=TubeCount.choices, default='', max_length=255, null=True, blank=True)
     resident_count = models.PositiveIntegerField(verbose_name='Кол-во прописанных человек', default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 
@@ -174,9 +179,27 @@ class Receipt(models.Model):
         return self.living_area.address
 
 
+class IndicationType(models.Model):
+    class TubeType(models.TextChoices):
+        FIRST = 'FIRST', 'Первый водосток'
+        SECOND = 'SECOND', 'Второй водосток'
+
+    name = models.CharField(verbose_name='Название', max_length=100)
+    tube_type = models.CharField(verbose_name='Тип водостока', choices=TubeType.choices, blank=True, max_length=100)
+
+    class Meta:
+        verbose_name = 'Тип показателя'
+        verbose_name_plural = 'Типы показателей'
+
+    def __str__(self):
+        return self.name
+
+
+
 class Indication(models.Model):
     last_indication = models.FloatField(verbose_name='Последний показатель', max_length=55)
     date_updated = models.DateTimeField(verbose_name='Дата обновления', auto_now=True)
+    type = models.ForeignKey(IndicationType, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     tariff = models.ForeignKey(Tariff, on_delete=models.CASCADE, verbose_name='Тариф')
     finish_price = models.FloatField(verbose_name='Итоговая сумма')

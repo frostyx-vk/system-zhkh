@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import AboutPortal, Contact, DataDeveloper, News, Service, Documents, Tariff, Indication, LivingArea, \
-    Regulation, Payment, Receipt, Appeal
+    Regulation, Payment, Receipt, Appeal, IndicationType
 from .forms import DocumentAdminForm
 
 
@@ -69,3 +69,6 @@ admin.site.register(Payment)
 class AppealAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name', 'text')
+
+
+admin.site.register(IndicationType)
