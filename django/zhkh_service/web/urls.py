@@ -20,7 +20,7 @@ urlpatterns = [
     path('tariffs/', TariffsAPIView.as_view(), name='tariffs'),
     path('receipts/', ReceiptListAPIView.as_view(), name='receipts'),
     path('get-living-area-data/', LivingAreaDataAPIView.as_view(), name='living-area-data'),
-    path('indications-history/', IndicationsHistory.as_view(), name='indications-history'),
+    path('indications-history/<str:token>/', IndicationsHistory.as_view(), name='indications-history'),
 
     path('get-sum-payment/<str:token>/', PaymentSumAPIView.as_view(), name='get-sum-payment'),
 

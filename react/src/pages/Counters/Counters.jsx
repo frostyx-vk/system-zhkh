@@ -80,7 +80,7 @@ function Counters() {
   }
 
   function getHistoryCounters() {
-    axios.get('http://localhost:8000/web/indications-history/',
+    axios.get(`http://localhost:8000/web/indications-history/${sessionStorage.accessToken}/`,
       { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(res => {
         console.log(res.data)
