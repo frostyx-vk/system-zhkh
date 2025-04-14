@@ -26,10 +26,11 @@ from rest_framework.views import APIView
 
 from accounts.models import User
 from web.models import AboutPortal, Contact, News, Service, Documents, Indication, Tariff, LivingArea, Receipt, Payment, \
-    Appeal, IndicationType
+    Appeal, IndicationType, DataDeveloper
 from web.serializers import AboutPortalSerializer, ContactSerializer, NewsSerializer, ServiceSerializer, \
-    DocumentsSerializer, LivingAreaSerializer, PaymentSerializer, IndicationSerializer, TariffSerializer, ReceiptSerializer, \
-    AppealSerializer
+    DocumentsSerializer, LivingAreaSerializer, PaymentSerializer, IndicationSerializer, TariffSerializer, \
+    ReceiptSerializer, \
+    AppealSerializer, DataDeveloperSerializer
 
 
 class PasswordResetCompleteCustomView(PasswordResetCompleteView):
@@ -110,7 +111,6 @@ class CountersAPIView(APIView):
             'finish_price': total_sum,
             'type': indication_type.pk,
         }
-        print(data, '******************')
         self.create_indication(data)
         return total_sum
 
@@ -412,3 +412,8 @@ class IndicationsHistory(ListAPIView):
     def get_queryset(self):
         user = Token.objects.get(key=self.kwargs['token']).user
         return Indication.objects.filter(user=user)
+
+
+class DataDeveloperListAPIView(ListAPIView):
+    serializer_class = DataDeveloperSerializer
+    queryset = DataDeveloper.objects.filter(contact__group=Contact.ContactType.DEVELOPER)

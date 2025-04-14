@@ -1,6 +1,5 @@
 from uuid import uuid4
 
-from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -78,9 +77,14 @@ class Service(models.Model):
 
 
 class Contact(models.Model):
+    class ContactType(models.TextChoices):
+        DEVELOPER = 'DEVELOPER', 'Разработчик'
+        STAFF = 'STAFF', 'Администрация'
+
     name = models.CharField('Имя', max_length=100)
     phone = models.CharField('Телефон', max_length=12)
     email = models.EmailField(verbose_name='Электронный адрес', unique=True)
+    group = models.CharField(verbose_name='Группа', choices=ContactType.choices, max_length=255, default=ContactType.STAFF)
 
     class Meta:
         verbose_name = 'Контакт'
@@ -107,6 +111,7 @@ class AboutPortal(models.Model):
 
 class DataDeveloper(models.Model):
     text = models.TextField()
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, verbose_name='Контакт')
 
     class Meta:
         verbose_name = 'Информация о разработчике'
