@@ -24,6 +24,8 @@ import Payments from './pages/Payments/Payments';
 import Documents from './pages/Documents/Documents';
 import Tariffs from './pages/Tariffs/Tariffs';
 import Treatment from './pages/Treatment/Treatment';
+import AddNews from './pages/AddNews/AddNews';
+import AddService from './pages/AddService/AddService';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
@@ -51,6 +53,8 @@ root.render(
             <Route path='/tariffs' element={<Tariffs />} />
             <Route path='/treatment' element={<Treatment />} />
             <Route path='/documents' element={<Documents />} />
+            <Route path='/addnews' element={<AddNews />} />
+            <Route path='/addservice' element={<AddService />} />
           </Route>
           <Route path='/reserved' element={<Reserved />} />
           <Route path='*' element={<NotFoundPage />} />

@@ -37,10 +37,10 @@ export default function NavPersonal() {
                         <NavLink to='/counters' className={setActive}>
                             <PiNotePencilThin style={{ color: 'green' }} />Показания счетчиков
                         </NavLink>
-                        <NavLink to='/invoice' className={setActive}>
+                        <NavLink to='/addservice' className={setActive}>
                             <MdOutlineAddComment style={{ color: 'rgb(130 66 139)' }} />Добавить услуги
                         </NavLink>
-                        <NavLink to='/payments' className={setActive}>
+                        <NavLink to='/addnews' className={setActive}>
                             <MdOutlineAddComment style={{ color: 'rgb(130 66 139)' }} />Добавить новости
                         </NavLink>
                         <NavLink to='/documents' className={setActive}>

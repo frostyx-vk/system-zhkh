@@ -1,0 +1,88 @@
+.content {
+  flex: 1 0 auto;
+  background: url("../../illustration/background-zhkh.jpeg");
+}
+
+.personalTabs button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.personalTabs button {
+  color: black;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.title {
+  border-radius: 20px 20px 0 0;
+  color: white;
+  background: #90C084;
+  padding: 12px 12px;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.personalTabs button[aria-selected=false] {
+  transition: none !important;
+}
+
+.personalTabs button:first-child[aria-selected=true] {
+  border-radius: 20px 0 0 0;
+}
+
+.personalTabs button:last-child[aria-selected=true] {
+  border-radius: 0 20px 0 0;
+}
+
+.personalTabsContent {
+  color: black;
+}
+
+.personalTabsContent1 p {
+  color: #839d74;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.personalTabsContent1 form {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.personalTabsContent1 form input {
+  margin-bottom: 10px;
+}
+
+.personalTabsContent1 form textarea {
+  height: 150px;
+  resize: none;
+}
+
+.personalTabsContent1 form button {
+  color: white;
+  background: #90C084;
+  padding: 8px 24px;
+  border-radius: 12px;
+  margin-top: 28px;
+}
+
+.personalTabsContent1 form button:hover {
+  background: #67a557;
+}
+
+.spinner {
+  text-align: center;
+}
+
+.personalTabsContent1 form {
+  color: black;
+}
