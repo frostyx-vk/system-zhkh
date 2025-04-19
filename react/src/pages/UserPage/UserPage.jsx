@@ -31,6 +31,9 @@ function UserPage() {
       { headers: { "Authorization": 'Token ' + sessionStorage.accessToken } })
       .then(response => {
         setUpdateUserData(response.data);
+        if (response.data.is_superuser) {
+          sessionStorage.setItem('user', 'admin');
+        }
         setLoading(false);
       })
       .catch((err) => {

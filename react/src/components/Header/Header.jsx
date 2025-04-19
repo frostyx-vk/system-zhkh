@@ -15,6 +15,7 @@ export default function Header() {
             .then(response => {
                 if (response.status in [200, 201, 204]) return
                 sessionStorage.removeItem('accessToken');
+                sessionStorage.removeItem('user');
                 navigator('/login');
             })
             .catch((err) => {
