@@ -155,3 +155,51 @@
     opacity: 0;
     cursor: pointer;
 }
+
+@media (max-width: 1280px) {
+
+    .round1,
+    .round2,
+    .round3 {
+        display: none;
+    }
+
+    .homeFirstBlock {
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 0;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .titleBlock p {
+        text-align: center;
+    }
+
+    .homeSecondBlock {
+        margin-top: 30px;
+        justify-content: normal;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .homeSecondBlockLeft,
+    .homeSecondBlockRight {
+        justify-content: normal;
+    }
+
+}
+
+@media (max-width: 476px) {
+    .homeFirstBlock {
+        margin-top: 26px;
+    }
+
+    .homeSecondBlock button {
+        width: 313px;
+    }
+}
+
+@media (max-width: 400px) {}
