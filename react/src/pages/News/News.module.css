@@ -16,7 +16,7 @@
   margin-top: 14px;
   text-indent: 50px;
   font-size: 18px;
-  text-align:justify;
+  text-align: justify;
   font-style: italic;
   font-weight: 500;
 }
@@ -28,4 +28,16 @@
 .spinner {
   text-align: center;
   margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .dateBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .titleBlock {
+    gap: 20px;
+  }
 }

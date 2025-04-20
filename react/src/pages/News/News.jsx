@@ -39,7 +39,7 @@ function News() {
                       <div>
                         {item.title}
                       </div>
-                      <div>
+                      <div className={s.dateBlock}>
                         <span className={s.dateNews}>
                           {item.date_created.slice(0, 10).split('-').reverse().join('-').replace(/-/g, '.')}
                         </span>
