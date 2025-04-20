@@ -192,7 +192,7 @@
 
 }
 
-@media (max-width: 476px) {
+@media (max-width: 510px) {
     .homeFirstBlock {
         margin-top: 26px;
     }
@@ -201,5 +201,3 @@
         width: 313px;
     }
 }
-
-@media (max-width: 400px) {}
