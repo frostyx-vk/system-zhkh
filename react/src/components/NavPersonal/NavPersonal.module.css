@@ -41,3 +41,21 @@
 .navActive:last-child {
     border-radius: 0 0 20px 20px;
 }
+
+@media (max-width: 768px) {
+    .hide {
+        display: none;
+    }
+
+    .navPers {
+        width: max-content;
+    }
+
+    .personalNav {
+        width: auto;
+    }
+
+    .personalContent {
+        width: 85%;
+    }
+}

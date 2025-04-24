@@ -41,6 +41,12 @@
     }
 }
 
+@media (max-width: 540px) {
+    .nav ul a::after {
+        background: transparent;
+    }
+}
+
 @media (max-width: 476px) {
     .nav ul a {
         font-size: 18px;
