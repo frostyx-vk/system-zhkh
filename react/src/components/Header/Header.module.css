@@ -64,3 +64,48 @@
     margin-top: -1px;
     margin-left: 4px;
 }
+
+@media (max-width: 1280px) {
+    .headerWrapper {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .headerName {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .arrow1,
+    .arrow2 {
+        display: none;
+    }
+
+    .headerNav button {
+        padding: 5px 12px 5px 12px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .headerWrapper {
+        flex-direction: column;
+    }
+
+    .headerNav button {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 540px) {
+    .headerNav {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 476px) {
+    .headerNav button {
+        font-size: 14px;
+    }
+}

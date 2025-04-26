@@ -1,0 +1,22 @@
+.notfound {
+  margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.notfound a {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.notfound a:hover {
+  text-decoration: underline;
+}

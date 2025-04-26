@@ -135,8 +135,8 @@ function Treatment() {
                           <Table variant='simple'>
                             <Thead>
                               <Tr>
-                                <Th>Название обращения</Th>
-                                <Th>Дата обращения</Th>
+                                <Th>Название</Th>
+                                <Th>Дата</Th>
                                 <Th>Статус</Th>
                               </Tr>
                             </Thead>

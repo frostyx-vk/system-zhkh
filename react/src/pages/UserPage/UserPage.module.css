@@ -66,7 +66,8 @@
   text-align: center;
 }
 
-.personalTabsContent1 form button:hover, .personalTabsContent2 button:hover {
+.personalTabsContent1 form button:hover,
+.personalTabsContent2 button:hover {
   background: #67a557;
 }
 
@@ -93,4 +94,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .personalTabs button, .personalTabsContent2 p {
+    font-size: 14px;
+  }
+
+  .personalTabsContent2 input {
+    width: 300px;
+  }
+
+  .personalTabsContent2 input::placeholder {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 478px) {
+  .personalTabs button {
+    font-size: 12px;
+  }
+
+  .personalTabsContent2 input {
+    width: 200px;
+  }
 }

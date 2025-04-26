@@ -31,3 +31,9 @@
     width: 140px;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .loginForm input {
+        width: 224px;
+    }
+  }

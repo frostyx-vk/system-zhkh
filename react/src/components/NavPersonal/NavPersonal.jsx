@@ -26,52 +26,67 @@ export default function NavPersonal() {
                 isUser === 'admin' ?
                     <ul className={s.navPers}>
                         <NavLink to='/userpage' className={setActive}>
-                            <IoPersonOutline style={{ color: '#57a7dc' }} />Профиль
+                            <IoPersonOutline style={{ color: '#57a7dc' }} />
+                            <span className={s.hide}>Профиль</span>
                         </NavLink>
                         <NavLink to='/messages' className={setActive}>
-                            <BiMessageDetail style={{ color: '#57a7dc' }} />Сообщения
+                            <BiMessageDetail style={{ color: '#57a7dc' }} />
+                            <span className={s.hide}>Сообщения</span>
                         </NavLink>
                         <NavLink to='/tariffs' className={setActive}>
-                            <MdOutlineCalculate style={{ color: '#57a7dc' }} />Тарифы
+                            <MdOutlineCalculate style={{ color: '#57a7dc' }} />
+                            <span className={s.hide}>Тарифы</span>
                         </NavLink>
                         <NavLink to='/counters' className={setActive}>
-                            <PiNotePencilThin style={{ color: 'green' }} />Показания счетчиков
+                            <PiNotePencilThin style={{ color: 'green' }} />
+                            <span className={s.hide}>Показания счетчиков</span>
                         </NavLink>
                         <NavLink to='/addservice' className={setActive}>
-                            <MdOutlineAddComment style={{ color: 'rgb(130 66 139)' }} />Добавить услуги
+                            <MdOutlineAddComment style={{ color: 'rgb(130 66 139)' }} />
+                            <span className={s.hide}>Добавить услуги</span>
                         </NavLink>
                         <NavLink to='/addnews' className={setActive}>
-                            <MdOutlineAddComment style={{ color: 'rgb(130 66 139)' }} />Добавить новости
+                            <MdOutlineAddComment style={{ color: 'rgb(130 66 139)' }} />
+                            <span className={s.hide}>Добавить новости</span>
                         </NavLink>
                         <NavLink to='/documents' className={setActive}>
-                            <IoDocumentsOutline style={{ color: '#d07575' }} />Документы от УК
+                            <IoDocumentsOutline style={{ color: '#d07575' }} />
+                            <span className={s.hide}>Документы от УК</span>
                         </NavLink>
                     </ul>
                     :
                     <ul className={s.navPers}>
                         <NavLink to='/userpage' className={setActive}>
-                            <IoPersonOutline style={{ color: '#57a7dc' }} />Профиль
+                            <IoPersonOutline style={{ color: '#57a7dc' }} />
+                            <span className={s.hide}>Профиль</span>
                         </NavLink>
                         <NavLink to='/messages' className={setActive}>
-                            <BiMessageDetail style={{ color: '#57a7dc' }} />Сообщения
+                            <BiMessageDetail style={{ color: '#57a7dc' }} />
+                            <span className={s.hide}>Сообщения</span>
                         </NavLink>
                         <NavLink to='/tariffs' className={setActive}>
-                            <MdOutlineCalculate style={{ color: '#57a7dc' }} />Тарифы
+                            <MdOutlineCalculate style={{ color: '#57a7dc' }} />
+                            <span className={s.hide}>Тарифы</span>
                         </NavLink>
                         <NavLink to='/counters' className={setActive}>
-                            <PiNotePencilThin style={{ color: 'green' }} />Показания счетчиков
+                            <PiNotePencilThin style={{ color: 'green' }} />
+                            <span className={s.hide}>Показания счетчиков</span>
                         </NavLink>
                         <NavLink to='/invoice' className={setActive}>
-                            <CiViewList style={{ color: 'green' }} />Платёжный документ
+                            <CiViewList style={{ color: 'green' }} />
+                            <span className={s.hide}>Платёжный документ</span>
                         </NavLink>
                         <NavLink to='/payments' className={setActive}>
-                            <CiWallet style={{ color: 'green' }} />Платежи
+                            <CiWallet style={{ color: 'green' }} />
+                            <span className={s.hide}>Платежи</span>
                         </NavLink>
                         <NavLink to='/treatment' className={setActive}>
-                            <AiOutlineQuestionCircle style={{ color: '#d07575' }} />Обращения
+                            <AiOutlineQuestionCircle style={{ color: '#d07575' }} />
+                            <span className={s.hide}>Обращения</span>
                         </NavLink>
                         <NavLink to='/documents' className={setActive}>
-                            <IoDocumentsOutline style={{ color: '#d07575' }} />Документы от УК
+                            <IoDocumentsOutline style={{ color: '#d07575' }} />
+                            <span className={s.hide}>Документы от УК</span>
                         </NavLink>
                     </ul>
             }

@@ -13,16 +13,6 @@ body {
   color: #FFF !important;
 }
 
-/* 5 backgrounds for background main page */
-
-/* .back {
-  color: #BFDDB9;
-  color: #B8D7AE;
-  color: #B1D6AA;
-  color: #AFD0A5;
-  color: #A5CD99;
-} */
-
 #root {
   display: flex;
   flex-direction: column;
@@ -56,6 +46,7 @@ button {
 
 .personalPage {
   margin-top: 50px;
+  margin-bottom: 50px;
   display: flex;
   justify-content: space-around;
 }
@@ -73,4 +64,20 @@ button {
   background: white;
   border-radius: 20px;
   box-shadow: 1px 1px 10px #888888;
+}
+
+@media (max-width: 1280px) {
+  .wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .personalNav {
+    width: auto;
+  }
+
+  .personalContent {
+    width: 85%;
+  }
 }

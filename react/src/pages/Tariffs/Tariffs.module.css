@@ -32,3 +32,23 @@ table {
 .spinner {
   text-align: center;
 }
+
+@media (max-width: 1146px) {
+
+  .tariffs table tbody tr td,
+  .tariffs table thead tr th {
+    max-width: 100%;
+    min-width: 100%;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 820px) {
+  .tariffs table thead tr th {
+    font-size: 10px;
+  }
+
+  .tariffs p, .title {
+    font-size: 14px;
+  }
+}
