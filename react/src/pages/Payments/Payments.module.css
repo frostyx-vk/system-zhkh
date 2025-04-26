@@ -77,3 +77,26 @@
   margin-top: 8px;
   margin-bottom: 1rem;
 }
+
+@media (max-width: 814px) {
+  .personalTabsContent2 table tbody tr td:nth-child(2),
+  .personalTabsContent2 table thead tr th:nth-child(2) {
+    display: block !important;
+  }
+
+  .personalTabsContent2 table tbody tr td,
+  .personalTabsContent2 table thead tr th {
+    max-width: 100%;
+    min-width: 100%;
+    padding: 6px;
+  }
+
+  .personalTabsContent2 table thead tr th {
+    font-size: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .personalTabsContent1 p, .personalTabs button {
+    font-size: 14px;
+  }
+}
