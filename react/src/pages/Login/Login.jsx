@@ -42,7 +42,7 @@ function Login() {
                     <h2>Войдите в личный кабинет</h2>
                     <form onSubmit={handlerForm} className={s.loginForm} method="post" action="">
                         <Input type='text'
-                            placeholder='Введите номер Лицевого счета'
+                            placeholder='Введите номер ЛС'
                             required
                             size='md'
                             name="username"

@@ -36,7 +36,7 @@ function ForgotPassword() {
                     <h2>Восстановление пароля</h2>
                     <form onSubmit={resetPasswordAction} className={s.loginForm} method="post" action=''>
                         <Input type='email'
-                            placeholder='Введите Email привязанный к аккаунту'
+                            placeholder='Введите Ваш Email'
                             required
                             size='md'
                             name="email"

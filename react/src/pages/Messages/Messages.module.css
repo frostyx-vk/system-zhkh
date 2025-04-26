@@ -158,4 +158,12 @@ input {
   .inputContainer textarea::placeholder {
     font-size: 14px;
   }
+
+  .messageUsers ul li {
+    font-size: 12px;
+  }
+
+  .messageUsers {
+    min-width: 100px;
+  }
 }
