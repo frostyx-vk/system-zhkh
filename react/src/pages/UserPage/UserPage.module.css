@@ -97,13 +97,25 @@
 }
 
 @media (max-width: 768px) {
-  .personalTabs button {
+  .personalTabs button, .personalTabsContent2 p {
     font-size: 14px;
+  }
+
+  .personalTabsContent2 input {
+    width: 300px;
+  }
+
+  .personalTabsContent2 input::placeholder {
+    font-size: 12px;
   }
 }
 
 @media (max-width: 478px) {
   .personalTabs button {
     font-size: 12px;
+  }
+
+  .personalTabsContent2 input {
+    width: 200px;
   }
 }
