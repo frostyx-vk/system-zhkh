@@ -262,9 +262,9 @@ function Counters() {
                           <Table variant='simple'>
                             <Thead>
                               <Tr>
-                                <Th>Дата передачи показаний</Th>
+                                <Th>Дата передачи</Th>
                                 <Th>Наименование</Th>
-                                <Th isNumeric>Переданные показания</Th>
+                                <Th isNumeric>Количество</Th>
                               </Tr>
                             </Thead>
                             <Tbody>

@@ -123,3 +123,39 @@
   font-weight: 500;
   margin-bottom: 14px;
 }
+
+@media (max-width: 1002px) {
+  .personalTabsContent2 table tbody tr td,
+  .personalTabsContent2 table thead tr th {
+    max-width: 100%;
+    min-width: 100%;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .personalTabsContent1 p {
+    font-size: 14px;
+  }
+
+  .personalTabs button {
+    font-size: 14px;
+  }
+
+  .counters {
+    padding: 0;
+  }
+
+  .counters label {
+    width: 200px;
+  }
+
+  .personalTabsContent2 table tbody tr td:nth-child(2),
+  .personalTabsContent2 table thead tr th:nth-child(2) {
+    display: block !important;
+  }
+
+  .personalTabsContent2 table thead tr th {
+    font-size: 10px;
+  }
+}
