@@ -15,15 +15,15 @@ function AddNews() {
   const [load, setLoad] = useState(false);
 
   let newsData = new FormData();
-  newsData.append('name', title);
-  newsData.append('text', description)
+  newsData.append('title', title);
+  newsData.append('description', description)
   newsData.append('token', sessionStorage.accessToken)
 
   function handleForm(e) {
     e.preventDefault();
     setLoad(true);
 
-    axios.post('http://localhost:8000/web/appeal-create/aaaaaa', newsData) //надо поменять урл для отправки
+    axios.post('http://localhost:8000/web/news-create/', newsData) //надо поменять урл для отправки
       .then(res => {
         toast.success(res.data.message);
         setLoad(false);
@@ -55,7 +55,7 @@ function AddNews() {
                 </div>
                 :
                 <div className={s.personalTabsContent1}>
-                  <form onSubmit={handleForm} encType={'multipart/form-data'}>
+                  <form onSubmit={handleForm}>
                     <Input
                       type='text'
                       placeholder='Введите название новости'

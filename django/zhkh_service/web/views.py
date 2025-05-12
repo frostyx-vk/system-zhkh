@@ -44,9 +44,33 @@ class NewsListAPIView(ListAPIView):
     queryset = News.objects.all()
 
 
+class  NewsCreateAPIView(CreateAPIView):
+    serializer_class = NewsSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            return HttpResponseBadRequest()
+        return Response({'message': 'Новость добавлена'})
+
+
 class ServiceAPIView(ListAPIView):
     serializer_class = ServiceSerializer
     queryset = Service.objects.all()
+
+
+class ServiceCreateAPIView(CreateAPIView):
+    serializer_class = ServiceSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            return HttpResponseBadRequest()
+        return Response({'message': 'Услуга добавлена'})
 
 
 class ContactAPIView(ListAPIView):
