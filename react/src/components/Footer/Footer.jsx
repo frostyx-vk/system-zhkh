@@ -13,8 +13,8 @@ export default function Footer() {
           </Link>
         </div>
         <div className={s.footerContentRight}>
-          <p>Разработка сайта</p>
-          <b>Viktor K</b>
+          <p>Разработка сайта:</p>
+          <b>Крюковский Виктор</b>
         </div>
       </div>
     </div>
