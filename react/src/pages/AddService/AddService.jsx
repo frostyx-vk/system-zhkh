@@ -16,8 +16,8 @@ function AddService() {
   const [load, setLoad] = useState(false);
 
   let serviceData = new FormData();
-  serviceData.append('name', title);
-  serviceData.append('text', description);
+  serviceData.append('title', title);
+  serviceData.append('description', description);
   serviceData.append('price', price);
   serviceData.append('token', sessionStorage.accessToken)
 
@@ -25,7 +25,7 @@ function AddService() {
     e.preventDefault();
     setLoad(true);
 
-    axios.post('http://localhost:8000/web/appeal-create/aaaaaa', serviceData) //надо поменять урл для отправки
+    axios.post('http://localhost:8000/web/service-create/', serviceData)
       .then(res => {
         toast.success(res.data.message);
         setLoad(false);
@@ -58,7 +58,7 @@ function AddService() {
                 </div>
                 :
                 <div className={s.personalTabsContent1}>
-                  <form onSubmit={handleForm} encType={'multipart/form-data'}>
+                  <form onSubmit={handleForm}>
                     <Input
                       type='text'
                       placeholder='Введите название услуги'

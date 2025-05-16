@@ -5,7 +5,7 @@ from web.views import AboutPortalAPIView, ContactAPIView, NewsListAPIView, Servi
     CountersAPIView, LivingAreaDataAPIView, TariffsAPIView, ReceiptListAPIView, yookassa_request, PaymentWidgetView, \
     PaymentSuccessView, \
     YooKassaCallbackView, PaymentSumAPIView, PaymentHistoryListAPIView, AppealCreateAPIView, AppealListAPIView, \
-    IndicationsHistory
+    IndicationsHistory, ServiceCreateAPIView, NewsCreateAPIView
 
 app_name = 'web'
 
@@ -34,4 +34,7 @@ urlpatterns = [
     path('ykcb/', YooKassaCallbackView.as_view(), name='yookassa_callback'),
     path('appeal-create/', AppealCreateAPIView.as_view(), name='appeal-create'),
     path('appeals/<str:token>/', AppealListAPIView.as_view(), name='appeal-list'),
+
+    path('service-create/', ServiceCreateAPIView.as_view(), name='service-create'),
+    path('news-create/', NewsCreateAPIView.as_view(), name='news-create'),
 ]
