@@ -134,7 +134,6 @@ class CountersAPIView(APIView):
             'finish_price': total_sum,
             'type': indication_type.pk,
         }
-        print(data, '******************')
         self.create_indication(data)
         return total_sum
 

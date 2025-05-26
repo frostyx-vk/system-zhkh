@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import AboutPortal, Contact, DataDeveloper, News, Service, Documents, Tariff, Indication, LivingArea, \
     Regulation, Payment, Receipt, Appeal, IndicationType
-from .forms import DocumentAdminForm
+from .forms import DocumentAdminForm, IndicationTypeAdminForm
 
 
 @admin.register(News)
@@ -71,4 +71,8 @@ class AppealAdmin(admin.ModelAdmin):
     search_fields = ('name', 'text')
 
 
-admin.site.register(IndicationType)
+@admin.register(IndicationType)
+class IndicationTypeAdmin(admin.ModelAdmin):
+    form = IndicationTypeAdminForm
+    list_display = ('name', )
+
