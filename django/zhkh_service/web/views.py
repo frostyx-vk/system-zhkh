@@ -5,6 +5,8 @@ from uuid import uuid4
 
 from aiohttp.http_exceptions import HttpBadRequest
 import requests
+from django.db.models import Window, F
+from django.db.models.functions import Lag
 from django.http import HttpRequest, HttpResponseBadRequest, JsonResponse, HttpResponse, HttpResponseRedirect
 from django.db import transaction
 from django.conf import settings
@@ -434,4 +436,15 @@ class IndicationsHistory(ListAPIView):
 
     def get_queryset(self):
         user = Token.objects.get(key=self.kwargs['token']).user
-        return Indication.objects.filter(user=user)
+        return Indication.objects.annotate(
+            previous_indication=Window(
+                expression=Lag('last_indication'),
+                partition_by=[F('user_id'), F('type_id')],
+                order_by=F('date_updated').asc()
+            ),
+            difference=F('last_indication') - Window(
+                expression=Lag('last_indication'),
+                partition_by=[F('user_id'), F('type_id')],
+                order_by=F('date_updated').asc()
+            )
+        ).filter(user=user)

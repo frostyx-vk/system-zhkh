@@ -56,6 +56,7 @@ class TariffSerializer(ModelSerializer):
 
 class IndicationSerializer(ModelSerializer):
     tariff_key = serializers.SerializerMethodField()
+    difference = serializers.SerializerMethodField()
 
     class Meta:
         model = Indication
@@ -63,6 +64,9 @@ class IndicationSerializer(ModelSerializer):
 
     def get_tariff_key(self, obj):
         return obj.tariff.key
+
+    def get_difference(self, obj):
+        return obj.difference
 
 
 class ReceiptSerializer(ModelSerializer):
