@@ -44,6 +44,8 @@ class ChatSerializer(ModelSerializer):
         return f'{obj.owner.first_name} {obj.owner.last_name}'
 
     def get_recipient(self, obj):
+        if obj.recipient.livingarea and obj.recipient.livingarea.home_number:
+            return f'{obj.recipient.first_name} {obj.recipient.last_name} ({obj.recipient.livingarea.home_number}кв.)'
         return f'{obj.recipient.first_name} {obj.recipient.last_name}'
 
 

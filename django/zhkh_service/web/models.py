@@ -32,6 +32,7 @@ class LivingArea(models.Model):
         TWO = 'TWO', 'Два водостока'
 
     address = models.CharField(verbose_name='Адрес', max_length=255, unique=True)
+    home_number = models.PositiveIntegerField(verbose_name='Номер квартиры', blank=True, null=True)
     number_ls = models.PositiveIntegerField(verbose_name='Номер лицевого счета', unique=True)
     square = models.PositiveIntegerField(verbose_name='Площадь')
     type = models.CharField(choices=TypeProperty.choices, default=TypeProperty.HABITABLE, max_length=255)
