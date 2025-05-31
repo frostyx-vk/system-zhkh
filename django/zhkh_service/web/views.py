@@ -141,7 +141,7 @@ class CountersAPIView(APIView):
 
     def save_indication_water_by_type(self, water1, water2, waters, tariff, total_sum):
         last_indication, last_indication_first, last_indication_second = 0, 0, 0
-        indications_first, indications, indications_second = self.check_data_water(
+        indications_first,  indications_second, indications = self.check_data_water(
             water1, water2, waters, tariff
         )
         if indications:
@@ -190,7 +190,6 @@ class CountersAPIView(APIView):
             )
         elif not water1 and water2 or not water1 and not water2:
             raise ValueError('Data water is not valid')
-
         return indications_first, indications_second, indications
 
     @transaction.atomic
@@ -266,17 +265,12 @@ class PaymentSumAPIView(APIView):
     def get(self, request, *args, **kwargs):
         token = kwargs.get('token')
         user = Token.objects.get(key=token).user
-        datetime_now = timezone.now()
-
-        start_month = datetime.datetime(datetime_now.year, datetime_now.month, 1)
-        end_month = datetime.datetime(datetime_now.year, datetime_now.month, 28)
-
         finish_prices = Indication.objects.filter(
-            date_updated__gte=start_month,
-            date_updated__lte=end_month,
+            status_payment=False,
             user=user
         ).values_list('finish_price', flat=True)
-        return Response({'message': f'{sum(list(finish_prices))}'})
+        other_services = Tariff.objects.filter(key=Tariff.Keys.other_service).values_list('ratio', flat=True)
+        return Response({'message': f'{sum(list(finish_prices) + list(other_services))}'})
 
 
 class PaymentHistoryListAPIView(ListAPIView):
@@ -290,7 +284,6 @@ class PaymentHistoryListAPIView(ListAPIView):
 
 def yookassa_request(request, value):
     def build_sha1_from_order(order):
-
         sha1 = hashlib.sha1(settings.FORMAT_TEMPLATE.format(
             account_number=order.user.pk,
             amount=order.order_amount,
@@ -374,6 +367,10 @@ class PaymentSuccessView(DetailView):
             obj.active = True
             obj.save()
             Payment.objects.filter(user=obj.user, active=False).delete()
+            Indication.objects.filter(
+                status_payment=False,
+                user=obj.user
+            ).update(status_payment=True)
         return super().get(request, *args, **kwargs)
 
 

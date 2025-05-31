@@ -136,6 +136,7 @@ class Tariff(models.Model):
         hot = 'hotWater', 'Горячая вода'
         disposal = 'disposal', 'Водоотведение'
         electricity = 'electricity', 'Электроэнергия'
+        other_service = 'otherService', 'Дополнительные услуги'
 
     name = models.CharField(verbose_name='Название', max_length=100)
     ratio = models.FloatField(verbose_name='Кол-во рублей за ед.', max_length=15, blank=True)
@@ -204,6 +205,8 @@ class Indication(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     tariff = models.ForeignKey(Tariff, on_delete=models.CASCADE, verbose_name='Тариф')
     finish_price = models.FloatField(verbose_name='Итоговая сумма')
+    status_payment = models.BooleanField(verbose_name='Статус оплаты', default=False)
+
 
     class Meta:
         verbose_name = 'Показание'
